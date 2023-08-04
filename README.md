@@ -1,4 +1,7 @@
 # Fullstack Project
+![link to db](https://dbdiagram.io/d/64cb7b6502bd1c4a5e2e1bd6)
+
+
 
 ![TypeScript](https://img.shields.io/badge/TypeScript-v.4-green)
 ![SASS](https://img.shields.io/badge/SASS-v.4-hotpink)
@@ -17,12 +20,18 @@ You can follow the same topics as your backend project or choose the alternative
 
 ## Table of Contents
 
-1. [Features](#features)
-   - [Mandatory features](#mandatory-features)
-   - [Extra features](#extra-features)
-2. [Requirements](#requirements)
-3. [Getting Started](#getting-started)
-4. [Testing](#testing)
+- [Fullstack Project](#fullstack-project)
+  - [Table of Contents](#table-of-contents)
+  - [Features](#features)
+    - [Mandatory features](#mandatory-features)
+      - [User Functionalities](#user-functionalities)
+      - [Admin Functionalities](#admin-functionalities)
+    - [Extra features](#extra-features)
+      - [User Functionalities](#user-functionalities-1)
+      - [Admin Functionalities](#admin-functionalities-1)
+  - [Requirements](#requirements)
+  - [Getting Started](#getting-started)
+  - [Testing](#testing)
 
 ## Features
 

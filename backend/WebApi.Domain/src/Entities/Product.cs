@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace WebApi.Domain.src.Entities
 {
-    public class Product: BaseEntityWithId
+    public class Product: BaseEntity
     {
         public string Title { get; set; }
         public decimal Price { get; set; }
