@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "j9aFo0Oz5n8/RV51tv0hOtbvtM3GtfJfpYSUR5tkeNV+L9m8SxIGMe2PjEU8P+iLE3dnd+7cC8qWxezdu5LtYA==",
+  "dgSpecHash": "UuSxn5IPGN1DSJlS4Q9BhLkH+wxd17b9poiuudtPDmWhbK13OuHCDrLduMTOCipDqeA39+r/nwOCS/SmoTtROg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\35841\\OneDrive\\Desktop\\Assignments\\FullStackProject\\fs15_Fullstack\\backend\\WebApi.Testing\\WebApi.Testing.csproj",
+  "projectFilePath": "c:\\Users\\35841\\OneDrive\\Desktop\\Assignments\\FullStackProject\\fs15_Fullstack\\backend\\WebApi.Testing\\WebApi.Testing.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\35841\\.nuget\\packages\\coverlet.collector\\3.1.2\\coverlet.collector.3.1.2.nupkg.sha512",
     "C:\\Users\\35841\\.nuget\\packages\\microsoft.codecoverage\\17.3.2\\microsoft.codecoverage.17.3.2.nupkg.sha512",

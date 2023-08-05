@@ -1808,6 +1808,16 @@
         "build": {
           "build/netcoreapp3.1/xunit.runner.visualstudio.props": {}
         }
+      },
+      "WebApi.Domain/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v7.0",
+        "compile": {
+          "bin/placeholder/WebApi.Domain.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/WebApi.Domain.dll": {}
+        }
       }
     }
   },
@@ -6103,11 +6113,17 @@
         "xunit.runner.visualstudio.2.4.5.nupkg.sha512",
         "xunit.runner.visualstudio.nuspec"
       ]
+    },
+    "WebApi.Domain/1.0.0": {
+      "type": "project",
+      "path": "../WebApi.Domain/WebApi.Domain.csproj",
+      "msbuildProject": "../WebApi.Domain/WebApi.Domain.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net7.0": [
       "Microsoft.NET.Test.Sdk >= 17.3.2",
+      "WebApi.Domain >= 1.0.0",
       "coverlet.collector >= 3.1.2",
       "xunit >= 2.4.2",
       "xunit.runner.visualstudio >= 2.4.5"
@@ -6119,11 +6135,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\35841\\OneDrive\\Desktop\\Assignments\\FullStackProject\\fs15_Fullstack\\backend\\WebApi.Testing\\WebApi.Testing.csproj",
+      "projectUniqueName": "c:\\Users\\35841\\OneDrive\\Desktop\\Assignments\\FullStackProject\\fs15_Fullstack\\backend\\WebApi.Testing\\WebApi.Testing.csproj",
       "projectName": "WebApi.Testing",
-      "projectPath": "C:\\Users\\35841\\OneDrive\\Desktop\\Assignments\\FullStackProject\\fs15_Fullstack\\backend\\WebApi.Testing\\WebApi.Testing.csproj",
+      "projectPath": "c:\\Users\\35841\\OneDrive\\Desktop\\Assignments\\FullStackProject\\fs15_Fullstack\\backend\\WebApi.Testing\\WebApi.Testing.csproj",
       "packagesPath": "C:\\Users\\35841\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\35841\\OneDrive\\Desktop\\Assignments\\FullStackProject\\fs15_Fullstack\\backend\\WebApi.Testing\\obj\\",
+      "outputPath": "c:\\Users\\35841\\OneDrive\\Desktop\\Assignments\\FullStackProject\\fs15_Fullstack\\backend\\WebApi.Testing\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\35841\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -6137,7 +6153,11 @@
       "frameworks": {
         "net7.0": {
           "targetAlias": "net7.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "c:\\Users\\35841\\OneDrive\\Desktop\\Assignments\\FullStackProject\\fs15_Fullstack\\backend\\WebApi.Domain\\WebApi.Domain.csproj": {
+              "projectPath": "c:\\Users\\35841\\OneDrive\\Desktop\\Assignments\\FullStackProject\\fs15_Fullstack\\backend\\WebApi.Domain\\WebApi.Domain.csproj"
+            }
+          }
         }
       },
       "warningProperties": {

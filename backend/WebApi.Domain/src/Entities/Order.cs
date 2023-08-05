@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace WebApi.Domain.src.Entities
 {
@@ -17,8 +13,7 @@ namespace WebApi.Domain.src.Entities
     {
         public int UserId { get; set; }
         public DateTime OrderDate { get; set; }
-        public OrderStatus Status { get; set; }
-        
+        public OrderStatus Status { get; set; } 
         public List<OrderItem> OrderItems { get; set; }
     }
 }

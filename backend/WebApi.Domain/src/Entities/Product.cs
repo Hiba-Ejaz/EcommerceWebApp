@@ -1,7 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+
 
 namespace WebApi.Domain.src.Entities
 {
@@ -11,6 +8,7 @@ namespace WebApi.Domain.src.Entities
         public decimal Price { get; set; }
         public string Description { get; set; }
         public int CategoryId { get; set; }
-        public string[] Images { get; set; }
+        public List<Image> Images { get; set; }
+        public int Quantity { get; set; } 
     }
 }

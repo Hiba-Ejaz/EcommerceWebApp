@@ -1,10 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "UAnP/u49wOVfz5Pp5fPIivO271OMSwhDsIT7UEu2BT9FZKtbRtY939qbKx5NWiy/I4MhHUJY92EZxRmYjUJ/ag==",
+  "dgSpecHash": "3O2p0W/AoaDbC7WHEmVIpJ8tEufYSQjDuPALJXk/y7PtJaDJGuBuNipppgDpxb2FDAsy7K9douj6prdVmlm9FQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\35841\\OneDrive\\Desktop\\Assignments\\FullStackProject\\fs15_Fullstack\\backend\\WebApi.WebApi\\WebApi.WebApi.csproj",
+  "projectFilePath": "c:\\Users\\35841\\OneDrive\\Desktop\\Assignments\\FullStackProject\\fs15_Fullstack\\backend\\WebApi.WebApi\\WebApi.WebApi.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\35841\\.nuget\\packages\\automapper\\12.0.1\\automapper.12.0.1.nupkg.sha512",
     "C:\\Users\\35841\\.nuget\\packages\\microsoft.aspnetcore.openapi\\7.0.0\\microsoft.aspnetcore.openapi.7.0.0.nupkg.sha512",
+    "C:\\Users\\35841\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",
     "C:\\Users\\35841\\.nuget\\packages\\microsoft.extensions.apidescription.server\\6.0.5\\microsoft.extensions.apidescription.server.6.0.5.nupkg.sha512",
     "C:\\Users\\35841\\.nuget\\packages\\microsoft.openapi\\1.4.3\\microsoft.openapi.1.4.3.nupkg.sha512",
     "C:\\Users\\35841\\.nuget\\packages\\swashbuckle.aspnetcore\\6.4.0\\swashbuckle.aspnetcore.6.4.0.nupkg.sha512",

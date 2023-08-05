@@ -1,0 +1,5 @@
+c:\Users\35841\OneDrive\Desktop\Assignments\FullStackProject\fs15_Fullstack\backend\WebApi.Domain\obj\Debug\net7.0\WebApi.Domain.csproj.AssemblyReference.cache
+c:\Users\35841\OneDrive\Desktop\Assignments\FullStackProject\fs15_Fullstack\backend\WebApi.Domain\obj\Debug\net7.0\WebApi.Domain.GeneratedMSBuildEditorConfig.editorconfig
+c:\Users\35841\OneDrive\Desktop\Assignments\FullStackProject\fs15_Fullstack\backend\WebApi.Domain\obj\Debug\net7.0\WebApi.Domain.AssemblyInfoInputs.cache
+c:\Users\35841\OneDrive\Desktop\Assignments\FullStackProject\fs15_Fullstack\backend\WebApi.Domain\obj\Debug\net7.0\WebApi.Domain.AssemblyInfo.cs
+c:\Users\35841\OneDrive\Desktop\Assignments\FullStackProject\fs15_Fullstack\backend\WebApi.Domain\obj\Debug\net7.0\WebApi.Domain.csproj.CoreCompileInputs.cache

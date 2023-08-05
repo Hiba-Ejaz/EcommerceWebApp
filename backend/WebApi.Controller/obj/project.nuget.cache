@@ -1,8 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "ZkETC59v63eR+HNp0nx96doo3VhoIM4PsR4FOMJ4H8wEM0LqZGyqfHQrVJNg94HFmdbFmh+fQr6tjgRznNkCLA==",
+  "dgSpecHash": "QhH/pr+dBDiP2lzkbwnAWSdQJHeir1ptBDuwj7n+qSMCgxLFD7iZWBMf6qN2EZoj/XS1ly4ZqpRm8u1isaOnfA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\35841\\OneDrive\\Desktop\\Assignments\\FullStackProject\\fs15_Fullstack\\backend\\WebApi.Controller\\WebApi.Controller.csproj",
-  "expectedPackageFiles": [],
+  "projectFilePath": "c:\\Users\\35841\\OneDrive\\Desktop\\Assignments\\FullStackProject\\fs15_Fullstack\\backend\\WebApi.Controller\\WebApi.Controller.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\35841\\.nuget\\packages\\automapper\\12.0.1\\automapper.12.0.1.nupkg.sha512",
+    "C:\\Users\\35841\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512"
+  ],
   "logs": []
 }
