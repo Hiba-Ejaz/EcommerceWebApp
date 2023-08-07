@@ -97,3 +97,6 @@ c:\Users\35841\OneDrive\Desktop\Assignments\FullStackProject\fs15_Fullstack\back
 c:\Users\35841\OneDrive\Desktop\Assignments\FullStackProject\fs15_Fullstack\backend\WebApi.Testing\obj\Debug\net7.0\WebApi.Testing.pdb
 c:\Users\35841\OneDrive\Desktop\Assignments\FullStackProject\fs15_Fullstack\backend\WebApi.Testing\obj\Debug\net7.0\WebApi.Testing.genruntimeconfig.cache
 c:\Users\35841\OneDrive\Desktop\Assignments\FullStackProject\fs15_Fullstack\backend\WebApi.Testing\obj\Debug\net7.0\ref\WebApi.Testing.dll
+c:\Users\35841\OneDrive\Desktop\Assignments\FullStackProject\fs15_Fullstack\backend\WebApi.Testing\bin\Debug\net7.0\CoverletSourceRootsMapping
+c:\Users\35841\OneDrive\Desktop\Assignments\FullStackProject\fs15_Fullstack\backend\WebApi.Testing\bin\Debug\net7.0\WebApi.Domain.dll
+c:\Users\35841\OneDrive\Desktop\Assignments\FullStackProject\fs15_Fullstack\backend\WebApi.Testing\bin\Debug\net7.0\WebApi.Domain.pdb

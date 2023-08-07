@@ -3,3 +3,10 @@ c:\Users\35841\OneDrive\Desktop\Assignments\FullStackProject\fs15_Fullstack\back
 c:\Users\35841\OneDrive\Desktop\Assignments\FullStackProject\fs15_Fullstack\backend\WebApi.Domain\obj\Debug\net7.0\WebApi.Domain.AssemblyInfoInputs.cache
 c:\Users\35841\OneDrive\Desktop\Assignments\FullStackProject\fs15_Fullstack\backend\WebApi.Domain\obj\Debug\net7.0\WebApi.Domain.AssemblyInfo.cs
 c:\Users\35841\OneDrive\Desktop\Assignments\FullStackProject\fs15_Fullstack\backend\WebApi.Domain\obj\Debug\net7.0\WebApi.Domain.csproj.CoreCompileInputs.cache
+c:\Users\35841\OneDrive\Desktop\Assignments\FullStackProject\fs15_Fullstack\backend\WebApi.Domain\bin\Debug\net7.0\WebApi.Domain.deps.json
+c:\Users\35841\OneDrive\Desktop\Assignments\FullStackProject\fs15_Fullstack\backend\WebApi.Domain\bin\Debug\net7.0\WebApi.Domain.dll
+c:\Users\35841\OneDrive\Desktop\Assignments\FullStackProject\fs15_Fullstack\backend\WebApi.Domain\bin\Debug\net7.0\WebApi.Domain.pdb
+c:\Users\35841\OneDrive\Desktop\Assignments\FullStackProject\fs15_Fullstack\backend\WebApi.Domain\obj\Debug\net7.0\WebApi.Domain.dll
+c:\Users\35841\OneDrive\Desktop\Assignments\FullStackProject\fs15_Fullstack\backend\WebApi.Domain\obj\Debug\net7.0\refint\WebApi.Domain.dll
+c:\Users\35841\OneDrive\Desktop\Assignments\FullStackProject\fs15_Fullstack\backend\WebApi.Domain\obj\Debug\net7.0\WebApi.Domain.pdb
+c:\Users\35841\OneDrive\Desktop\Assignments\FullStackProject\fs15_Fullstack\backend\WebApi.Domain\obj\Debug\net7.0\ref\WebApi.Domain.dll
