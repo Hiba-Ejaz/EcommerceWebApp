@@ -7,23 +7,23 @@ using WebApi.Domain.src.Entities;
 
 namespace WebApi.Business.src.Implementations
 {
-    public class UserService: BaseService<User,UserDto>, IUserService
+    public class UserService: BaseService<User,UserCreateDto,UserReadDto,UserUpdateDto>, IUserService
     {
         private readonly IUserRepo _userRepo;
         public UserService(IUserRepo userRepo,IMapper mapper):base(userRepo,mapper)
         {
          _userRepo=userRepo;  
         }
-        public UserDto UpdatePassword(string id, string password)
+        public async Task<UserReadDto> UpdatePassword(string id, string password)
         {
-           var foundItem=_userRepo.GetOneById(id);
+           var foundItem=await _userRepo.GetOneById(id);
            if(foundItem==null){
             throw new Exception("item not found");
            }
-           var updatedEntity=_userRepo.UpdatePassword(foundItem,password);
-           return _mapper.Map<UserDto>(updatedEntity);
+           var updatedEntity=await _userRepo.UpdatePassword(foundItem,password);
+           return _mapper.Map<UserReadDto>(updatedEntity);
         }
 
-
+       
     }
 }

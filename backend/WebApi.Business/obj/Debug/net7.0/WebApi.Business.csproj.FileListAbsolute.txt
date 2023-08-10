@@ -1,0 +1,15 @@
+C:\Users\35841\OneDrive\Desktop\Assignments\FullStackProject\fs15_Fullstack\backend\WebApi.Business\bin\Debug\net7.0\WebApi.Business.deps.json
+C:\Users\35841\OneDrive\Desktop\Assignments\FullStackProject\fs15_Fullstack\backend\WebApi.Business\bin\Debug\net7.0\WebApi.Business.dll
+C:\Users\35841\OneDrive\Desktop\Assignments\FullStackProject\fs15_Fullstack\backend\WebApi.Business\bin\Debug\net7.0\WebApi.Business.pdb
+C:\Users\35841\OneDrive\Desktop\Assignments\FullStackProject\fs15_Fullstack\backend\WebApi.Business\bin\Debug\net7.0\WebApi.Domain.dll
+C:\Users\35841\OneDrive\Desktop\Assignments\FullStackProject\fs15_Fullstack\backend\WebApi.Business\bin\Debug\net7.0\WebApi.Domain.pdb
+C:\Users\35841\OneDrive\Desktop\Assignments\FullStackProject\fs15_Fullstack\backend\WebApi.Business\obj\Debug\net7.0\WebApi.Business.csproj.AssemblyReference.cache
+C:\Users\35841\OneDrive\Desktop\Assignments\FullStackProject\fs15_Fullstack\backend\WebApi.Business\obj\Debug\net7.0\WebApi.Business.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\35841\OneDrive\Desktop\Assignments\FullStackProject\fs15_Fullstack\backend\WebApi.Business\obj\Debug\net7.0\WebApi.Business.AssemblyInfoInputs.cache
+C:\Users\35841\OneDrive\Desktop\Assignments\FullStackProject\fs15_Fullstack\backend\WebApi.Business\obj\Debug\net7.0\WebApi.Business.AssemblyInfo.cs
+C:\Users\35841\OneDrive\Desktop\Assignments\FullStackProject\fs15_Fullstack\backend\WebApi.Business\obj\Debug\net7.0\WebApi.Business.csproj.CoreCompileInputs.cache
+C:\Users\35841\OneDrive\Desktop\Assignments\FullStackProject\fs15_Fullstack\backend\WebApi.Business\obj\Debug\net7.0\WebApi.Business.csproj.CopyComplete
+C:\Users\35841\OneDrive\Desktop\Assignments\FullStackProject\fs15_Fullstack\backend\WebApi.Business\obj\Debug\net7.0\WebApi.Business.dll
+C:\Users\35841\OneDrive\Desktop\Assignments\FullStackProject\fs15_Fullstack\backend\WebApi.Business\obj\Debug\net7.0\refint\WebApi.Business.dll
+C:\Users\35841\OneDrive\Desktop\Assignments\FullStackProject\fs15_Fullstack\backend\WebApi.Business\obj\Debug\net7.0\WebApi.Business.pdb
+C:\Users\35841\OneDrive\Desktop\Assignments\FullStackProject\fs15_Fullstack\backend\WebApi.Business\obj\Debug\net7.0\ref\WebApi.Business.dll

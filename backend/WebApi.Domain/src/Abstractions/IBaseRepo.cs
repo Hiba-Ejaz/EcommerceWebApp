@@ -5,10 +5,10 @@ namespace WebApi.Domain.src.Abstractions
 {
     public interface IBaseRepo<T>
     {
-        T CreateOne(T entity);
-        T GetOneById(string id);
-        bool DeleteOneById(T entity);
-        T UpdateOne(T entity,T updated);
-        IEnumerable<T> GetAll(SearchQueryOptions options);
+        Task<T> CreateOne(T entity);
+        Task<T> GetOneById(string id);
+        Task<bool> DeleteOneById(T entity);
+        Task<T> UpdateOne(T entity,T updated);
+        Task<IEnumerable<T>> GetAll(SearchQueryOptions options);
     }
 }

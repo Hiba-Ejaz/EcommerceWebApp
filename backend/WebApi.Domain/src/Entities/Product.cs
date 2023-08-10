@@ -10,5 +10,6 @@ namespace WebApi.Domain.src.Entities
         public int CategoryId { get; set; }
         public List<Image> Images { get; set; }
         public int Quantity { get; set; } 
+        public Category Category { get; set; } 
     }
 }

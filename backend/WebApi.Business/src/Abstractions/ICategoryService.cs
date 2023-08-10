@@ -5,7 +5,7 @@ using WebApi.Domain.src.Entities;
 
 namespace WebApi.Business.src.Abstractions
 {
-    public interface ICategoryService:IBaseService<Category,CategoryDto>
+    public interface ICategoryService:IBaseService<Category,CategoryCreateDto,CategoryReadDto,CategoryUpdateDto>
     {
         
     }

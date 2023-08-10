@@ -5,7 +5,7 @@ using WebApi.Domain.src.Entities;
 
 namespace WebApi.Business.src.Abstractions
 {
-    public interface IProductService:IBaseService<Product,ProductDto>
+    public interface IProductService:IBaseService<Product,ProductCreateDto,ProductReadDto,ProductUpdateDto>
     {
         
     }
