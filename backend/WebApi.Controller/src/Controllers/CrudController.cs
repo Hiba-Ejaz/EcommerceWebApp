@@ -6,39 +6,40 @@ using WebApi.Domain.src.Entities;
 namespace WebApi.Controller.src.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+     [Route("api/v1/[controller]s")]
 
     public class CrudController<T,TCreateDto,TReadDto,TUpdateDto> : ControllerBase
     {
-        private readonly IBaseService<T,TCreateDto,TReadDto,TUpdateDto> _service;
+        private readonly IBaseService<T,TCreateDto,TReadDto,TUpdateDto> _baseservice;
         public CrudController(IBaseService<T,TCreateDto,TReadDto,TUpdateDto> service)
         {
-            _service = service;
+            _baseservice = service;
         }
 
         [HttpGet] 
         public virtual async Task<ActionResult<IEnumerable<TReadDto>>> GetAll([FromQuery] SearchQueryOptions options)
         {
-                        return Ok(await _service.GetAll(options));
+                        return Ok(await _baseservice.GetAll(options));
         }
-        [HttpGet("{id}")]
-         public virtual async Task<ActionResult<IEnumerable<TReadDto>>> GetOneById([FromRoute] string id)
+        [HttpGet("{id:Guid}")]
+         public virtual async Task<ActionResult<IEnumerable<TReadDto>>> GetOneById([FromRoute] Guid id)
         {
 
-                        return Ok(await _service.GetOneById(id));
+                        return Ok(await _baseservice.GetOneById(id));
         }
-        [HttpPatch("{id}")]
-         public async Task<ActionResult<TReadDto>> UpdateOneById([FromRoute] string id, [FromBody] TUpdateDto updated){
-            return Ok(await _service.UpdateOneById(id, updated));
+        [HttpPatch("{id:Guid}")]
+         public async Task<ActionResult<TReadDto>> UpdateOneById([FromRoute] Guid  id, [FromBody] TUpdateDto updated){
+            return Ok(await _baseservice.UpdateOneById(id, updated));
          }
-        [HttpDelete("{id}")]
-         public async Task<ActionResult<TReadDto>> DeleteOneById([FromRoute] string id){
-            return Ok(await _service.DeleteOneById(id));
+        [HttpDelete("{id:Guid}")]
+         public async Task<ActionResult<TReadDto>> DeleteOneById([FromRoute] Guid id){
+            return Ok(await _baseservice.DeleteOneById(id));
          }
          [HttpPost]
-         public async Task<ActionResult<TReadDto>> CreateOne([FromBody] TCreateDto created){
-            var createdObject=await _service.CreateOne(created);
-            return CreatedAtAction("created",createdObject);
+         public virtual 
+         async Task<ActionResult<TReadDto>> CreateOne([FromBody] TCreateDto created){
+            var createdObject=await _baseservice.CreateOne(created);
+            return CreatedAtAction(nameof(CreateOne),createdObject);
          }
 
 

@@ -5,6 +5,22 @@ backend/appsettings.json
 backend/appsettings.*.json
 backend/obj/
 backend/bin/
+backend/.vscode/
+backend/WebApi.Domain/obj/
+backend/WebApi.Domain/bin/
+backend/WebApi.Domain/.vscode/
+backend/WebApi.Business/obj/
+backend/WebApi.Business/bin/
+backend/WebApi.Business/.vscode/
+backend/WebApi.Controller/obj/
+backend/WebApi.Controller/bin/
+backend/WebApi.Controller/.vscode/
+backend/WebApi.WebApi/obj/
+backend/WebApi.WebApi/bin/
+backend/WebApi.WebApi/.vscode/
+backend/WebApi.Test/obj/
+backend/WebApi.Test/bin/
+backend/WebApi.Test/.vscode/
 
 # Visual Studio 2015/2017 cache/options directory
 .vs/

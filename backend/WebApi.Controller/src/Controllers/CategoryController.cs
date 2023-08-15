@@ -23,7 +23,7 @@ namespace WebApi.Controller.src.Controllers
         }
 
         [AllowAnonymous]
-          public override async Task<ActionResult<IEnumerable<CategoryReadDto>>> GetOneById([FromRoute] string id)
+          public override async Task<ActionResult<IEnumerable<CategoryReadDto>>> GetOneById([FromRoute] Guid id)
         {
 
                         return Ok(await _categoryService.GetOneById(id));

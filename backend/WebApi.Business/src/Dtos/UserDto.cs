@@ -3,6 +3,10 @@ using WebApi.Domain.src.Entities;
 
 namespace WebApi.Business.src.Dtos
 {
+    public class UserCredentialsDto{
+        public string   Email   { get; set;}
+        public string Password { get; set;}
+    }
     public class UserReadDto
     {
         public string Email { get; set; }

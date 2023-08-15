@@ -13,6 +13,11 @@ namespace WebApi.Business.src.Implementations
         {
             _productRepository = productRepo;
         }
+
+        public async Task<ProductUpdateDto> FindProductForUpdate(Guid id)
+        {
+          return _mapper.Map<ProductUpdateDto>(await _productRepository.GetOneById(id)); 
+        }
     }
 
 

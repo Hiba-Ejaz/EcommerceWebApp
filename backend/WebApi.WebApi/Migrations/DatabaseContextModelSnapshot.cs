@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
+using WebApi.Domain.src.Entities;
 using WebApi.WebApi.Database;
 
 #nullable disable
@@ -20,207 +21,262 @@ namespace WebApi.WebApi.Migrations
                 .HasAnnotation("ProductVersion", "7.0.9")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
+            NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "role", new[] { "customer", "admin" });
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
             modelBuilder.Entity("WebApi.Domain.src.Entities.Category", b =>
                 {
-                    b.Property<Guid>("id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("created_at");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("name");
 
                     b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("updated_at");
 
-                    b.HasKey("id");
+                    b.HasKey("Id")
+                        .HasName("pk_categories");
 
-                    b.ToTable("Categories");
+                    b.ToTable("categories", (string)null);
                 });
 
             modelBuilder.Entity("WebApi.Domain.src.Entities.Image", b =>
                 {
-                    b.Property<Guid>("id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("created_at");
 
-                    b.Property<string>("Link")
+                    b.Property<byte[]>("ImageData")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("bytea")
+                        .HasColumnName("image_data");
 
-                    b.Property<int>("ProductId")
-                        .HasColumnType("integer");
-
-                    b.Property<Guid?>("Productid")
-                        .HasColumnType("uuid");
+                    b.Property<string>("ProductId")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("product_id");
 
                     b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("updated_at");
 
-                    b.HasKey("id");
+                    b.HasKey("Id")
+                        .HasName("pk_images");
 
-                    b.HasIndex("Productid");
-
-                    b.ToTable("Images");
+                    b.ToTable("images", (string)null);
                 });
 
             modelBuilder.Entity("WebApi.Domain.src.Entities.Order", b =>
                 {
-                    b.Property<Guid>("id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<DateTime>("OrderDate")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("created_at");
 
                     b.Property<int>("Status")
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("status");
+
+                    b.Property<decimal>("TotalAmount")
+                        .HasColumnType("numeric")
+                        .HasColumnName("total_amount");
 
                     b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("updated_at");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("integer");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("user_id");
 
-                    b.HasKey("id");
+                    b.HasKey("Id")
+                        .HasName("pk_orders");
 
-                    b.ToTable("Orders");
+                    b.HasIndex("UserId")
+                        .HasDatabaseName("ix_orders_user_id");
+
+                    b.ToTable("orders", (string)null);
                 });
 
             modelBuilder.Entity("WebApi.Domain.src.Entities.OrderItem", b =>
                 {
-                    b.Property<Guid>("id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                    b.Property<Guid>("OrderId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("order_id");
+
+                    b.Property<Guid>("ProductId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("product_id");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<int>("OrderId")
-                        .HasColumnType("integer");
-
-                    b.Property<Guid?>("Orderid")
-                        .HasColumnType("uuid");
-
-                    b.Property<int>("ProductId")
-                        .HasColumnType("integer");
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("created_at");
 
                     b.Property<int>("Quantity")
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("quantity");
 
                     b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("updated_at");
 
-                    b.HasKey("id");
+                    b.HasKey("OrderId", "ProductId")
+                        .HasName("pk_order_items");
 
-                    b.HasIndex("Orderid");
+                    b.HasIndex("ProductId")
+                        .HasDatabaseName("ix_order_items_product_id");
 
-                    b.ToTable("OrderItems");
+                    b.ToTable("order_items", (string)null);
                 });
 
             modelBuilder.Entity("WebApi.Domain.src.Entities.Product", b =>
                 {
-                    b.Property<Guid>("id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<int>("CategoryId")
-                        .HasColumnType("integer");
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("created_at");
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("description");
 
                     b.Property<decimal>("Price")
-                        .HasColumnType("numeric");
+                        .HasColumnType("numeric")
+                        .HasColumnName("price");
 
                     b.Property<int>("Quantity")
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("quantity");
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("title");
 
                     b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("updated_at");
 
-                    b.HasKey("id");
+                    b.HasKey("Id")
+                        .HasName("pk_products");
 
-                    b.ToTable("Products");
+                    b.ToTable("products", (string)null);
                 });
 
             modelBuilder.Entity("WebApi.Domain.src.Entities.User", b =>
                 {
-                    b.Property<Guid>("id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
 
                     b.Property<string>("Avatar")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("avatar");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("created_at");
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("email");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("name");
 
                     b.Property<string>("Password")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("password");
 
-                    b.Property<int>("Role")
-                        .HasColumnType("integer");
+                    b.Property<Role>("Role")
+                        .HasColumnType("role")
+                        .HasColumnName("role");
+
+                    b.Property<byte[]>("Salt")
+                        .IsRequired()
+                        .HasColumnType("bytea")
+                        .HasColumnName("salt");
 
                     b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("updated_at");
 
-                    b.HasKey("id");
+                    b.HasKey("Id")
+                        .HasName("pk_users");
 
-                    b.ToTable("Users");
+                    b.HasIndex("Email")
+                        .IsUnique()
+                        .HasDatabaseName("ix_users_email");
+
+                    b.ToTable("users", (string)null);
                 });
 
-            modelBuilder.Entity("WebApi.Domain.src.Entities.Image", b =>
+            modelBuilder.Entity("WebApi.Domain.src.Entities.Order", b =>
                 {
-                    b.HasOne("WebApi.Domain.src.Entities.Product", null)
-                        .WithMany("Images")
-                        .HasForeignKey("Productid");
+                    b.HasOne("WebApi.Domain.src.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_orders_users_user_id");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("WebApi.Domain.src.Entities.OrderItem", b =>
                 {
-                    b.HasOne("WebApi.Domain.src.Entities.Order", null)
+                    b.HasOne("WebApi.Domain.src.Entities.Order", "Order")
                         .WithMany("OrderItems")
-                        .HasForeignKey("Orderid");
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_order_items_orders_order_id");
+
+                    b.HasOne("WebApi.Domain.src.Entities.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_order_items_products_product_id");
+
+                    b.Navigation("Order");
+
+                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("WebApi.Domain.src.Entities.Order", b =>
                 {
                     b.Navigation("OrderItems");
-                });
-
-            modelBuilder.Entity("WebApi.Domain.src.Entities.Product", b =>
-                {
-                    b.Navigation("Images");
                 });
 #pragma warning restore 612, 618
         }

@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace WebApi.Controller.src.Controllers
 {
-    [Authorize] 
+    //[Authorize] 
     public class ProductController:CrudController<Product, ProductCreateDto,ProductReadDto,ProductUpdateDto>
     {
         private readonly IProductService _productService;
@@ -22,11 +22,21 @@ namespace WebApi.Controller.src.Controllers
         }
 
         [AllowAnonymous]
-          public override async Task<ActionResult<IEnumerable<ProductReadDto>>> GetOneById([FromRoute] string id)
+          public override async Task<ActionResult<IEnumerable<ProductReadDto>>> GetOneById([FromRoute] Guid id)
         {
 
                         return Ok(await _productService.GetOneById(id));
         }
+          [HttpPost]
+         // [Authorize(Roles ="admin")]
+         public override async Task<ActionResult<ProductReadDto>> CreateOne([FromBody] ProductCreateDto created){
+            var createdObject=await _productService.CreateOne(created);
+            return CreatedAtAction(nameof(CreateOne),createdObject);
+         }
+         [HttpGet("{id:Guid}")]
+         public async Task<ProductUpdateDto?> FindUserByIdForUpdate([FromRoute] Guid id){
+           return await _productService.FindProductForUpdate(id);
+         }
     }
 
 

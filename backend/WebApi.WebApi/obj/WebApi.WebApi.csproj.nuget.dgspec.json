@@ -1,7 +1,7 @@
 {
   "format": 1,
   "restore": {
-    "c:\\Users\\35841\\OneDrive\\Desktop\\Assignments\\FullStackProject\\fs15_Fullstack\\backend\\WebApi.WebApi\\WebApi.WebApi.csproj": {}
+    "C:\\Users\\35841\\OneDrive\\Desktop\\Assignments\\FullStackProject\\fs15_Fullstack\\backend\\WebApi.WebApi\\WebApi.WebApi.csproj": {}
   },
   "projects": {
     "C:\\Users\\35841\\OneDrive\\Desktop\\Assignments\\FullStackProject\\fs15_Fullstack\\backend\\WebApi.Business\\WebApi.Business.csproj": {
@@ -26,8 +26,8 @@
           "net7.0": {
             "targetAlias": "net7.0",
             "projectReferences": {
-              "c:\\Users\\35841\\OneDrive\\Desktop\\Assignments\\FullStackProject\\fs15_Fullstack\\backend\\WebApi.Domain\\WebApi.Domain.csproj": {
-                "projectPath": "c:\\Users\\35841\\OneDrive\\Desktop\\Assignments\\FullStackProject\\fs15_Fullstack\\backend\\WebApi.Domain\\WebApi.Domain.csproj"
+              "C:\\Users\\35841\\OneDrive\\Desktop\\Assignments\\FullStackProject\\fs15_Fullstack\\backend\\WebApi.Domain\\WebApi.Domain.csproj": {
+                "projectPath": "C:\\Users\\35841\\OneDrive\\Desktop\\Assignments\\FullStackProject\\fs15_Fullstack\\backend\\WebApi.Domain\\WebApi.Domain.csproj"
               }
             }
           }
@@ -45,6 +45,10 @@
             "AutoMapper": {
               "target": "Package",
               "version": "[12.0.1, )"
+            },
+            "System.IdentityModel.Tokens.Jwt": {
+              "target": "Package",
+              "version": "[6.32.1, )"
             }
           },
           "imports": [
@@ -67,14 +71,14 @@
         }
       }
     },
-    "c:\\Users\\35841\\OneDrive\\Desktop\\Assignments\\FullStackProject\\fs15_Fullstack\\backend\\WebApi.Controller\\WebApi.Controller.csproj": {
+    "C:\\Users\\35841\\OneDrive\\Desktop\\Assignments\\FullStackProject\\fs15_Fullstack\\backend\\WebApi.Controller\\WebApi.Controller.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "c:\\Users\\35841\\OneDrive\\Desktop\\Assignments\\FullStackProject\\fs15_Fullstack\\backend\\WebApi.Controller\\WebApi.Controller.csproj",
+        "projectUniqueName": "C:\\Users\\35841\\OneDrive\\Desktop\\Assignments\\FullStackProject\\fs15_Fullstack\\backend\\WebApi.Controller\\WebApi.Controller.csproj",
         "projectName": "WebApi.Controller",
-        "projectPath": "c:\\Users\\35841\\OneDrive\\Desktop\\Assignments\\FullStackProject\\fs15_Fullstack\\backend\\WebApi.Controller\\WebApi.Controller.csproj",
+        "projectPath": "C:\\Users\\35841\\OneDrive\\Desktop\\Assignments\\FullStackProject\\fs15_Fullstack\\backend\\WebApi.Controller\\WebApi.Controller.csproj",
         "packagesPath": "C:\\Users\\35841\\.nuget\\packages\\",
-        "outputPath": "c:\\Users\\35841\\OneDrive\\Desktop\\Assignments\\FullStackProject\\fs15_Fullstack\\backend\\WebApi.Controller\\obj\\",
+        "outputPath": "C:\\Users\\35841\\OneDrive\\Desktop\\Assignments\\FullStackProject\\fs15_Fullstack\\backend\\WebApi.Controller\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\35841\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -105,6 +109,10 @@
         "net7.0": {
           "targetAlias": "net7.0",
           "dependencies": {
+            "Microsoft.AspNetCore.Hosting": {
+              "target": "Package",
+              "version": "[2.2.7, )"
+            },
             "Microsoft.AspNetCore.Mvc": {
               "target": "Package",
               "version": "[2.2.0, )"
@@ -130,14 +138,14 @@
         }
       }
     },
-    "c:\\Users\\35841\\OneDrive\\Desktop\\Assignments\\FullStackProject\\fs15_Fullstack\\backend\\WebApi.Domain\\WebApi.Domain.csproj": {
+    "C:\\Users\\35841\\OneDrive\\Desktop\\Assignments\\FullStackProject\\fs15_Fullstack\\backend\\WebApi.Domain\\WebApi.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "c:\\Users\\35841\\OneDrive\\Desktop\\Assignments\\FullStackProject\\fs15_Fullstack\\backend\\WebApi.Domain\\WebApi.Domain.csproj",
+        "projectUniqueName": "C:\\Users\\35841\\OneDrive\\Desktop\\Assignments\\FullStackProject\\fs15_Fullstack\\backend\\WebApi.Domain\\WebApi.Domain.csproj",
         "projectName": "WebApi.Domain",
-        "projectPath": "c:\\Users\\35841\\OneDrive\\Desktop\\Assignments\\FullStackProject\\fs15_Fullstack\\backend\\WebApi.Domain\\WebApi.Domain.csproj",
+        "projectPath": "C:\\Users\\35841\\OneDrive\\Desktop\\Assignments\\FullStackProject\\fs15_Fullstack\\backend\\WebApi.Domain\\WebApi.Domain.csproj",
         "packagesPath": "C:\\Users\\35841\\.nuget\\packages\\",
-        "outputPath": "c:\\Users\\35841\\OneDrive\\Desktop\\Assignments\\FullStackProject\\fs15_Fullstack\\backend\\WebApi.Domain\\obj\\",
+        "outputPath": "C:\\Users\\35841\\OneDrive\\Desktop\\Assignments\\FullStackProject\\fs15_Fullstack\\backend\\WebApi.Domain\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\35841\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -183,14 +191,14 @@
         }
       }
     },
-    "c:\\Users\\35841\\OneDrive\\Desktop\\Assignments\\FullStackProject\\fs15_Fullstack\\backend\\WebApi.WebApi\\WebApi.WebApi.csproj": {
+    "C:\\Users\\35841\\OneDrive\\Desktop\\Assignments\\FullStackProject\\fs15_Fullstack\\backend\\WebApi.WebApi\\WebApi.WebApi.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "c:\\Users\\35841\\OneDrive\\Desktop\\Assignments\\FullStackProject\\fs15_Fullstack\\backend\\WebApi.WebApi\\WebApi.WebApi.csproj",
+        "projectUniqueName": "C:\\Users\\35841\\OneDrive\\Desktop\\Assignments\\FullStackProject\\fs15_Fullstack\\backend\\WebApi.WebApi\\WebApi.WebApi.csproj",
         "projectName": "WebApi.WebApi",
-        "projectPath": "c:\\Users\\35841\\OneDrive\\Desktop\\Assignments\\FullStackProject\\fs15_Fullstack\\backend\\WebApi.WebApi\\WebApi.WebApi.csproj",
+        "projectPath": "C:\\Users\\35841\\OneDrive\\Desktop\\Assignments\\FullStackProject\\fs15_Fullstack\\backend\\WebApi.WebApi\\WebApi.WebApi.csproj",
         "packagesPath": "C:\\Users\\35841\\.nuget\\packages\\",
-        "outputPath": "c:\\Users\\35841\\OneDrive\\Desktop\\Assignments\\FullStackProject\\fs15_Fullstack\\backend\\WebApi.WebApi\\obj\\",
+        "outputPath": "C:\\Users\\35841\\OneDrive\\Desktop\\Assignments\\FullStackProject\\fs15_Fullstack\\backend\\WebApi.WebApi\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\35841\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -205,8 +213,8 @@
           "net7.0": {
             "targetAlias": "net7.0",
             "projectReferences": {
-              "c:\\Users\\35841\\OneDrive\\Desktop\\Assignments\\FullStackProject\\fs15_Fullstack\\backend\\WebApi.Controller\\WebApi.Controller.csproj": {
-                "projectPath": "c:\\Users\\35841\\OneDrive\\Desktop\\Assignments\\FullStackProject\\fs15_Fullstack\\backend\\WebApi.Controller\\WebApi.Controller.csproj"
+              "C:\\Users\\35841\\OneDrive\\Desktop\\Assignments\\FullStackProject\\fs15_Fullstack\\backend\\WebApi.Controller\\WebApi.Controller.csproj": {
+                "projectPath": "C:\\Users\\35841\\OneDrive\\Desktop\\Assignments\\FullStackProject\\fs15_Fullstack\\backend\\WebApi.Controller\\WebApi.Controller.csproj"
               }
             }
           }
@@ -221,6 +229,26 @@
         "net7.0": {
           "targetAlias": "net7.0",
           "dependencies": {
+            "AutoMapper.Extensions.Microsoft.DependencyInjection": {
+              "target": "Package",
+              "version": "[12.0.1, )"
+            },
+            "EFCore.NamingConventions": {
+              "target": "Package",
+              "version": "[7.0.2, )"
+            },
+            "Microsoft.AspNetCore.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[7.0.10, )"
+            },
+            "Microsoft.AspNetCore.Cors": {
+              "target": "Package",
+              "version": "[2.2.0, )"
+            },
+            "Microsoft.AspNetCore.Hosting": {
+              "target": "Package",
+              "version": "[2.2.7, )"
+            },
             "Microsoft.AspNetCore.OpenApi": {
               "target": "Package",
               "version": "[7.0.0, )"
@@ -241,9 +269,17 @@
               "target": "Package",
               "version": "[7.0.9, )"
             },
+            "Microsoft.Extensions.DependencyInjection": {
+              "target": "Package",
+              "version": "[7.0.0, )"
+            },
             "Npgsql.EntityFrameworkCore.PostgreSQL": {
               "target": "Package",
               "version": "[7.0.4, )"
+            },
+            "Serilog.AspNetCore": {
+              "target": "Package",
+              "version": "[7.0.0, )"
             },
             "Swashbuckle.AspNetCore": {
               "target": "Package",

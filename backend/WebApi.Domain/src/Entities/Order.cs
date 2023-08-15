@@ -13,7 +13,7 @@ namespace WebApi.Domain.src.Entities
     {
         
         public User User { get; set; }
-        public int UserId { get; set; }
+        public Guid UserId { get; set; }
         public OrderStatus Status { get; set; } 
          public Decimal TotalAmount { get; set; }
         public List<OrderItem> OrderItems { get; set; }

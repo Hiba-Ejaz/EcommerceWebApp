@@ -6,9 +6,9 @@ namespace WebApi.Domain.src.Abstractions
     public interface IBaseRepo<T>
     {
         Task<T> CreateOne(T entity);
-        Task<T> GetOneById(string id);
+        Task<T?> GetOneById(Guid id);
         Task<bool> DeleteOneById(T entity);
-        Task<T> UpdateOne(T entity,T updated);
+        Task<T> UpdateOne(T updated);
         Task<IEnumerable<T>> GetAll(SearchQueryOptions options);
     }
 }
