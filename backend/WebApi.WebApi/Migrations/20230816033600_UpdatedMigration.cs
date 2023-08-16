@@ -7,7 +7,7 @@ using WebApi.Domain.src.Entities;
 namespace WebApi.WebApi.Migrations
 {
     /// <inheritdoc />
-    public partial class Create : Migration
+    public partial class UpdatedMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -30,6 +30,38 @@ namespace WebApi.WebApi.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "images",
+                columns: table => new
+                {
+                    id = table.Column<Guid>(type: "uuid", nullable: false),
+                    image_data = table.Column<byte[]>(type: "bytea", nullable: false),
+                    product_id = table.Column<string>(type: "text", nullable: false),
+                    created_at = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    updated_at = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("pk_images", x => x.id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "products",
+                columns: table => new
+                {
+                    id = table.Column<Guid>(type: "uuid", nullable: false),
+                    title = table.Column<string>(type: "text", nullable: false),
+                    price = table.Column<decimal>(type: "numeric", nullable: false),
+                    description = table.Column<string>(type: "text", nullable: false),
+                    quantity = table.Column<int>(type: "integer", nullable: false),
+                    created_at = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    updated_at = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("pk_products", x => x.id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "users",
                 columns: table => new
                 {
@@ -46,31 +78,6 @@ namespace WebApi.WebApi.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("pk_users", x => x.id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "products",
-                columns: table => new
-                {
-                    id = table.Column<Guid>(type: "uuid", nullable: false),
-                    title = table.Column<string>(type: "text", nullable: false),
-                    price = table.Column<decimal>(type: "numeric", nullable: false),
-                    description = table.Column<string>(type: "text", nullable: false),
-                    category_id = table.Column<int>(type: "integer", nullable: false),
-                    quantity = table.Column<int>(type: "integer", nullable: false),
-                    category_id1 = table.Column<Guid>(type: "uuid", nullable: false),
-                    created_at = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
-                    updated_at = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("pk_products", x => x.id);
-                    table.ForeignKey(
-                        name: "fk_products_categories_category_id1",
-                        column: x => x.category_id1,
-                        principalTable: "categories",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -93,27 +100,6 @@ namespace WebApi.WebApi.Migrations
                         principalTable: "users",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "images",
-                columns: table => new
-                {
-                    id = table.Column<Guid>(type: "uuid", nullable: false),
-                    link = table.Column<string>(type: "text", nullable: false),
-                    product_id = table.Column<int>(type: "integer", nullable: false),
-                    product_id1 = table.Column<Guid>(type: "uuid", nullable: true),
-                    created_at = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
-                    updated_at = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("pk_images", x => x.id);
-                    table.ForeignKey(
-                        name: "fk_images_products_product_id1",
-                        column: x => x.product_id1,
-                        principalTable: "products",
-                        principalColumn: "id");
                 });
 
             migrationBuilder.CreateTable(
@@ -144,11 +130,6 @@ namespace WebApi.WebApi.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "ix_images_product_id1",
-                table: "images",
-                column: "product_id1");
-
-            migrationBuilder.CreateIndex(
                 name: "ix_order_items_product_id",
                 table: "order_items",
                 column: "product_id");
@@ -157,11 +138,6 @@ namespace WebApi.WebApi.Migrations
                 name: "ix_orders_user_id",
                 table: "orders",
                 column: "user_id");
-
-            migrationBuilder.CreateIndex(
-                name: "ix_products_category_id1",
-                table: "products",
-                column: "category_id1");
 
             migrationBuilder.CreateIndex(
                 name: "ix_users_email",
@@ -173,6 +149,9 @@ namespace WebApi.WebApi.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "categories");
+
             migrationBuilder.DropTable(
                 name: "images");
 
@@ -187,9 +166,6 @@ namespace WebApi.WebApi.Migrations
 
             migrationBuilder.DropTable(
                 name: "users");
-
-            migrationBuilder.DropTable(
-                name: "categories");
         }
     }
 }

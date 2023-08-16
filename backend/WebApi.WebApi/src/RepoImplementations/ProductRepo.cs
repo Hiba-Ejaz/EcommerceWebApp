@@ -21,5 +21,21 @@ namespace WebApi.WebApi.src.RepoImplementations
         {
            return await _products.FindAsync(id);
         }
+
+        public async Task<Product> UpdateOne(Guid id,Product updated)
+        {
+             var existingProduct = await _products.FindAsync(id);
+
+            if (existingProduct == null)
+            {
+                throw new ArgumentException("Product not found");
+            }
+            existingProduct.Title = updated.Title ?? existingProduct.Title;
+            existingProduct.Price = updated.Price ;
+            existingProduct.Description = updated.Description ?? existingProduct.Description;
+            existingProduct.Quantity = updated.Quantity;
+            _dbcontext.SaveChanges();
+            return updated;
+        }
     }
 }

@@ -27,10 +27,7 @@ namespace WebApi.Controller.src.Controllers
 
                         return Ok(await _baseservice.GetOneById(id));
         }
-        [HttpPatch("{id:Guid}")]
-         public async Task<ActionResult<TReadDto>> UpdateOneById([FromRoute] Guid  id, [FromBody] TUpdateDto updated){
-            return Ok(await _baseservice.UpdateOneById(id, updated));
-         }
+       
         [HttpDelete("{id:Guid}")]
          public async Task<ActionResult<TReadDto>> DeleteOneById([FromRoute] Guid id){
             return Ok(await _baseservice.DeleteOneById(id));
@@ -41,8 +38,5 @@ namespace WebApi.Controller.src.Controllers
             var createdObject=await _baseservice.CreateOne(created);
             return CreatedAtAction(nameof(CreateOne),createdObject);
          }
-
-
-
     }
 }

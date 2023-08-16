@@ -5,7 +5,7 @@
 namespace WebApi.WebApi.Migrations
 {
     /// <inheritdoc />
-    public partial class RemoveCategoryFromProduc : Migration
+    public partial class UpdatedMigrationww : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

@@ -33,9 +33,14 @@ namespace WebApi.Controller.src.Controllers
             var createdObject=await _productService.CreateOne(created);
             return CreatedAtAction(nameof(CreateOne),createdObject);
          }
-         [HttpGet("{id:Guid}")]
-         public async Task<ProductUpdateDto?> FindUserByIdForUpdate([FromRoute] Guid id){
-           return await _productService.FindProductForUpdate(id);
+         [HttpGet("{id:Guid}/update")]
+         public async Task<ActionResult<ProductUpdateDto?>> FindUserByIdForUpdate([FromRoute] Guid id){
+           return Ok(await _productService.FindProductForUpdate(id));
+         }
+
+          [HttpPatch("{id:Guid}")]
+         public async Task<ActionResult<ProductReadDto>> UpdateOneById([FromRoute] Guid  id, [FromBody] ProductUpdateDto updated){
+            return Ok(await _productService.UpdateOneById(id, updated));
          }
     }
 

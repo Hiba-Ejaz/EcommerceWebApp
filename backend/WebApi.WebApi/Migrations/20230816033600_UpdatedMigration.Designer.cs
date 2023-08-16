@@ -13,8 +13,8 @@ using WebApi.WebApi.Database;
 namespace WebApi.WebApi.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20230814210554_ImageEdited3")]
-    partial class ImageEdited3
+    [Migration("20230816033600_UpdatedMigration")]
+    partial class UpdatedMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -74,19 +74,12 @@ namespace WebApi.WebApi.Migrations
                         .HasColumnType("text")
                         .HasColumnName("product_id");
 
-                    b.Property<Guid?>("ProductId1")
-                        .HasColumnType("uuid")
-                        .HasColumnName("product_id1");
-
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("timestamp without time zone")
                         .HasColumnName("updated_at");
 
                     b.HasKey("Id")
                         .HasName("pk_images");
-
-                    b.HasIndex("ProductId1")
-                        .HasDatabaseName("ix_images_product_id1");
 
                     b.ToTable("images", (string)null);
                 });
@@ -165,14 +158,6 @@ namespace WebApi.WebApi.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("id");
 
-                    b.Property<int>("CategoryId")
-                        .HasColumnType("integer")
-                        .HasColumnName("category_id");
-
-                    b.Property<Guid>("CategoryId1")
-                        .HasColumnType("uuid")
-                        .HasColumnName("category_id1");
-
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp without time zone")
                         .HasColumnName("created_at");
@@ -201,9 +186,6 @@ namespace WebApi.WebApi.Migrations
 
                     b.HasKey("Id")
                         .HasName("pk_products");
-
-                    b.HasIndex("CategoryId1")
-                        .HasDatabaseName("ix_products_category_id1");
 
                     b.ToTable("products", (string)null);
                 });
@@ -262,14 +244,6 @@ namespace WebApi.WebApi.Migrations
                     b.ToTable("users", (string)null);
                 });
 
-            modelBuilder.Entity("WebApi.Domain.src.Entities.Image", b =>
-                {
-                    b.HasOne("WebApi.Domain.src.Entities.Product", null)
-                        .WithMany("Images")
-                        .HasForeignKey("ProductId1")
-                        .HasConstraintName("fk_images_products_product_id1");
-                });
-
             modelBuilder.Entity("WebApi.Domain.src.Entities.Order", b =>
                 {
                     b.HasOne("WebApi.Domain.src.Entities.User", "User")
@@ -303,31 +277,9 @@ namespace WebApi.WebApi.Migrations
                     b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("WebApi.Domain.src.Entities.Product", b =>
-                {
-                    b.HasOne("WebApi.Domain.src.Entities.Category", "Category")
-                        .WithMany("Products")
-                        .HasForeignKey("CategoryId1")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("fk_products_categories_category_id1");
-
-                    b.Navigation("Category");
-                });
-
-            modelBuilder.Entity("WebApi.Domain.src.Entities.Category", b =>
-                {
-                    b.Navigation("Products");
-                });
-
             modelBuilder.Entity("WebApi.Domain.src.Entities.Order", b =>
                 {
                     b.Navigation("OrderItems");
-                });
-
-            modelBuilder.Entity("WebApi.Domain.src.Entities.Product", b =>
-                {
-                    b.Navigation("Images");
                 });
 #pragma warning restore 612, 618
         }

@@ -31,6 +31,10 @@ namespace WebApi.WebApi.Database
 
                protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
+
+
+            
             modelBuilder.Entity<OrderItem>().HasKey("OrderId","ProductId");
             modelBuilder.Entity<User>().HasIndex(u=>u.Email).IsUnique();
              modelBuilder.HasPostgresEnum<Role>(); 

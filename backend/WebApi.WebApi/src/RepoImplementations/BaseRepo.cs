@@ -1,6 +1,7 @@
 
 
 using System.Reflection;
+using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using WebApi.Domain.src.Abstractions;
 using WebApi.Domain.src.Entities;
@@ -16,58 +17,62 @@ namespace WebApi.WebApi.src.RepoImplementations
 
         public BaseRepo(DatabaseContext dbContext)
         {
-          _databaseContext=dbContext;
-          _dbSet=dbContext.Set<T>();  
+            _databaseContext = dbContext;
+            _dbSet = dbContext.Set<T>();
+         
         }
         public virtual async Task<T> CreateOne(T entity)
         {
-           await _dbSet.AddAsync(entity);
-           await _databaseContext.SaveChangesAsync();
-           return entity;
+            await _dbSet.AddAsync(entity);
+            await _databaseContext.SaveChangesAsync();
+            return entity;
         }
 
         public async Task<bool> DeleteOneById(T entity)
         {
             _dbSet.Remove(entity);
-             await _databaseContext.SaveChangesAsync();
-             return true;   
+            await _databaseContext.SaveChangesAsync();
+            return true;
         }
 
         public virtual async Task<IEnumerable<T>> GetAll(SearchQueryOptions options)
         {
-        IQueryable<T> query = _dbSet;
-        Type entityType = typeof(T);
-       string ?SearchQuery = options.SearchQuery;
-        bool SortAscending = options.SortAscending;
-        string SortBy =options.SortBy;
-       
-            if(entityType is Product){  
-                 if(!string.IsNullOrWhiteSpace(options.SearchQuery)){
-                var collection=_dbSet as DbSet<User>;
-                PropertyInfo? titleProperty = entityType.GetProperty("Title",
-                 BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance);
-                 if(titleProperty != null){
-               query = query.Where(entity => (entityType == typeof(User)) &&
-            string.Equals(titleProperty.GetValue(collection).ToString(), options.SearchQuery, StringComparison.OrdinalIgnoreCase));
-            }
-            }
-        
-         PropertyInfo? priceProperty = entityType.GetProperty("Price",
-            BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance);
+            IQueryable<T> query = _dbSet;
+            Type entityType = typeof(T);
+            string? SearchQuery = options.SearchQuery;
+            bool SortAscending = options.SortAscending;
+            string SortBy = options.SortBy;
 
-              if (priceProperty != null)
-             {
-            // Sort the query based on the Price property and sort direction
-            if (options.SortAscending)
+            if (entityType is Product)
             {
-                query = query.OrderBy(entity => priceProperty.GetValue(entity));
-            }
-            else
-            {
-                query = query.OrderByDescending(entity => priceProperty.GetValue(entity));
-            }
-        }
-        return await query.ToListAsync();
+                if (!string.IsNullOrWhiteSpace(options.SearchQuery))
+                {
+                    var collection = _dbSet as DbSet<User>;
+                    PropertyInfo? titleProperty = entityType.GetProperty("Title",
+                     BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance);
+                    if (titleProperty != null)
+                    {
+                        query = query.Where(entity => (entityType == typeof(User)) &&
+                     string.Equals(titleProperty.GetValue(collection).ToString(), options.SearchQuery, StringComparison.OrdinalIgnoreCase));
+                    }
+                }
+
+                PropertyInfo? priceProperty = entityType.GetProperty("Price",
+                   BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance);
+
+                if (priceProperty != null)
+                {
+                    // Sort the query based on the Price property and sort direction
+                    if (options.SortAscending)
+                    {
+                        query = query.OrderBy(entity => priceProperty.GetValue(entity));
+                    }
+                    else
+                    {
+                        query = query.OrderByDescending(entity => priceProperty.GetValue(entity));
+                    }
+                }
+                return await query.ToListAsync();
             }
             // if(entityType is Product){
             //     var collection=_dbSet as DbSet<Product>;
@@ -87,27 +92,18 @@ namespace WebApi.WebApi.src.RepoImplementations
             //  if(entityType is Category){
             //     var collection=_dbSet as DbSet<Category>;
             // }
-        
-        
-        return await _dbSet.ToArrayAsync();
+
+
+            return await _dbSet.ToArrayAsync();
         }
 
         public async Task<T?> GetOneById(Guid id)
         {
-        //string guidString = "2992038f-96d0-4619-bf91-af984438e157";
-
-// Convert the string to a Guid object
-//Guid pid = Guid.Parse(guidString);
-        return await _dbSet.FindAsync(id);
+            return await _dbSet.FindAsync(id);
         }
- 
-        public async Task<T> UpdateOne( T updated)
-        {
-         _dbSet.Update(updated);
-        await _databaseContext.SaveChangesAsync();
-        return updated;
-        }
-    }
+
+    }}
 
 
-}
+        
+

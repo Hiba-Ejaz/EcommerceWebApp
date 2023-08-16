@@ -7,7 +7,7 @@ namespace WebApi.Business.src.Abstractions
     {
         Task<TReadDto> GetOneById(Guid id);
         Task<bool> DeleteOneById(Guid id);
-        Task<TReadDto> UpdateOneById(Guid id,TUpdateDto entityToUpdate); //cannot update password
+        // Task<TReadDto> UpdateOneById(Guid id,TUpdateDto entityToUpdate); //cannot update password
         Task<IEnumerable<TReadDto>> GetAll(SearchQueryOptions options);
         Task<TReadDto> CreateOne(TCreateDto dto);
     }

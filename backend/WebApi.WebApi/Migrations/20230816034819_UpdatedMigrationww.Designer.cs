@@ -13,8 +13,8 @@ using WebApi.WebApi.Database;
 namespace WebApi.WebApi.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20230814231941_RemoveCategoryFromProduc")]
-    partial class RemoveCategoryFromProduc
+    [Migration("20230816034819_UpdatedMigrationww")]
+    partial class UpdatedMigrationww
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

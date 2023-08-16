@@ -16,17 +16,19 @@ namespace WebApi.Business.src.Implementations
          _userRepo=userRepo;  
         }
        
-        public async Task<UserReadDto> UpdatePassword(Guid id, string password)
+        public async Task<string> UpdatePassword(Guid id, string password)
         {
            var foundItem=await _userRepo.GetOneById(id);
            if(foundItem==null){
             throw new Exception("item not found");
+
            }
             PasswordService.HashPassword(password,out string hashedpassword,out Byte[] salt);
            foundItem.Password=hashedpassword;
            foundItem.Salt=salt;
-           var updatedEntity=await _userRepo.UpdatePassword(foundItem);
-           return _mapper.Map<UserReadDto>(updatedEntity);
+           return await _userRepo.UpdatePassword(foundItem);
+         //  var updatedEntity=await _userRepo.UpdatePassword(foundItem);
+           //return _mapper.Map<UserReadDto>(updatedEntity);
         }
            public async Task<UserReadDto> CreateAdmin(UserCreateDto dto)
         {

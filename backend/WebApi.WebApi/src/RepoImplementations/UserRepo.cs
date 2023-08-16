@@ -31,11 +31,12 @@ namespace WebApi.WebApi.src.RepoImplementations
             return await _users.FirstOrDefaultAsync(u => u.Email.Contains(email));
         }
 
-        public async Task<User> UpdatePassword(User user)
+        public async Task<string> UpdatePassword(User user)
         {
           _users.Update(user);
          await _dbcontext.SaveChangesAsync();
-         return user;
+         //return user;
+         return "password updated";
         }
          public override Task<User> CreateOne(User entity)
         {
