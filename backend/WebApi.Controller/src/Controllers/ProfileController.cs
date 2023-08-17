@@ -11,7 +11,7 @@ namespace WebApi.Controller.src.Controllers
 {
     [ApiController]
     [Route("api/v1/profile")]
-    [Authorize]// Requires authentication (token-based)
+    //[Authorize]// Requires authentication (token-based)
     public class ProfileController : ControllerBase
     {
         private readonly IUserService _userService;

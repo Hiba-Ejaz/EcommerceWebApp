@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace WebApi.Controller.src.Controllers
 {
-    [Authorize]
+   
     public class CategoryController:CrudController<Category, CategoryCreateDto,CategoryReadDto,CategoryUpdateDto>
     {
         private readonly ICategoryService _categoryService;
@@ -28,6 +28,7 @@ namespace WebApi.Controller.src.Controllers
 
                         return Ok(await _categoryService.GetOneById(id));
         }
+        
         
     }
 }

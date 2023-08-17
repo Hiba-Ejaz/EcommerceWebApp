@@ -33,8 +33,8 @@ namespace WebApi.Controller.src.Controllers
             return Ok(await _baseservice.DeleteOneById(id));
          }
          [HttpPost]
-         public virtual 
-         async Task<ActionResult<TReadDto>> CreateOne([FromBody] TCreateDto created){
+         
+       public virtual async Task<ActionResult<TReadDto>> CreateOne([FromBody] TCreateDto created){
             var createdObject=await _baseservice.CreateOne(created);
             return CreatedAtAction(nameof(CreateOne),createdObject);
          }

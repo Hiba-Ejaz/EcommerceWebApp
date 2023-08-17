@@ -9,7 +9,7 @@ namespace WebApi.Controller.src.Controllers
 {
     [ApiController]
     [Route("api/v1/[controller]")]
-   // [Authorize]
+   //[Authorize]
     public class AuthController: ControllerBase
     {
         private readonly IAuthService _authService;

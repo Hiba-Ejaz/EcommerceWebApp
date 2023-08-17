@@ -28,17 +28,19 @@ namespace WebApi.Controller.src.Controllers
                         return Ok(await _productService.GetOneById(id));
         }
           [HttpPost]
-         // [Authorize(Roles ="admin")]
+          [Authorize(Roles ="Admin")]
          public override async Task<ActionResult<ProductReadDto>> CreateOne([FromBody] ProductCreateDto created){
             var createdObject=await _productService.CreateOne(created);
             return CreatedAtAction(nameof(CreateOne),createdObject);
          }
          [HttpGet("{id:Guid}/update")]
+         
          public async Task<ActionResult<ProductUpdateDto?>> FindUserByIdForUpdate([FromRoute] Guid id){
            return Ok(await _productService.FindProductForUpdate(id));
          }
 
           [HttpPatch("{id:Guid}")]
+           [Authorize(Roles ="Admin")]
          public async Task<ActionResult<ProductReadDto>> UpdateOneById([FromRoute] Guid  id, [FromBody] ProductUpdateDto updated){
             return Ok(await _productService.UpdateOneById(id, updated));
          }
