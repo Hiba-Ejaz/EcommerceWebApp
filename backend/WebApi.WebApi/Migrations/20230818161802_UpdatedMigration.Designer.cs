@@ -13,7 +13,7 @@ using WebApi.WebApi.Database;
 namespace WebApi.WebApi.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20230816033600_UpdatedMigration")]
+    [Migration("20230818161802_UpdatedMigration")]
     partial class UpdatedMigration
     {
         /// <inheritdoc />

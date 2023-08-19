@@ -37,5 +37,19 @@ namespace WebApi.WebApi.src.RepoImplementations
             _dbcontext.SaveChanges();
             return updated;
         }
+        public async Task<string> FindOneById(Guid id)
+        {
+            try{
+            var milgaya= await _products.FindAsync(id);
+            if(milgaya == null){
+                return "try ma aya but null hai";
+            }
+            else
+return "product mila hai";
+            }
+            catch(Exception ex){
+                return "product repo ma aaya , try ma nahi gaya";
+            }
+        }
     }
 }

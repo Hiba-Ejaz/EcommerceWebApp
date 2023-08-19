@@ -11,6 +11,8 @@ using WebApi.WebApi.Database;
 using WebApi.WebApi.src.RepoImplementations;
 using Serilog;
 using Serilog.Events;
+using Microsoft.Extensions.Logging;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -30,6 +32,7 @@ builder.Services.AddScoped<IProductRepo, ProductRepo>();
 //builder.Services.AddScoped(typeof(IBaseRepo<Category>), typeof(BaseRepo<Category>));
 builder.Services.AddScoped<ICategoryRepo, CategoryRepo>();
 builder.Services.AddScoped<IOrderRepo, OrderRepo>();
+builder.Services.AddScoped<IOrderItemsRepo, OrderItemRepo>();
 builder.Services.AddScoped<IAuthRepo, AuthRepo>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IProductService, ProductService>();
@@ -154,6 +157,14 @@ var app = builder.Build();
             // }
    //}
 //}
+ void ConfigureLogging(IServiceCollection services)
+    {
+        services.AddLogging(builder =>
+        {
+            builder.AddConsole(); // Add Console logging provider
+            // You can add other logging providers here, such as Debug, EventLog, etc.
+        });
+    }
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
