@@ -16,6 +16,11 @@ namespace WebApi.WebApi.src.RepoImplementations
              _orderItem=dbContext.OrderItems;
             _dbcontext=dbContext;
         }
+        public async Task<OrderItem?> GetOrderItem(Guid orderId,Guid ProductId){
+        return await _orderItem.FirstOrDefaultAsync(item =>
+    item.Order.Id == orderId && item.Product.Id == ProductId);
+
+        }
         public async Task<string> UpdateOrderItem(OrderItem orderItem)
 {
     try
