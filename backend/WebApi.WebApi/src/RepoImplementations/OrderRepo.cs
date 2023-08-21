@@ -57,9 +57,6 @@ public async Task<string> UpdateOrder(Order order)
         return errorMessage;
     }
 }
-
-
-
         public async Task<Order?> GetProcessingOrderByUserId(Guid userId)
         {
             var order = await _orders
@@ -73,6 +70,39 @@ public async Task<string> UpdateOrder(Order order)
         public Task<bool> DeleteOneById(Order entity)
         {
             throw new NotImplementedException();
-        } 
         }
+
+//      public async Task<string> RemoveFromCart(Guid userIdGuid, Guid productId)
+// {
+    
+//     var order = await GetProcessingOrderByUserId(userIdGuid);
+//     if (order == null)
+//     {
+//         return "order not found";
+//     //    return false; // Order not found for the user
+//     }
+//     var orderId=order.Id;
+//    if (order.OrderItems != null && order.OrderItems.Count > 0)
+// {
+    
+//     var orderItemToRemove = order.OrderItems.FirstOrDefault(item =>
+//       item.Order.Id == orderId  &&
+//          item.Product.Id == productId);
+//     if (orderItemToRemove is not null)
+//     {
+//         return "product  found";
+//       //  return false; // Product not found in the user's cart
+//     }
+//      return "product not found";
+// }
+// return "order . orderitem null";
+//     // order.OrderItems.Remove(orderItemToRemove);
+//     // order.TotalAmount -= orderItemToRemove.Product.Price * orderItemToRemove.Quantity;
+//     // _dbcontext.OrderItems.Remove(orderItemToRemove);
+
+//     // await _dbcontext.SaveChangesAsync();
+//     // return "order item removed"; 
+// }
+
+    }
     }
