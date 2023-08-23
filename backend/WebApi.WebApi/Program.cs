@@ -27,12 +27,15 @@ Log.Logger = new LoggerConfiguration()
 builder.Logging.AddSerilog();
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
 builder.Services.AddScoped<IUserRepo, UserRepo>();
+builder.Services.AddScoped<IOrderRepo, OrderRepo>();
 builder.Services.AddScoped<IImageRepo, ImageRepo>();
 builder.Services.AddScoped<IProductRepo, ProductRepo>();
 //builder.Services.AddScoped(typeof(IBaseRepo<Category>), typeof(BaseRepo<Category>));
 builder.Services.AddScoped<ICategoryRepo, CategoryRepo>();
-builder.Services.AddScoped<IOrderRepo, OrderRepo>();
-builder.Services.AddScoped<IOrderItemsRepo, OrderItemRepo>();
+ builder.Services.AddScoped<ICartRepo, CartRepo>();
+builder.Services.AddScoped<ICartItemsRepo, CartItemRepo>();
+// builder.Services.AddScoped<IOrderRepo, OrderRepo>();
+// builder.Services.AddScoped<IOrderItemsRepo, OrderItemRepo>();
 builder.Services.AddScoped<IAuthRepo, AuthRepo>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IProductService, ProductService>();

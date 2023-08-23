@@ -13,8 +13,8 @@ using WebApi.WebApi.Database;
 namespace WebApi.WebApi.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20230818161802_UpdatedMigration")]
-    partial class UpdatedMigration
+    [Migration("20230822194905_fullStackFinalMigrations")]
+    partial class fullStackFinalMigrations
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,8 +24,76 @@ namespace WebApi.WebApi.Migrations
                 .HasAnnotation("ProductVersion", "7.0.9")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
+            NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "order_status", new[] { "processing", "shipped", "delivered" });
             NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "role", new[] { "customer", "admin" });
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
+
+            modelBuilder.Entity("WebApi.Domain.src.Entities.Cart", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("created_at");
+
+                    b.Property<OrderStatus>("Status")
+                        .HasColumnType("order_status")
+                        .HasColumnName("status");
+
+                    b.Property<decimal>("TotalAmount")
+                        .HasColumnType("numeric")
+                        .HasColumnName("total_amount");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("updated_at");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("user_id");
+
+                    b.HasKey("Id")
+                        .HasName("pk_carts");
+
+                    b.HasIndex("UserId")
+                        .HasDatabaseName("ix_carts_user_id");
+
+                    b.ToTable("carts", (string)null);
+                });
+
+            modelBuilder.Entity("WebApi.Domain.src.Entities.CartItem", b =>
+                {
+                    b.Property<Guid>("CartId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("cart_id");
+
+                    b.Property<Guid>("ProductId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("product_id");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("created_at");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("integer")
+                        .HasColumnName("quantity");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("updated_at");
+
+                    b.HasKey("CartId", "ProductId")
+                        .HasName("pk_cart_items");
+
+                    b.HasIndex("ProductId")
+                        .HasDatabaseName("ix_cart_items_product_id");
+
+                    b.ToTable("cart_items", (string)null);
+                });
 
             modelBuilder.Entity("WebApi.Domain.src.Entities.Category", b =>
                 {
@@ -95,8 +163,8 @@ namespace WebApi.WebApi.Migrations
                         .HasColumnType("timestamp without time zone")
                         .HasColumnName("created_at");
 
-                    b.Property<int>("Status")
-                        .HasColumnType("integer")
+                    b.Property<OrderStatus>("Status")
+                        .HasColumnType("order_status")
                         .HasColumnName("status");
 
                     b.Property<decimal>("TotalAmount")
@@ -244,6 +312,39 @@ namespace WebApi.WebApi.Migrations
                     b.ToTable("users", (string)null);
                 });
 
+            modelBuilder.Entity("WebApi.Domain.src.Entities.Cart", b =>
+                {
+                    b.HasOne("WebApi.Domain.src.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_carts_users_user_id");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("WebApi.Domain.src.Entities.CartItem", b =>
+                {
+                    b.HasOne("WebApi.Domain.src.Entities.Cart", "Cart")
+                        .WithMany("CartItems")
+                        .HasForeignKey("CartId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_cart_items_carts_cart_id");
+
+                    b.HasOne("WebApi.Domain.src.Entities.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_cart_items_products_product_id");
+
+                    b.Navigation("Cart");
+
+                    b.Navigation("Product");
+                });
+
             modelBuilder.Entity("WebApi.Domain.src.Entities.Order", b =>
                 {
                     b.HasOne("WebApi.Domain.src.Entities.User", "User")
@@ -275,6 +376,11 @@ namespace WebApi.WebApi.Migrations
                     b.Navigation("Order");
 
                     b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("WebApi.Domain.src.Entities.Cart", b =>
+                {
+                    b.Navigation("CartItems");
                 });
 
             modelBuilder.Entity("WebApi.Domain.src.Entities.Order", b =>

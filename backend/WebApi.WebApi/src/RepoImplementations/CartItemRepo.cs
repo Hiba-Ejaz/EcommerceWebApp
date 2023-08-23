@@ -8,52 +8,67 @@ using WebApi.WebApi.Database;
 
 namespace WebApi.WebApi.src.RepoImplementations
 {
-    public class OrderItemRepo:BaseRepo<OrderItem>,IOrderItemsRepo
+    public class CartItemRepo:BaseRepo<CartItem>,ICartItemsRepo
     {
-        private readonly DbSet<OrderItem> _orderItem;
+        private readonly DbSet<CartItem> _cartItem;
         private readonly DatabaseContext _dbcontext;
 
  
 
 
-        public OrderItemRepo(DatabaseContext dbContext) : base(dbContext)
+        public CartItemRepo(DatabaseContext dbContext) : base(dbContext)
         {
-             _orderItem=dbContext.OrderItems;
+             _cartItem=dbContext.CartItems;
             _dbcontext=dbContext;
         }
 
-        public async Task<IEnumerable<OrderItem>> GetCartItems(Guid userId){
-       var orderItems = await _orderItem
-        .Where(oi => oi.Order.UserId == userId)
+        public async Task<IEnumerable<CartItem>> GetCartItems(Guid userId){
+       var cartItems = await _cartItem
+        .Where(oi => oi.Cart.UserId == userId)
         .Include(oi => oi.Product)
-        .Include(oi => oi.Order)
+        .Include(oi => oi.Cart)
         .ToListAsync();
-        return orderItems;
+        return cartItems;
         }
 
-        public async Task<OrderItem?> GetOrderItem(Guid orderId,Guid ProductId){
-        return await _orderItem.FirstOrDefaultAsync(item =>
-        item.Order.Id == orderId && item.Product.Id == ProductId);
+        public async Task<CartItem?> GetCartItem(Guid cartId,Guid ProductId){
+        return await _cartItem.FirstOrDefaultAsync(item =>
+        item.Cart.Id == cartId && item.Product.Id == ProductId);
         }
 
+        public async Task<string> GetProductFromCartItem(CartItem cartItem){
+           try{
+           return cartItem.Product.Title;
+        
+         }
+         catch (Exception ex)
+        {
+        string errorMessage = $"Error updating cart ya yeh: {ex.Message}";
+        if (ex.InnerException != null)
+        {
+            errorMessage += $" (Inner Exception: {ex.InnerException.Message})";
+        }
+       return errorMessage;
+        }
+        }
         ///
          public async Task<string> RemoveFromCart(Guid userIdGuid, Guid productId)
 {
-    var orderItemToRemove = await _orderItem
-        .Include(oi => oi.Order) 
+    var cartItemToRemove = await _cartItem
+        .Include(oi => oi.Cart) 
         .FirstOrDefaultAsync(oi =>
-            oi.Order.UserId == userIdGuid &&
+            oi.Cart.UserId == userIdGuid &&
             oi.Product.Id == productId);
-               if (orderItemToRemove is not null)
+               if (cartItemToRemove is not null)
     {
         var product = await _dbcontext.Products
             .FirstOrDefaultAsync(p => p.Id == productId);
-         var order=orderItemToRemove.Order;
-         order.OrderItems.Remove(orderItemToRemove);
-          if(order is not null && product is not null){
-         order.TotalAmount -= product.Price * orderItemToRemove.Quantity;
+         var cart=cartItemToRemove.Cart;
+         cart.CartItems.Remove(cartItemToRemove);
+          if(cart is not null && product is not null){
+         cart.TotalAmount -= product.Price * cartItemToRemove.Quantity;
           }
-        _orderItem.Remove(orderItemToRemove); // Remove the order item
+        _cartItem.Remove(cartItemToRemove); // Remove the order item
         await _dbcontext.SaveChangesAsync();
         return "product removed from cart";
     }
@@ -90,17 +105,17 @@ namespace WebApi.WebApi.src.RepoImplementations
 /// </summary>
 
         
-        public async Task<string> UpdateOrderItem(OrderItem orderItem)
+        public async Task<string> UpdateCartItem(CartItem cartItem)
         {
        try
          {
-        _orderItem.Update(orderItem);
+        _cartItem.Update(cartItem);
         await _dbcontext.SaveChangesAsync();
-        return " order item updated successfully";
+        return " cart item updated successfully";
          }
          catch (Exception ex)
         {
-        string errorMessage = $"Error updating order ya yeh: {ex.Message}";
+        string errorMessage = $"Error updating cart ya yeh: {ex.Message}";
         if (ex.InnerException != null)
         {
             errorMessage += $" (Inner Exception: {ex.InnerException.Message})";

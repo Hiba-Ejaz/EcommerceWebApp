@@ -99,6 +99,7 @@ namespace WebApi.WebApi.src.RepoImplementations
 
         public async Task<T?> GetOneById(Guid id)
         {
+             
             return await _dbSet.FindAsync(id);
         }
 
