@@ -28,7 +28,7 @@ namespace WebApi.Controller.src.Controllers
         }
 
         [HttpDelete("{id:Guid}")]
-        public async Task<ActionResult<TReadDto>> DeleteOneById([FromRoute] Guid id)
+        public virtual async Task<ActionResult<TReadDto>> DeleteOneById([FromRoute] Guid id)
         {
             return Ok(await _baseservice.DeleteOneById(id));
         }

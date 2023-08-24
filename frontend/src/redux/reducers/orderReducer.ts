@@ -62,12 +62,17 @@ export const displayOrder = createAsyncThunk(
     }
   }
 );
-export const fetchAllOrders = createAsyncThunk("fetchAllOrders", async () => {
+export const fetchAllOrders = createAsyncThunk("fetchAllOrders", async (token: string | null) => {
   try {
     console.log("going to get order items");
     const response = await axios.get<OrderWithDetailsRead[]>(
       "http://localhost:5145/api/v1/admin/orders",
-      {}
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      }
     );
     console.log("order with details response", response.data);
     return response.data;

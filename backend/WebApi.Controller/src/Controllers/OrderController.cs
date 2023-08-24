@@ -18,7 +18,7 @@ namespace WebApi.Controller.src.Controllers
                _orderService = orderService;
           }
           [HttpPatch]
-          //[Authorize(Roles = "Customer")]
+          [Authorize(Roles = "Customer")]
           public async Task<ActionResult<string>> AddOrder()
           {
                var loggedInUserIdClaim = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier);
@@ -36,6 +36,7 @@ namespace WebApi.Controller.src.Controllers
                     return BadRequest("Invalid user ID format");
                }
           }
+          [Authorize(Roles ="Customer")]
           [HttpGet("my-orders")]
           public async Task<ActionResult<IEnumerable<OrderReadDto>>> GetOrderItems()
           {

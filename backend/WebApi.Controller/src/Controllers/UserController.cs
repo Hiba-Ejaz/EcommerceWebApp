@@ -17,6 +17,7 @@ namespace WebApi.Controller.src.Controllers
             _userService = userService;
         }
         [HttpPatch("updatepassword")]
+        [Authorize]
         public async Task<ActionResult<string>> UpdatePassword([FromBody] string password)
         {
             var loggedInUserIdClaim = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier);
@@ -37,7 +38,7 @@ namespace WebApi.Controller.src.Controllers
         }
 
         [HttpGet]
-        // [Authorize(Roles = "admin")]
+         [Authorize(Roles = "admin")]
         public override async Task<ActionResult<IEnumerable<UserReadDto>>> GetAll([FromQuery] SearchQueryOptions options)
         {
             return Ok(await _userService.GetAll(options));
@@ -49,9 +50,23 @@ namespace WebApi.Controller.src.Controllers
             var createdObject = await _userService.CreateOne(created);
             return CreatedAtAction(nameof(CreateOne), createdObject);
         }
-        [AllowAnonymous]
+
+         [HttpGet("{id:Guid}")]
+         [Authorize]
+        public override async Task<ActionResult<IEnumerable<UserReadDto>>> GetOneById([FromRoute] Guid id)
+        {
+            return Ok(await _userService.GetOneById(id));
+        }
+
+        [HttpDelete("{id:Guid}")]
+         [Authorize(Roles = "Admin")]
+        public override async Task<ActionResult<UserReadDto>> DeleteOneById([FromRoute] Guid id)
+        {
+            return Ok(await _userService.DeleteOneById(id));
+        }
 
         [HttpPost("admin")]
+        [Authorize(Roles ="Admin")]
         public async Task<ActionResult<UserReadDto>> CreateAdmin([FromBody] UserCreateDto dto)
         {
             return await _userService.CreateAdmin(dto);

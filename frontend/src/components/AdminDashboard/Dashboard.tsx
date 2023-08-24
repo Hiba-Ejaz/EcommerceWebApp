@@ -8,21 +8,24 @@ import { AddCircle, Dashboard, RemoveCircle } from "@mui/icons-material";
 import { Colors } from "../../styles/theme/mainTheme";
 import { Link } from "react-router-dom";
 import Users from "./Users";
-import { fetchAllUsers } from "../../redux/reducers/usersReducer";
+import { displayAllUsers, fetchAllUsers } from "../../redux/reducers/usersReducer";
 import { fetchAllOrders } from "../../redux/reducers/orderReducer";
  
   
   function Dashboarddd() {
     const dispatch = useAppDispatch(); 
   const navigate = useNavigate();
+  const token = useCustomTypeSelector(
+    (state) => state.authReducer.accessToken
+  );
   const handleNavigateAndFetch = () => {
     // Dispatch the fetchAllUsers action before navigating
-    dispatch(fetchAllUsers());
+    dispatch(displayAllUsers(token));
     navigate("/users");
   };
   const handleNavigateAndFetchOrders = () => {
     // Dispatch the fetchAllUsers action before navigating
-    dispatch(fetchAllOrders());
+    dispatch(fetchAllOrders(token));
     navigate("/orders");
   };
    

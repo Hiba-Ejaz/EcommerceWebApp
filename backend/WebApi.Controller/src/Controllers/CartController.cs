@@ -4,9 +4,11 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.Business.src.Abstractions;
 using WebApi.Business.src.Dtos;
+using WebApi.Domain.src.Entities;
 
 namespace WebApi.Controller.src.Controllers
 {
+     [Authorize(Roles="Customer")]
      [ApiController]
      [Route("api/v1/[controller]s")]
      public class CartController : ControllerBase
@@ -16,7 +18,7 @@ namespace WebApi.Controller.src.Controllers
           {
                _cartService = cartService;
           }
-
+         
           [HttpDelete]
           public async Task<ActionResult<string>> Delete()
           {
@@ -33,6 +35,7 @@ namespace WebApi.Controller.src.Controllers
                }
                return BadRequest("Invalid user ID format");
           }
+          [Authorize(Roles = "Customer")]
           [HttpGet("items")]
           public async Task<ActionResult<IEnumerable<CartReadDto>>> GetCartItems()
           {

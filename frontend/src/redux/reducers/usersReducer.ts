@@ -34,10 +34,16 @@ export const createNewUser = createAsyncThunk(
 
 export const deleteUser = createAsyncThunk(
   "deleteUser",
-  async (userId: string) => {
+  async ({ userId, token }: { userId: string; token: string | null }) => {
     try {
       const result = await axios.delete<string>(
-        `http://localhost:5145/api/v1/users/${userId}`
+        `http://localhost:5145/api/v1/users/${userId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
       );
       console.log("result after deletion", result.data);
       return result.data;
@@ -82,7 +88,8 @@ export const updateUserPassword = createAsyncThunk(
 export const fetchAllUsers = createAsyncThunk("fetchAllUsers", async () => {
   try {
     const usersList = await axios.get<UserRead[]>( //backend change
-      "http://localhost:5145/api/v1/users"
+      "http://localhost:5145/api/v1/users", {  
+      }
     );
     console.log(usersList.data);
     return usersList.data;
@@ -91,6 +98,26 @@ export const fetchAllUsers = createAsyncThunk("fetchAllUsers", async () => {
     return error.message;
   }
 });
+
+export const displayAllUsers = createAsyncThunk("displayAllUsers", 
+async (token: string | null) => {
+  try {
+    const usersList = await axios.get<UserRead[]>( //backend change
+      "http://localhost:5145/api/v1/users", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    console.log(usersList.data);
+    return usersList.data;
+  } catch (e) {
+    const error = e as AxiosError;
+    return error.message;
+  }
+});
+
 export const usersSlice = createSlice({
   name: "users",
   initialState,
@@ -122,14 +149,14 @@ export const usersSlice = createSlice({
         state.loading = false;
         state.error = action.error.message || "Failed to create user";
       })
-      .addCase(fetchAllUsers.pending, (state, action) => {
+      .addCase(displayAllUsers.pending, (state, action) => {
         state.loading = true;
       })
-      .addCase(fetchAllUsers.rejected, (state, action) => {
+      .addCase(displayAllUsers.rejected, (state, action) => {
         state.loading = false;
         state.error = "cannot perform this action";
       })
-      .addCase(fetchAllUsers.fulfilled, (state, action) => {
+      .addCase(displayAllUsers.fulfilled, (state, action) => {
         state.loading = false;
         if (typeof action.payload === "string") {
           state.error = action.payload;

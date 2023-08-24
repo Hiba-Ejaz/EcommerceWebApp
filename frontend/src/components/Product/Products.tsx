@@ -38,12 +38,8 @@ import { addToCart}
 from "../../redux/reducers/cartReducer";
 import { CustomisedLink } from "../../styles/navbar/navbar";
 import { CategoryButton, FilterBox, ProductActionButton, ProductBox, ProductButton, ProductImage } from "../../styles/products/productsDisplay";
-import ProductDetail from "./ProductDetail";
 import { Colors } from "../../styles/theme/mainTheme";
-import { ForkRight } from "@mui/icons-material";
-import { grey } from "@mui/material/colors";
 import { ProductRead } from "../../types/NewProduct";
-import internal from "stream";
 
 const pageSize = 10;
 function Products({  categoryId = 0 }: { categoryId?: number }) {
@@ -66,8 +62,7 @@ function Products({  categoryId = 0 }: { categoryId?: number }) {
   const products = useCustomTypeSelector(
     (state) => state.productsReducer.products
   );
-
-    
+ 
   const cart = useCustomTypeSelector((state) => state.cartReducer);
   const LoggedInUser = useCustomTypeSelector((state) => state.authReducer);
   const LoggedInUserRole = LoggedInUser.user.role;
@@ -100,20 +95,8 @@ function Products({  categoryId = 0 }: { categoryId?: number }) {
     setPagination({ ...pagination, count: filteredList.length })
   }, [pagination.from, pagination.to, filteredList]);
 
-//   useEffect(() => {
-//     dispatch(getAllProducts(searchName));
-// }
-//   , [searchName]);
-
-  useEffect(() => {
-    
-    
+  useEffect(() => { 
     let filteredProducts = products;
-    if (categoryId !== 0) {
-     // filteredProducts = filteredProducts.filter(
-       // (product) => product.category.id === categoryId
-     // );
-    }
     if (upperPriceRange !== 0) {
       filteredProducts = filteredProducts.filter(
         (product) =>
@@ -141,23 +124,12 @@ const handleSortChange = (e: SelectChangeEvent) => {
   const handleCategoryChangeButton = (e: React.MouseEvent<HTMLButtonElement>) => {
     const catId = Number(e.currentTarget.value);
     categoryId=catId;
-    //setCategoryId(catId);
   };
-  // const handleSetProductIdAndFetchProduct = async (productId: string) => {
-  //   dispatch(setProductIdForUpdate(productId));
-  //   try {
-  //     await dispatch(getProductForUpdate(productId));
-  //     return 1;
-  //   } catch (error) {
-      
-  //   }
-  // };
   
   const handleEditProduct = async (productId: string) => {
     dispatch(setProductIdForUpdate(productId));
     await dispatch(getProductForUpdate(productId)); // Use the async action creator
   };
-
 
   const handlePriceChange = (e: SelectChangeEvent) => {
     const price = e.target.value;
@@ -229,12 +201,6 @@ const handleSortChange = (e: SelectChangeEvent) => {
           </FormControl>
 </Box>
         <div>
-          {/* <TextField
-            sx={{ margin: '1em', fontFamily: 'Arial' , '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline':  { borderColor: 'black' } }}
-            variant="outlined"
-            placeholder="Search Product By Name"
-            onChange={handleSearhByNameChange}
-          /> */}
         </div>
         <div>
           <FormControl
@@ -320,11 +286,8 @@ const handleSortChange = (e: SelectChangeEvent) => {
                   {LoggedInUserRole !== "Admin" && showOptions && 
                   (<ProductButton
                     variant="outlined" show={showOptions}
-                    onClick={() => {
-                     
-                      handleAddToCart(product.id,1); //as i dont have quantity so making it 3 for now
-                      // dispatch(addToCart(product,))
-                      //dispatch(totalCartAmountAfterUpdate());
+                    onClick={() => { 
+                      handleAddToCart(product.id,1); 
                     }}
                   >
                     Add to Cart
@@ -334,35 +297,21 @@ const handleSortChange = (e: SelectChangeEvent) => {
                       <ProductButton
                         variant="outlined"
                         onClick={() => {
-                          // dispatch(addToCart(product))
-                          // dispatch(totalCartAmountAfterUpdate());
-                        }}
-                      >
-                        Add to Cart
-                      </ProductButton>
-                      <ProductButton
-                        variant="outlined"
-                        onClick={() => {
-                          dispatch(deleteProduct(product.id)).then((resultAction)=> {
+                          dispatch(deleteProduct({productId:product.id,token:token})).then((resultAction)=> {
                             if (deleteProduct.fulfilled.match(resultAction)) {
                               console.log('Product deletion successful:', resultAction.payload);
                               dispatch(fetchAllProducts());
                             } else if (deleteProduct.rejected.match(resultAction)) {
                               console.error('Product deletion failed:', resultAction.error.message);
                             }
-                          // dispatch(removeFromCart(product))
-                         // dispatch(totalCartAmountAfterUpdate());
                         })}}
                       >
                         Delete Product
                       </ProductButton>
                       <ProductButton
                         variant="outlined"
-                        onClick={
-                          
+                        onClick={ 
                             () => handleEditProduct(product.id)
-                        // dispatch(setProductIdForUpdate(product.id))
-                        //   dispatch(getProductForUpdate(product.id));
                         }
                       > 
                         <CustomisedLink sx={{color:Colors.black}} to={"/UpdateProduct"}>

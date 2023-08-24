@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.Business.src.Abstractions;
 
@@ -12,6 +13,7 @@ namespace WebApi.Controller.src.Controllers
         {
             _orderService = orderService;
         }
+        [Authorize(Roles = "Admin")]
         [HttpGet("orders")]
         public async Task<IEnumerable<OrderWithDetailsReadDto>> GetOrderItems()
         {

@@ -33,7 +33,6 @@ animation: ${slideAnimation} 0.5s;
 function UpdateProduct() {
   const dispatch = useAppDispatch();
   const [updated, setUpdated] = useState(false);
- 
   const productForUpdate = useCustomTypeSelector(
     (state) => state.productsReducer.currentProductForUpdate
   );
@@ -41,7 +40,9 @@ function UpdateProduct() {
     (state) => state.productsReducer.currentProductIdForUpdate
   );
   console.log("productIdForUpdate in update Product",productForUpdate);
-  
+  const token = useCustomTypeSelector(
+    (state) => state.authReducer.accessToken
+  );
 
    const [productData, setProductData] = useState<AddUpdateProductType>
   ({
@@ -81,28 +82,13 @@ function UpdateProduct() {
       }));
     }
   };
-  // const updateProductFromApi = async () => {
-  //   try {
-  //     console.log("update user api");
-  //     const response = await axios.put<ProductUpdate>(
-  //     //  `https://api.escuelajs.co/api/v1/products/${productFOrUpdate.id}`,
-  //      // productData
-  //     );
-  //     dispatch(updateProduct(response.data));
-  //     //dispatch(updateCartItem(response.data));
-  //     dispatch(totalCartAmountAfterUpdate());
-  //     setUpdated(true);
-  //   } catch (error) {
-  //     console.error("Failed to fetch product:", error);
-  //   }
-  // };
+
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-    dispatch(updateProduct({ id: productIdForUpdate, updateProductData: productData })).then((resultAction)=> {
+    dispatch(updateProduct({ id: productIdForUpdate, updateProductData: productData, token: token })).then((resultAction)=> {
       if (updateProduct.fulfilled.match(resultAction)) {
         console.log('Product updated successful:', resultAction.payload);
         dispatch(fetchAllProducts());
-
         setUpdated(true);
       } else if (updateProduct.rejected.match(resultAction)) {
         console.error('Product deletion failed:', resultAction.error.message);

@@ -65,12 +65,24 @@ export const getProductById = createAsyncThunk(
 
 export const createNewProduct = createAsyncThunk(
   "createNewProduct",
-  async (product: CreateProduct) => {
-    product.quantity = 10;
+  async (payload: {product: CreateProduct ; token: string | null}) => {
+    const updatedPayload = {
+      product: {
+        ...payload.product,
+        quantity: 10,
+      },
+      token: payload.token,
+    };
     try {
       const result = await axios.post<ProductRead>(
         "http://localhost:5145/api/v1/products/",
-        product
+        updatedPayload.product,
+        {
+          headers: {
+            Authorization: `Bearer ${updatedPayload.token}`,
+            "Content-Type": "application/json",
+          },
+        }
       );
       return result.data;
     } catch (e) {
@@ -103,12 +115,18 @@ export const getAllProducts = createAsyncThunk(
 );
 export const updateProduct = createAsyncThunk(
   "updateProduct",
-  async (payload: { id: string; updateProductData: ProductUpdate }) => {
-    const { id, updateProductData } = payload;
+  async (payload: { id: string; updateProductData: ProductUpdate; token: string | null}) => {
+    const { id, updateProductData,token } = payload;
     try {
       const result = await axios.patch<ProductUpdate>(
         `http://localhost:5145/api/v1/products/${id}`,
-        updateProductData
+        updateProductData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
       );
       return result.data;
     } catch (e) {
@@ -124,6 +142,7 @@ export const getProductForUpdate = createAsyncThunk(
       console.log("product coming", productId);
       const result = await axios.get<ProductUpdate>(
         `http://localhost:5145/api/v1/products/${productId}/update`
+        
       );
       console.log("product for update is", result.data);
       return result.data;
@@ -135,10 +154,17 @@ export const getProductForUpdate = createAsyncThunk(
 );
 export const deleteProduct = createAsyncThunk(
   "deleteProduct",
-  async (productId: string) => {
+  async (payload:{productId: string; token: string | null}) => {
+    const { productId,token } = payload;
     try {
       const result = await axios.delete<boolean>(
-        `http://localhost:5145/api/v1/products/${productId}`
+        `http://localhost:5145/api/v1/products/${productId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
       );
       console.log("result after deletion", result.data);
       return result.data;

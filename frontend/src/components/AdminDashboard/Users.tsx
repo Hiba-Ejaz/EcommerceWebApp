@@ -20,11 +20,14 @@ function Users() {
   const users=useCustomTypeSelector(
     (state) => state.usersReducer
   );
+  const token = useCustomTypeSelector(
+    (state) => state.authReducer.accessToken
+  );
   const userList = useCustomTypeSelector(
     (state) => state.usersReducer.usersList
   );
   const handleDeleteUser = (userId:string) => {
-    dispatch(deleteUser(userId)).then(() => {
+    dispatch(deleteUser({userId:userId,token:token})).then(() => {
       dispatch(fetchAllUsers());
     });
   };

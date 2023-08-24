@@ -81,6 +81,9 @@ to {
       }));
     }
   };
+  const token = useCustomTypeSelector(
+    (state) => state.authReducer.accessToken
+  );
   function createImageObject(location: string): ImageType {
     return {
       link: location,
@@ -91,7 +94,7 @@ to {
     event.preventDefault();
     setCreateNew(false);
     const { title } = productData;
-    dispatch(createNewProduct(productData));
+    dispatch(createNewProduct({product:productData,token:token}));
     // if(products.find((item)=>item.id===productData.))
   };
   return (
