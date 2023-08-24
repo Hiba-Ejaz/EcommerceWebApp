@@ -1,7 +1,5 @@
-
 namespace WebApi.Domain.src.Entities
 {
-
     public class SearchQueryOptions
     {
         public string SearchQuery { get; set; } = string.Empty;

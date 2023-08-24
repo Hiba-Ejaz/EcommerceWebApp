@@ -1,3 +1,4 @@
+using System.Reflection.PortableExecutable;
 using AutoMapper;
 using WebApi.Business.src.Abstractions;
 using WebApi.Business.src.Dtos;
@@ -8,18 +9,32 @@ namespace WebApi.Business.src.Implementations
 {
     public class CartService : ICartService
     {
-        private readonly IOrderRepo _orderRepository;
+        private readonly ICartRepo _cartRepository;
+        private readonly ICartItemsRepo _cartItemRepository;
         private readonly IProductRepo _productRepository;
         private readonly IUserRepo _userRepository;
         private readonly IMapper _mapper;
-
-        public CartService(IOrderRepo orderRepository, IUserRepo userRepository, IProductRepo productRepository, IMapper mapper)
+        public CartService(ICartRepo cartRepository, ICartItemsRepo cartItemRepository, IUserRepo userRepository, IProductRepo productRepository, IMapper mapper)
         {
-            _orderRepository = orderRepository;
+            _cartRepository = cartRepository;
+            _cartItemRepository = cartItemRepository;
             _productRepository = productRepository;
             _userRepository = userRepository;
             _mapper = mapper;
 
+        }
+        public async Task<IEnumerable<CartReadDto>> GetCartItems(Guid userId)
+        {
+            var carrtItems = await _cartItemRepository.GetCartItems(userId);
+            var cartItems = carrtItems.Select(ci => new CartReadDto
+            {
+                ProductId = ci.Product.Id,
+                ProductTitle = ci.Product.Title,
+                Quantity = ci.Quantity,
+                ProductPrice = ci.Product.Price,
+                TotalAmount = ci.Cart.TotalAmount,
+            });
+            return cartItems;
         }
         public async Task<string> AddToCart(Guid userId, AddToCartDto addToCartDto)
         {
@@ -27,33 +42,112 @@ namespace WebApi.Business.src.Implementations
             var user = await _userRepository.GetOneById(userId);
             if (product == null || product.Quantity < addToCartDto.Quantity)
             {
-                return "false; // Product not found or insufficient quantity";
+                return "Product not found or insufficient quantity";
             }
             if (user == null)
             {
-                return "false; // User not found ";
+                return "User not found";
             }
-            var existingOrder = await _orderRepository.GetProcessingOrderByUserId(userId);
-            if (existingOrder == null)
+            var existingCart = await _cartRepository.GetProcessingCartByUserId(userId);
+            if (existingCart == null)
             {
-                existingOrder = await _orderRepository.GetOrCreateCartForUser(userId);
-            }
-            var productPresent = existingOrder.OrderItems.FirstOrDefault(oi =>
-           oi.Product.Id == product.Id);
-            if (productPresent != null)
-            {
-                productPresent.Quantity += addToCartDto.Quantity;
-            }
-            else
-            {
-                var orderItem = new OrderItem
+                var newCart = new Cart
                 {
-                    Product = product,
-                    Quantity = addToCartDto.Quantity
+                    UserId = userId,
+                    Status = OrderStatus.Processing,
+                    CartItems = new List<CartItem>()
                 };
-                existingOrder.OrderItems.Add(orderItem);
+                var createdCart = await _cartRepository.CreateOne(newCart);
+                createdCart.CartItems = new List<CartItem>();
+                var cartItem = new CartItem
+                {
+                    Cart = createdCart,
+                    Product = product,
+                    Quantity = addToCartDto.Quantity,
+
+                };
+                newCart.CartItems.Add(cartItem);
+                newCart.TotalAmount = cartItem.Product.Price;
+                return await _cartRepository.UpdateCart(newCart);
             }
-            return await _orderRepository.AddOrder(existingOrder);
+            else if (existingCart != null)
+            {
+                try
+                {
+                    var existingCartItem = await _cartItemRepository.GetCartItem(existingCart.Id, addToCartDto.ProductId);
+                    if (existingCartItem != null)
+                    {
+                        if (addToCartDto.Quantity < 0)
+                        {
+                            existingCartItem.Quantity -= Math.Abs(addToCartDto.Quantity);
+                            if (existingCartItem.Quantity == 0)
+                            {
+                                await _cartItemRepository.RemoveFromCart(userId, addToCartDto.ProductId);
+                            }
+                            if (existingCartItem.Quantity > 0)
+                            {
+                                existingCart.TotalAmount -= existingCartItem.Product.Price;
+                            }
+                        }
+                        else
+                        {
+                            existingCartItem.Quantity += addToCartDto.Quantity;
+                            existingCart.TotalAmount += existingCartItem.Product.Price;
+                        }
+                        return await _cartItemRepository.UpdateCartItem(existingCartItem);
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    string errorMessage = $"Error updating order: {ex.Message}";
+                    if (ex.InnerException != null)
+                    {
+                        errorMessage += $" (Inner Exception: {ex.InnerException.Message})";
+                    }
+                }
+                var cartItem2 = new CartItem
+                {
+                    Cart = existingCart,
+                    Product = product,
+                    Quantity = addToCartDto.Quantity,
+                };
+                    existingCart.CartItems.Add(cartItem2);
+                    return await _cartRepository.UpdateCart(existingCart);
+            }
+            return "";
+        }
+        public async Task<string> RemoveFromCart(Guid userIdGuid, Guid productId)
+        {
+            return await _cartItemRepository.RemoveFromCart(userIdGuid, productId);
+        }
+        public async Task<string> DeleteCart(Guid userIdGuid)
+        {
+            try
+            {
+                var cart = await _cartRepository.GetProcessingCartByUserId(userIdGuid);
+
+                if (cart != null)
+                {
+                    foreach (var cartItem in cart.CartItems.ToList()) // ToList creates a snapshot
+                    {
+                        await _cartItemRepository.DeleteOneById(cartItem);
+                    }
+
+                    await _cartRepository.DeleteOneById(cart);
+
+                    return "Cart and associated items deleted successfully";
+                }
+                else
+                {
+                    return "Cart not found for the specified user";
+                }
+            }
+            catch (Exception ex)
+            {
+                return $"Error deleting cart: {ex.Message}";
+            }
         }
     }
 }
+

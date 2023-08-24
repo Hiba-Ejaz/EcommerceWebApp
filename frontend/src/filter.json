@@ -1,0 +1,8 @@
+{ "filters":[
+    {"id":1,"name":"all"},
+    {"id":2,"name":"clothes"},
+    {"id":3,"name":"shoes"},
+    {"id":4,"name":"others"},
+    {"id":5,"name":"price-range"}
+ 
+] }

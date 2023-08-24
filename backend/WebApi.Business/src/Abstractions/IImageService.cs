@@ -1,4 +1,3 @@
-
 using WebApi.Domain.src.Entities;
 
 namespace WebApi.Business.src.Abstractions

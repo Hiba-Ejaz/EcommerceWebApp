@@ -9,7 +9,7 @@ namespace WebApi.Business.src.Implementations.Shared
         {
             var hmac = new HMACSHA256();
             salt = hmac.Key;
-           hashedPassword = Encoding.UTF8.GetString(hmac.ComputeHash(Encoding.UTF8.GetBytes(originalPassword)));
+            hashedPassword = Encoding.UTF8.GetString(hmac.ComputeHash(Encoding.UTF8.GetBytes(originalPassword)));
         }
         public static bool VerifyPassword(string originalPassword, string hashedPassword, byte[] salt)
         {
