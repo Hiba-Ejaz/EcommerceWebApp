@@ -35,7 +35,7 @@ builder.Services.AddScoped<ICategoryRepo, CategoryRepo>();
  builder.Services.AddScoped<ICartRepo, CartRepo>();
 builder.Services.AddScoped<ICartItemsRepo, CartItemRepo>();
 // builder.Services.AddScoped<IOrderRepo, OrderRepo>();
-// builder.Services.AddScoped<IOrderItemsRepo, OrderItemRepo>();
+builder.Services.AddScoped<IOrderItemRepo, OrderItemRepo>();
 builder.Services.AddScoped<IAuthRepo, AuthRepo>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IProductService, ProductService>();

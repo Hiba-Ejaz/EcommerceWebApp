@@ -1,7 +1,4 @@
-
-
 using System.Reflection;
-using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using WebApi.Domain.src.Abstractions;
 using WebApi.Domain.src.Entities;
@@ -10,16 +7,14 @@ using WebApi.WebApi.Database;
 namespace WebApi.WebApi.src.RepoImplementations
 {
     public class BaseRepo<T> : IBaseRepo<T> where T : class
-
     {
         private readonly DatabaseContext _databaseContext;
         private readonly DbSet<T> _dbSet;
-
         public BaseRepo(DatabaseContext dbContext)
         {
             _databaseContext = dbContext;
             _dbSet = dbContext.Set<T>();
-         
+
         }
         public virtual async Task<T> CreateOne(T entity)
         {
@@ -42,7 +37,6 @@ namespace WebApi.WebApi.src.RepoImplementations
             string? SearchQuery = options.SearchQuery;
             bool SortAscending = options.SortAscending;
             string SortBy = options.SortBy;
-
             if (entityType is Product)
             {
                 if (!string.IsNullOrWhiteSpace(options.SearchQuery))
@@ -92,19 +86,16 @@ namespace WebApi.WebApi.src.RepoImplementations
             //  if(entityType is Category){
             //     var collection=_dbSet as DbSet<Category>;
             // }
-
-
             return await _dbSet.ToArrayAsync();
         }
 
         public async Task<T?> GetOneById(Guid id)
         {
-             
             return await _dbSet.FindAsync(id);
         }
+    }
+}
 
-    }}
 
 
-        
 

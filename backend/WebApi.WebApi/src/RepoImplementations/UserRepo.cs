@@ -1,7 +1,4 @@
-
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Conventions;
-using WebApi.Business.src.Dtos;
 using WebApi.Domain.src.Abstractions;
 using WebApi.Domain.src.Entities;
 using WebApi.WebApi.Database;
@@ -25,18 +22,14 @@ namespace WebApi.WebApi.src.RepoImplementations
             await _dbcontext.SaveChangesAsync();
             return user;
         }
-
         public async Task<User?> FindUserByEmail(string email)
         {
             return await _users.FirstOrDefaultAsync(u => u.Email.Contains(email));
         }
-     
-
         public async Task<string> UpdatePassword(User user)
         {
             _users.Update(user);
             await _dbcontext.SaveChangesAsync();
-            //return user;
             return "password updated";
         }
         public override Task<User> CreateOne(User entity)
@@ -44,6 +37,5 @@ namespace WebApi.WebApi.src.RepoImplementations
             entity.Role = Role.Customer;
             return base.CreateOne(entity);
         }
-
     }
 }

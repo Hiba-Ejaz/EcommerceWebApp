@@ -10,14 +10,14 @@ namespace WebApi.WebApi.src.RepoImplementations
 {
     public class AuthRepo : IAuthRepo
     {
-         private readonly IConfiguration _configuration;
-        public AuthRepo( IConfiguration configuration)
-            {
-            _configuration=configuration;
-            }
+        private readonly IConfiguration _configuration;
+        public AuthRepo(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
         public string CreateToken(User user)
         {
-           var claims = new List<Claim>{
+            var claims = new List<Claim>{
                 new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
                 new Claim(ClaimTypes.Role, user.Role.ToString())
             };
@@ -27,7 +27,8 @@ namespace WebApi.WebApi.src.RepoImplementations
 
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey));
             var signingCredentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256Signature);
-            var securityTokenDescriptor = new SecurityTokenDescriptor {
+            var securityTokenDescriptor = new SecurityTokenDescriptor
+            {
                 Issuer = jwtIssuer,
                 Expires = DateTime.Now.AddDays(1),
                 Subject = new ClaimsIdentity(claims),
