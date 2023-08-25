@@ -22,14 +22,12 @@ namespace WebApi.WebApi.src.RepoImplementations
             await _databaseContext.SaveChangesAsync();
             return entity;
         }
-
         public async Task<bool> DeleteOneById(T entity)
         {
             _dbSet.Remove(entity);
             await _databaseContext.SaveChangesAsync();
             return true;
         }
-
         public virtual async Task<IEnumerable<T>> GetAll(SearchQueryOptions options)
         {
             IQueryable<T> query = _dbSet;
@@ -53,7 +51,6 @@ namespace WebApi.WebApi.src.RepoImplementations
             }
             //     PropertyInfo? priceProperty = entityType.GetProperty("Price",
             //        BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance);
-
             //     if (priceProperty != null)
             //     {
             //         // Sort the query based on the Price property and sort direction
@@ -86,7 +83,7 @@ namespace WebApi.WebApi.src.RepoImplementations
             //  if(entityType is Category){
             //     var collection=_dbSet as DbSet<Category>;
             // }
-            return await _dbSet.ToArrayAsync();
+            return await _dbSet.AsNoTracking().ToArrayAsync();  
         }
 
         public async Task<T?> GetOneById(Guid id)

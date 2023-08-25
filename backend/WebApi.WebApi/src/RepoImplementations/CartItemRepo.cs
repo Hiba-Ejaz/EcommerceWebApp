@@ -24,7 +24,7 @@ namespace WebApi.WebApi.src.RepoImplementations
             return cartItems;
         }
         public async Task<CartItem?> GetCartItem(Guid cartId, Guid ProductId)
-        {
+        { 
             return await _cartItem.FirstOrDefaultAsync(item =>
             item.Cart.Id == cartId && item.Product.Id == ProductId);
         }
@@ -77,7 +77,7 @@ namespace WebApi.WebApi.src.RepoImplementations
             }
             catch (Exception ex)
             {
-                string errorMessage = $"Error updating cart ya yeh: {ex.Message}";
+                string errorMessage = $"Error updating cart: {ex.Message}";
                 if (ex.InnerException != null)
                 {
                     errorMessage += $" (Inner Exception: {ex.InnerException.Message})";

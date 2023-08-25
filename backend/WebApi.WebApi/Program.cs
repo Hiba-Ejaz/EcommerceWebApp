@@ -12,7 +12,8 @@ using WebApi.WebApi.src.RepoImplementations;
 using Serilog;
 using Serilog.Events;
 using Microsoft.Extensions.Logging;
-
+using System.Security.Claims;
+using WebApi.WebApi.src.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -79,6 +80,9 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         ValidateIssuerSigningKey = true
     };
 });
+builder.Services.AddAuthorization(options =>{
+options.AddPolicy("EmailAllowedList",policy=>policy.RequireClaim(ClaimTypes.Email,"hibaejaz@gmail.com"));
+});
 
 builder.Services.AddDbContext<DatabaseContext>();
 builder.Services.AddControllers();
@@ -86,6 +90,8 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddSingleton<ErrorHandlerMiddleware>();
 
 var app = builder.Build();
 //
@@ -182,7 +188,7 @@ app.UseCors(options =>
            .AllowAnyHeader()
            .AllowAnyMethod();
 });
-
+app.UseMiddleware<ErrorHandlerMiddleware>();
 app.UseAuthorization();
 app.MapControllers();
 app.Run();
