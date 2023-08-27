@@ -38,7 +38,7 @@ namespace WebApi.Controller.src.Controllers
         }
 
         [HttpGet]
-         [Authorize(Roles = "admin")]
+        [Authorize(Roles = "Admin")]
         public override async Task<ActionResult<IEnumerable<UserReadDto>>> GetAll([FromQuery] SearchQueryOptions options)
         {
             return Ok(await _userService.GetAll(options));
@@ -59,14 +59,14 @@ namespace WebApi.Controller.src.Controllers
         }
 
         [HttpDelete("{id:Guid}")]
-         [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         public override async Task<ActionResult<UserReadDto>> DeleteOneById([FromRoute] Guid id)
         {
             return Ok(await _userService.DeleteOneById(id));
         }
 
-        [HttpPost("admin")]
-        [Authorize(Roles ="Admin")]
+        [HttpPost("Admin")]
+        // [Authorize(Roles ="Admin")]
         public async Task<ActionResult<UserReadDto>> CreateAdmin([FromBody] UserCreateDto dto)
         {
             return await _userService.CreateAdmin(dto);

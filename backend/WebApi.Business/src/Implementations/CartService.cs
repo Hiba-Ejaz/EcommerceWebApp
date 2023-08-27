@@ -1,7 +1,7 @@
-using System.Reflection.PortableExecutable;
 using AutoMapper;
 using WebApi.Business.src.Abstractions;
 using WebApi.Business.src.Dtos;
+using WebApi.Business.src.Implementations.Shared;
 using WebApi.Domain.src.Abstractions;
 using WebApi.Domain.src.Entities;
 
@@ -25,7 +25,7 @@ namespace WebApi.Business.src.Implementations
         }
         public async Task<IEnumerable<CartReadDto>> GetCartItems(Guid userId)
         {
-            var carrtItems = await _cartItemRepository.GetCartItems(userId);
+            var carrtItems = await _cartItemRepository.GetCartItems(userId) ?? throw CustomException.NotFoundException();
             var cartItems = carrtItems.Select(ci => new CartReadDto
             {
                 ProductId = ci.Product.Id,
@@ -42,11 +42,11 @@ namespace WebApi.Business.src.Implementations
             var user = await _userRepository.GetOneById(userId);
             if (product == null || product.Quantity < addToCartDto.Quantity)
             {
-                return "Product not found or insufficient quantity";
+                throw CustomException.NotFoundException();
             }
             if (user == null)
             {
-                return "User not found";
+                throw CustomException.NotFoundException();
             }
             var existingCart = await _cartRepository.GetProcessingCartByUserId(userId);
             if (existingCart == null)
@@ -56,8 +56,8 @@ namespace WebApi.Business.src.Implementations
                     UserId = userId,
                     Status = OrderStatus.Processing,
                     CartItems = new List<CartItem>()
-                };
-                var createdCart = await _cartRepository.CreateOne(newCart);
+                };       
+               var createdCart = await _cartRepository.CreateOne(newCart); 
                 createdCart.CartItems = new List<CartItem>();
                 var cartItem = new CartItem
                 {
@@ -112,14 +112,21 @@ namespace WebApi.Business.src.Implementations
                     Product = product,
                     Quantity = addToCartDto.Quantity,
                 };
-                    existingCart.CartItems.Add(cartItem2);
-                    return await _cartRepository.UpdateCart(existingCart);
+                existingCart.CartItems.Add(cartItem2);
+                return await _cartRepository.UpdateCart(existingCart);
             }
             return "";
         }
         public async Task<string> RemoveFromCart(Guid userIdGuid, Guid productId)
         {
-            return await _cartItemRepository.RemoveFromCart(userIdGuid, productId);
+            try
+            {
+                return await _cartItemRepository.RemoveFromCart(userIdGuid, productId);
+            }
+            catch (Exception ex)
+            {
+                throw new CustomException(500, $"Error deleting cart: {ex.Message}");
+            }
         }
         public async Task<string> DeleteCart(Guid userIdGuid)
         {
@@ -140,7 +147,7 @@ namespace WebApi.Business.src.Implementations
                 }
                 else
                 {
-                    return "Cart not found for the specified user";
+                    throw CustomException.NotFoundException();
                 }
             }
             catch (Exception ex)

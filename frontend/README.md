@@ -46,7 +46,7 @@ TypeScript - Programming language for type-safe JavaScript development.
 Material-UI - React component library for building user interfaces.
 Platz API - Backend API for product data and user management.
 
-The project is deployed and can be accessed [here] (https://hiba-ejaz.github.io/fs15_frontend-project/)
+The project is deployed and can be accessed [here] (https://64ebdabb0ade1032a935e3a3--chic-florentine-8e741c.netlify.app)
 
 ## PROJECT STRUCTURE
 src

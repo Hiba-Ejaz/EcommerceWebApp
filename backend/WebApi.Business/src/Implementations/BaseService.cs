@@ -2,13 +2,13 @@ using WebApi.Business.src.Abstractions;
 using WebApi.Domain.src.Abstractions;
 using WebApi.Domain.src.Entities;
 using AutoMapper;
+using WebApi.Business.src.Implementations.Shared;
 
 namespace WebApi.Business.src.Implementations
 {
     public abstract class BaseService<T, TCreateDto, TReadDto, TUpdateDto> : IBaseService<T, TCreateDto, TReadDto, TUpdateDto>
     {
         private readonly IBaseRepo<T> _baseRepo;
-        private readonly IProductRepo _productRepo;
         protected readonly IMapper _mapper;
         public BaseService(IBaseRepo<T> baseRepo, IMapper mapper)
         {
@@ -23,15 +23,21 @@ namespace WebApi.Business.src.Implementations
                 await _baseRepo.DeleteOneById(foundItem);
                 return true;
             }
-            return false;
+            throw CustomException.NotFoundException();
         }
         public virtual async Task<IEnumerable<TReadDto>> GetAll(SearchQueryOptions options)
         {
-            return _mapper.Map<IEnumerable<TReadDto>>(await _baseRepo.GetAll(options));
+            var mappedResult = _mapper.Map<IEnumerable<TReadDto>>(await _baseRepo.GetAll(options));
+            if (mappedResult == null)
+            {
+                throw CustomException.NotFoundException();
+            }
+            return mappedResult;
         }
         public async Task<TReadDto> GetOneById(Guid id)
         {
-            return _mapper.Map<TReadDto>(await _baseRepo.GetOneById(id)); //writing await bcz all functions in base repo have task as return type. 
+            var mappedResult= _mapper.Map<TReadDto>(await _baseRepo.GetOneById(id)) ?? throw CustomException.NotFoundException(); //writing await bcz all functions in base repo have task as return type. 
+            return mappedResult;
         }
         public virtual async Task<TReadDto> CreateOne(TCreateDto dto)
         {

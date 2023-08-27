@@ -27,18 +27,18 @@ namespace WebApi.Controller.src.Controllers
       return Ok(await _productService.GetOneById(id));
     }
     [HttpPost]
-    [Authorize(Roles ="Admin")]
+    [Authorize(Roles = "Admin")]
     public override async Task<ActionResult<ProductReadDto>> CreateOne([FromBody] ProductCreateDto created)
     {
       var createdObject = await _productService.CreateOne(created);
       return CreatedAtAction(nameof(CreateOne), createdObject);
     }
-      [Authorize(Roles ="Admin")]
-      [HttpDelete("{id:Guid}")]
-     public override async Task<ActionResult<ProductReadDto>> DeleteOneById([FromRoute] Guid id)
-        {
-            return Ok(await _productService.DeleteOneById(id));
-        }
+    [Authorize(Roles = "Admin")]
+    [HttpDelete("{id:Guid}")]
+    public override async Task<ActionResult<ProductReadDto>> DeleteOneById([FromRoute] Guid id)
+    {
+      return Ok(await _productService.DeleteOneById(id));
+    }
 
     [HttpGet("{id:Guid}/update")]
     public async Task<ActionResult<ProductUpdateDto?>> FindProductByIdForUpdate([FromRoute] Guid id)
@@ -53,6 +53,4 @@ namespace WebApi.Controller.src.Controllers
       return Ok(await _productService.UpdateOneById(id, updated));
     }
   }
-
-
 }

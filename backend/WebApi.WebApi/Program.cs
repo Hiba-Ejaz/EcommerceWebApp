@@ -27,13 +27,17 @@ Log.Logger = new LoggerConfiguration()
 
 builder.Logging.AddSerilog();
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
+
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+
+
 builder.Services.AddScoped<IUserRepo, UserRepo>();
 builder.Services.AddScoped<IOrderRepo, OrderRepo>();
 builder.Services.AddScoped<IImageRepo, ImageRepo>();
 builder.Services.AddScoped<IProductRepo, ProductRepo>();
 //builder.Services.AddScoped(typeof(IBaseRepo<Category>), typeof(BaseRepo<Category>));
 builder.Services.AddScoped<ICategoryRepo, CategoryRepo>();
- builder.Services.AddScoped<ICartRepo, CartRepo>();
+builder.Services.AddScoped<ICartRepo, CartRepo>();
 builder.Services.AddScoped<ICartItemsRepo, CartItemRepo>();
 // builder.Services.AddScoped<IOrderRepo, OrderRepo>();
 builder.Services.AddScoped<IOrderItemRepo, OrderItemRepo>();
@@ -80,8 +84,9 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         ValidateIssuerSigningKey = true
     };
 });
-builder.Services.AddAuthorization(options =>{
-options.AddPolicy("EmailAllowedList",policy=>policy.RequireClaim(ClaimTypes.Email,"hibaejaz@gmail.com"));
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("EmailAllowedList", policy => policy.RequireClaim(ClaimTypes.Email, "hibaejaz@gmail.com"));
 });
 
 builder.Services.AddDbContext<DatabaseContext>();
@@ -94,97 +99,27 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddSingleton<ErrorHandlerMiddleware>();
 
 var app = builder.Build();
-//
-// CreateAdminUser(app);
-// ...
-// Method to create the admin user
-// void CreateAdminUser(IHost app)
-// {
-//     using (var serviceScope = app.Services.CreateScope())
-//     {
-//         var dbContext = serviceScope.ServiceProvider.GetRequiredService<DatabaseContext>();
-//         var configuration = serviceScope.ServiceProvider.GetRequiredService<IConfiguration>();
-//         var userRepo = serviceScope.ServiceProvider.GetRequiredService<IUserRepo>();
-//         var userService = serviceScope.ServiceProvider.GetRequiredService<IUserService>();
-        // Extract the admin information from the connection string
-       
-    //     string GetConnectionStringValue(string connectionString, string key)
-    //                 {
-    // var keyValuePairs = connectionString.Split(';')
-    //     .Select(part => part.Split('='))
-    //     .Where(split => split.Length == 2)
-    //     .ToDictionary(split => split[0], split => split[1], StringComparer.OrdinalIgnoreCase);
-    // if (keyValuePairs.TryGetValue(key, out var value))
-    // {
-    //     Log.Information("Value  Value of value: {Value}", value);
-    //     return value;
-    // }
-//     return null; // Key not found
-// }
-    //    var connectionString = configuration.GetConnectionString("DefaultConnection");
-    //     var adminUsername = GetConnectionStringValue(connectionString, "Username");
-    //     var adminPassword = GetConnectionStringValue(connectionString, "Password");
-    //     // Check if the admin user exists, create if not
-    //    var adminUser = userRepo.FindUserByEmail(adminUsername).Result;
-        //  if (adminUser == null)
-        // {
-            // Create the admin user with the "Admin" role
-            //  PasswordService.HashPassword("hiba1234",out string hashedpassword,out Byte[] salt);   
-            // if (hashedpassword != null){
-            //     Log.Information("Value  Value of hashedpassword: {Value}", hashedpassword);
-            //     }
-            //      if (salt != null){
-            //     Log.Information("Value  Value of salt: {Value}", salt);
-            //     }
-            // var admin = new User
-            // { 
-            //     Email = "hibaejaz@gmail.com",
-            //     Role = Role.Admin,
-            //     Name="hiba",
-            //     Avatar="avatar",
-            //     Password=hashedpassword,
-            //     Salt=salt,
-            //      // Set the role to "Admin"
-            //     // Set other properties as needed for the User entity
-            // };
-            // // Log.Information("Value  Value of value: {Value}", value);
-            // //Log.Information("USERnAME.",adminUsername);
-            // var createdAdmin = userService.CreateAdmin(admin).Result;
-            // if(createdAdmin.Email!=null){
-            //     Log.Information("{createdAdmin email}", createdAdmin.Email);
-            // }
-            // else{
-            //     Log.Information("created admin email null");
-            // }
-            // if (createdAdmin != null)
-            // {
-            //     var cn=createdAdmin.Email;
-            //     var cn2=createdAdmin.Avatar;
-            //     var cn3=createdAdmin.Role;
-            //     var cn4=createdAdmin.Name;
-            //     Log.Information("email avatar role name {cn} {cn2} {cn3} {cn4}",cn,cn2,cn3,cn4);
-            // }
-   //}
-//}
- void ConfigureLogging(IServiceCollection services)
-    {
-        services.AddLogging(builder =>
-        {
-            builder.AddConsole(); // Add Console logging provider
-            // You can add other logging providers here, such as Debug, EventLog, etc.
-        });
-    }
-if (app.Environment.IsDevelopment())
+
+void ConfigureLogging(IServiceCollection services)
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    services.AddLogging(builder =>
+    {
+        builder.AddConsole(); // Add Console logging provider
+                              // You can add other logging providers here, such as Debug, EventLog, etc.
+    });
 }
+// if (app.Environment.IsDevelopment())
+// {
+
+// }
+app.UseSwagger();
+app.UseSwaggerUI();
 app.UseHttpsRedirection();
 // CORS configuration
 var allowOrigins = "allowOrigins";
 app.UseCors(options =>
 {
-    options.WithOrigins("http://localhost:3000","http://localhost:3001","http://localhost:3003", "http://localhost:3002")
+    options.WithOrigins("http://localhost:3000","https://64ebdabb0ade1032a935e3a3--chic-florentine-8e741c.netlify.app","http://localhost:3001", "http://localhost:3003", "http://localhost:3002")
            .AllowAnyHeader()
            .AllowAnyMethod();
 });

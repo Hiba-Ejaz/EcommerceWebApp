@@ -21,7 +21,7 @@ import { AddCircle, RemoveCircle } from "@mui/icons-material";
 //   totalCartAmount,
 //   totalCartAmountAfterUpdate,
 // } from "../../../redux/reducers/cartReducer";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Colors } from "../../../styles/theme/mainTheme";
 import { addToCart, deleteCart, deleteItemFromCart, displayCart } from "../../../redux/reducers/cartReducer";
 import { createIncrementalCompilerHost } from "typescript";
@@ -34,33 +34,23 @@ function Cart() {
   const token = useCustomTypeSelector(
     (state) => state.authReducer.accessToken
   );
-  // useEffect(() => {
-  //   dispatch(displayCart(token));
-  // }, [dispatch, cart]); 
   const cartItems = cart.cart;
-const totalCartAmount=0;
-  // const getQuantity = (productId: number) => {
-  //   const quantityObj = cart.quantityOfIndiviualProduct.find(
-  //     (item) => item.id === productId
-  //   );
-  //   return quantityObj ? quantityObj.quantity : 0;
-  // };
-//   const handleDeleteItem = (productId:string)=>{
-//     dispatch(deleteItemFromCart({productId, token})).then(() => {
-//       dispatch(displayCart(token)); 
-//   });
-// }
+const [isLoading, setIsLoading] = useState(false);
 const navigate = useNavigate();
-  const manageQuantityInCart = ( productId:string,quantity:number) => {
+  const manageQuantityInCart = async ( productId:string,quantity:number) => {
+    setIsLoading(true); 
     const newOrderr:newOrder = {
       productId: productId,
       quantity: quantity,
     };
-    console.log("going to dispatch add to cart");
-    //dispatch(addToCart({newOrderr,token}));
-    dispatch(addToCart({ newOrderr, token })).then(() => {
-      dispatch(displayCart(token)); 
-    });
+    try {
+      await dispatch(addToCart({ newOrderr, token }));
+      await dispatch(displayCart(token));
+    } catch (error) {
+      console.error('An error occurred:', error);
+    }finally {
+      setIsLoading(false); 
+    }
    
   }
   return (
@@ -90,7 +80,7 @@ const navigate = useNavigate();
                     Price: {product.productPrice*product.quantity}
                   </Typography>
                   <Box display="flex" alignItems="center">
-                    <IconButton
+                    <IconButton  disabled={isLoading} 
                       onClick={() => { manageQuantityInCart(product.productId,-1) 
                        // dispatch(displayCart(token)); 
                       //  dispatch(decrementQuantityOfIndiviualProduct(product.id))
@@ -102,7 +92,7 @@ const navigate = useNavigate();
                     <Typography variant="subtitle1" gutterBottom>
                       {product.quantity}
                     </Typography>
-                    <IconButton
+                    <IconButton  disabled={isLoading} 
                       onClick={() => {manageQuantityInCart(product.productId,1)  
                        //  dispatch(displayCart(token)); 
                         // dispatch(incrementQuantityOfIndiviualProduct(product.id))
@@ -124,17 +114,10 @@ const navigate = useNavigate();
                       color: Colors.black,
                     },}}
 
-                    onClick={() => {
-                      dispatch(deleteItemFromCart({ productId: product.productId, token }))
-                      .then(() => {
-                        dispatch(displayCart(token));
-                      });
+                    onClick={async() => {
+                     await dispatch(deleteItemFromCart({ productId: product.productId, token }));      
+                    await dispatch(displayCart(token)); 
                     }}
-                      //  handleDeleteItem(product.productId)}
-                      
-                    
-                      // dispatch(totalCartAmountAfterUpdate());
-                    
                   >
                     Remove from Cart
                   </Button>

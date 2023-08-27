@@ -16,11 +16,7 @@ namespace WebApi.Business.src.Implementations
         }
         public async Task<string> UpdatePassword(Guid id, string password)
         {
-            var foundItem = await _userRepo.GetOneById(id);
-            if (foundItem == null)
-            {
-                throw new Exception("item not found");
-            }
+            var foundItem = await _userRepo.GetOneById(id) ?? throw CustomException.NotFoundException();
             PasswordService.HashPassword(password, out string hashedpassword, out Byte[] salt);
             foundItem.Password = hashedpassword;
             foundItem.Salt = salt;

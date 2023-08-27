@@ -18,7 +18,7 @@ const initialState: usersReducer = {
   users: [],
   userCreated: false,
 };
-const API_URL = "http://localhost:5145/api/v1/users"; //doing for backend trial
+const API_URL = "https://shop-and-shop.azurewebsites.net/api/v1/users"; //doing for backend trial
 export const createNewUser = createAsyncThunk(
   "createNewUser",
   async (userData: CreateUser) => {
@@ -37,7 +37,7 @@ export const deleteUser = createAsyncThunk(
   async ({ userId, token }: { userId: string; token: string | null }) => {
     try {
       const result = await axios.delete<string>(
-        `http://localhost:5145/api/v1/users/${userId}`,
+        `https://shop-and-shop.azurewebsites.net/api/v1/users/${userId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -67,7 +67,7 @@ export const updateUserPassword = createAsyncThunk(
     try {
       console.log("token is", token);
       const userCreated = await axios.patch<boolean>(
-        "http://localhost:5145/api/v1/users/updatepassword",
+        "https://shop-and-shop.azurewebsites.net/api/v1/users/updatepassword",
         newPassword,
         {
           headers: {
@@ -88,7 +88,7 @@ export const updateUserPassword = createAsyncThunk(
 export const fetchAllUsers = createAsyncThunk("fetchAllUsers", async () => {
   try {
     const usersList = await axios.get<UserRead[]>( //backend change
-      "http://localhost:5145/api/v1/users", {  
+      "https://shop-and-shop.azurewebsites.net/api/v1/users", {  
       }
     );
     console.log(usersList.data);
@@ -103,7 +103,7 @@ export const displayAllUsers = createAsyncThunk("displayAllUsers",
 async (token: string | null) => {
   try {
     const usersList = await axios.get<UserRead[]>( //backend change
-      "http://localhost:5145/api/v1/users", {
+      "https://shop-and-shop.azurewebsites.net/api/v1/users", {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",

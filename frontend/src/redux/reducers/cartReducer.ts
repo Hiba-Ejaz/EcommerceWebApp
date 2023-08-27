@@ -27,7 +27,7 @@ export const displayCart = createAsyncThunk(
     try {
       console.log("going to get cart items");
       const response = await axios.get<CartRead[]>(
-        "http://localhost:5145/api/v1/carts/items",
+        "https://shop-and-shop.azurewebsites.net/api/v1/carts/items",
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -49,7 +49,7 @@ export const deleteItemFromCart = createAsyncThunk(
   async ({ productId, token }: { productId: string; token: string | null }) => {
     try {
       const orderItemDeleted = await axios.delete<string>(
-        `http://localhost:5145/api/v1/carts/items/${productId}`,
+        `https://shop-and-shop.azurewebsites.net/api/v1/carts/items/${productId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`, // Include the token in the Authorization header
@@ -70,7 +70,7 @@ export const deleteCart = createAsyncThunk(
   async (token: string | null) => {
     try {
       const response = await axios.delete<string>(
-        "http://localhost:5145/api/v1/carts",
+        "https://shop-and-shop.azurewebsites.net/api/v1/carts",
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -99,7 +99,7 @@ export const addToCart = createAsyncThunk(
     try {
       console.log("product quantity request going", newOrderr.quantity);
       const orderCreated = await axios.patch<string>(
-        "http://localhost:5145/api/v1/carts",
+        "https://shop-and-shop.azurewebsites.net/api/v1/carts",
         newOrderr,
         {
           headers: {

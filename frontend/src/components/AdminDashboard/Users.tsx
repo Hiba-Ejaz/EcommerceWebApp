@@ -12,24 +12,23 @@ import {
 } from "@mui/material";
 import { useAppDispatch } from "../../hooks/useCustomUsersType";
 import useCustomTypeSelector from "../../hooks/useCustomTypeSelector";
-import { deleteUser, fetchAllUsers } from "../../redux/reducers/usersReducer";
-import { useEffect, useState } from "react";
+import { deleteUser, displayAllUsers} from "../../redux/reducers/usersReducer";
 
 function Users() {
   const dispatch = useAppDispatch();
-  const users=useCustomTypeSelector(
-    (state) => state.usersReducer
-  );
   const token = useCustomTypeSelector(
     (state) => state.authReducer.accessToken
   );
   const userList = useCustomTypeSelector(
     (state) => state.usersReducer.usersList
   );
-  const handleDeleteUser = (userId:string) => {
-    dispatch(deleteUser({userId:userId,token:token})).then(() => {
-      dispatch(fetchAllUsers());
-    });
+  const handleDeleteUser = async (userId: string) => {
+    try {
+      await dispatch(deleteUser({ userId: userId, token: token }));
+      dispatch(displayAllUsers(token));
+    } catch (error) {
+      console.error("Error deleting user:", error);
+    }
   };
   
   return (

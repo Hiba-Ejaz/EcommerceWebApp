@@ -78,19 +78,15 @@ function Products({  categoryId = 0 }: { categoryId?: number }) {
   const token = useCustomTypeSelector(
     (state) => state.authReducer.accessToken
   );
-  const handleAddToCart = ( productId:string,quantity:number) => {
+  const handleAddToCart = async ( productId:string,quantity:number) => {
     const newOrderr:newOrder = {
       productId: productId,
       quantity: quantity,
     };
     console.log("going to dispatch add to cart");
-    dispatch(addToCart({newOrderr,token}));
-   
+    await dispatch(addToCart({newOrderr,token}));   
   }
-
-  useEffect(() => {
-    
-      
+  useEffect(() => {  
     setPaginatedProduct(service.getData({ from: pagination.from, to: pagination.to }));
     setPagination({ ...pagination, count: filteredList.length })
   }, [pagination.from, pagination.to, filteredList]);
@@ -127,7 +123,7 @@ const handleSortChange = (e: SelectChangeEvent) => {
   };
   
   const handleEditProduct = async (productId: string) => {
-    dispatch(setProductIdForUpdate(productId));
+  await dispatch(setProductIdForUpdate(productId));
     await dispatch(getProductForUpdate(productId)); // Use the async action creator
   };
 
@@ -296,15 +292,15 @@ const handleSortChange = (e: SelectChangeEvent) => {
                     <>
                       <ProductButton
                         variant="outlined"
-                        onClick={() => {
-                          dispatch(deleteProduct({productId:product.id,token:token})).then((resultAction)=> {
+                        onClick={async() => {
+                          var resultAction = await dispatch(deleteProduct({productId:product.id,token:token})); 
                             if (deleteProduct.fulfilled.match(resultAction)) {
                               console.log('Product deletion successful:', resultAction.payload);
-                              dispatch(fetchAllProducts());
+                               await  dispatch(fetchAllProducts());
                             } else if (deleteProduct.rejected.match(resultAction)) {
                               console.error('Product deletion failed:', resultAction.error.message);
                             }
-                        })}}
+                        }}
                       >
                         Delete Product
                       </ProductButton>

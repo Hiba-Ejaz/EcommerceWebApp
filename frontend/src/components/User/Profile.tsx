@@ -31,7 +31,7 @@ const Profile = () => {
     try {
       console.log("going to fetch token");
       const response = await axios.post<LoginResponse>(
-        "https://api.escuelajs.co/api/v1/auth/login",
+        "https://shop-and-shop.azurewebsites.net/api/v1/auth/login",
         {
           email,
           password,
@@ -59,7 +59,7 @@ const Profile = () => {
         return;
       }
       const response = await axios.get<User>(
-        "https://api.escuelajs.co/api/v1/auth/profile",
+        "https://shop-and-shop.azurewebsites.net/api/v1/auth/profile",
         {
           headers: {
             Authorization: `Bearer ${accessToken}`,

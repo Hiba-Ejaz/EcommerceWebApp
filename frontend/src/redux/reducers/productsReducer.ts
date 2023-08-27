@@ -39,7 +39,7 @@ export const fetchAllProducts = createAsyncThunk(
       console.log("came here to fetch");
       const result = await axios.get<ProductRead[]>(
         // "https://api.escuelajs.co/api/v1/products"
-        "http://localhost:5145/api/v1/products/"
+        "https://shop-and-shop.azurewebsites.net/api/v1/products/"
       );
       return result.data;
     } catch (e) {
@@ -53,7 +53,7 @@ export const getProductById = createAsyncThunk(
   async (productId: string) => {
     try {
       const result = await axios.get<ProductRead[]>(
-        `http://localhost:5145/api/v1/products/${productId}`
+        `https://shop-and-shop.azurewebsites.net/api/v1/products/${productId}`
       );
       return result.data;
     } catch (e) {
@@ -75,7 +75,7 @@ export const createNewProduct = createAsyncThunk(
     };
     try {
       const result = await axios.post<ProductRead>(
-        "http://localhost:5145/api/v1/products/",
+        "https://shop-and-shop.azurewebsites.net/api/v1/products/",
         updatedPayload.product,
         {
           headers: {
@@ -104,7 +104,7 @@ export const getAllProducts = createAsyncThunk(
         PageSize: searchQuery.pageSize,
       };
       const result = await axios.get<ProductRead>(
-        "http://localhost:5145/api/v1/products/"
+        "https://shop-and-shop.azurewebsites.net/api/v1/products/"
       );
       return result.data;
     } catch (e) {
@@ -119,7 +119,7 @@ export const updateProduct = createAsyncThunk(
     const { id, updateProductData,token } = payload;
     try {
       const result = await axios.patch<ProductUpdate>(
-        `http://localhost:5145/api/v1/products/${id}`,
+        `https://shop-and-shop.azurewebsites.net/api/v1/products/${id}`,
         updateProductData,
         {
           headers: {
@@ -141,7 +141,7 @@ export const getProductForUpdate = createAsyncThunk(
     try {
       console.log("product coming", productId);
       const result = await axios.get<ProductUpdate>(
-        `http://localhost:5145/api/v1/products/${productId}/update`
+        `https://shop-and-shop.azurewebsites.net/api/v1/products/${productId}/update`
         
       );
       console.log("product for update is", result.data);
@@ -158,7 +158,7 @@ export const deleteProduct = createAsyncThunk(
     const { productId,token } = payload;
     try {
       const result = await axios.delete<boolean>(
-        `http://localhost:5145/api/v1/products/${productId}`,
+        `https://shop-and-shop.azurewebsites.net/api/v1/products/${productId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

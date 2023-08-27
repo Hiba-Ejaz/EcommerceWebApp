@@ -47,7 +47,6 @@ namespace WebApi.Controller.src.Controllers
                var userId = loggedInUserIdClaim.Value;
                if (Guid.TryParse(userId, out Guid userIdGuid))
                {
-                    // return "failed in parsing";
                     return Ok(await _cartService.GetCartItems(userIdGuid));
                }
                else
@@ -56,7 +55,7 @@ namespace WebApi.Controller.src.Controllers
                }
           }
           [HttpPatch]
-          //[Authorize(Roles = "Customer")]
+          [Authorize(Roles = "Customer")]
           public async Task<ActionResult<string>> AddToCart([FromBody] AddToCartDto addToCartDto)
           {
                var loggedInUserIdClaim = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier);
@@ -77,13 +76,12 @@ namespace WebApi.Controller.src.Controllers
           }
 
           [HttpDelete("items/{productId}")]
-          // [Authorize(Roles = "Customer")]
+           [Authorize(Roles = "Customer")]
           public async Task<ActionResult<string>> RemoveFromCart([FromRoute] Guid productId)
           {
                var loggedInUserIdClaim = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier);
                if (loggedInUserIdClaim == null)
                {
-                    return "cliam is null";
                     return BadRequest("User claim is null"); // User not authenticated
                }
                var userId = loggedInUserIdClaim.Value;

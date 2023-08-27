@@ -39,7 +39,7 @@ const Login = () => {
       console.log("going to auth for getting token");
       const response = await axios.post<string>(
       //  "https://api.escuelajs.co/api/v1/auth/login",
-      "http://localhost:5145/api/v1/auth",
+      "https://shop-and-shop.azurewebsites.net/api/v1/auth",
         {
           email,
           password,
@@ -69,7 +69,7 @@ const Login = () => {
         console.error("Access token is present");
       }
       const response = await axios.get<ReadUser>(
-        "http://localhost:5145/api/v1/profile",
+        "https://shop-and-shop.azurewebsites.net/api/v1/profile",
         {
           headers: {
             Authorization: `Bearer ${accessToken}`,

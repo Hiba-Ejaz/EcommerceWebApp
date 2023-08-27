@@ -13,7 +13,7 @@ using WebApi.WebApi.Database;
 namespace WebApi.WebApi.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20230823121314_fullStackFinalMigrations")]
+    [Migration("20230826153325_fullStackFinalMigrations")]
     partial class fullStackFinalMigrations
     {
         /// <inheritdoc />

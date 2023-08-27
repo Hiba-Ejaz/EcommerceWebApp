@@ -25,7 +25,7 @@ export const addOrder = createAsyncThunk(
   async (token: string | null) => {
     try {
       const orderCreated = await axios.patch<string>(
-        "http://localhost:5145/api/v1/order",
+        "https://shop-and-shop.azurewebsites.net/api/v1/order",
         null,
         {
           headers: {
@@ -45,7 +45,7 @@ export const displayOrder = createAsyncThunk(
     try {
       console.log("going to get order items");
       const response = await axios.get<OrderRead[]>(
-        "http://localhost:5145/api/v1/order/my-orders",
+        "https://shop-and-shop.azurewebsites.net/api/v1/order/my-orders",
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -66,7 +66,7 @@ export const fetchAllOrders = createAsyncThunk("fetchAllOrders", async (token: s
   try {
     console.log("going to get order items");
     const response = await axios.get<OrderWithDetailsRead[]>(
-      "http://localhost:5145/api/v1/admin/orders",
+      "https://shop-and-shop.azurewebsites.net/api/v1/admin/orders",
       {
         headers: {
           Authorization: `Bearer ${token}`,

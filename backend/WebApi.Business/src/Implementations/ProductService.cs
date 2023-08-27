@@ -1,6 +1,7 @@
 using AutoMapper;
 using WebApi.Business.src.Abstractions;
 using WebApi.Business.src.Dtos;
+using WebApi.Business.src.Implementations.Shared;
 using WebApi.Domain.src.Abstractions;
 using WebApi.Domain.src.Entities;
 
@@ -20,11 +21,7 @@ namespace WebApi.Business.src.Implementations
     }
     public async Task<ProductReadDto> UpdateOneById(Guid id, ProductUpdateDto updated)
     {
-      var foundItem = await _productRepository.GetOneById(id);
-      if (foundItem is null)
-      {
-        throw new Exception("Item not found");
-      }
+      var foundItem = await _productRepository.GetOneById(id) ?? throw CustomException.NotFoundException();
       var updatedEntity = await _productRepository.UpdateOne(id, _mapper.Map<Product>(updated));
       return _mapper.Map<ProductReadDto>(updatedEntity);
     }
