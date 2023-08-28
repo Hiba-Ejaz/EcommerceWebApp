@@ -38,7 +38,6 @@ export const fetchAllProducts = createAsyncThunk(
     try {
       console.log("came here to fetch");
       const result = await axios.get<ProductRead[]>(
-        // "https://api.escuelajs.co/api/v1/products"
         "https://shop-and-shop.azurewebsites.net/api/v1/products/"
       );
       return result.data;
@@ -69,7 +68,7 @@ export const createNewProduct = createAsyncThunk(
     const updatedPayload = {
       product: {
         ...payload.product,
-        quantity: 10,
+         quantity: payload.product.quantity,
       },
       token: payload.token,
     };
@@ -194,12 +193,10 @@ export const productsSlice = createSlice({
       })
       .addCase(fetchAllProducts.fulfilled, (state, action) => {
         state.loading = false;
-        console.log("products in case", state.products);
         if (typeof action.payload === "string") {
           state.error = action.payload;
         } else {
           state.products = action.payload;
-          console.log("products in case", state.products);
         }
       })
       .addCase(createNewProduct.fulfilled, (state, action) => {

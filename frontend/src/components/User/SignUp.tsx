@@ -46,18 +46,22 @@ const UserDataForm = () => {
     }
   };
   const navigate = useNavigate();
-  const handleSubmit = (event: FormEvent) => {
+  const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
     const { email } = userData;
     const userExists = users.some((user) => user.email === email);
     if (userExists) {
       setError("email already in use");
-    }
-    else {
-      dispatch(createNewUser(userData));
-      navigate("/Profile");
+    } else {
+      try {
+        await dispatch(createNewUser(userData));
+        navigate("/Profile");
+      } catch (error) {
+        console.log("error occured while creating a new user",error);
+      }
     }
   };
+
   const [error, setError] = useState("");
   const theme = useTheme();
   return (

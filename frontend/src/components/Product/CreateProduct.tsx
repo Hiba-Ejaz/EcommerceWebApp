@@ -51,7 +51,7 @@ to {
   const dispatch = useAppDispatch();
   const handleChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
-    if (name === "price" || name === "categoryId") {
+    if (name === "price" || name === "categoryId" || name === "quantity") {
       setProductData((prevData) => ({
         ...prevData,
         [name]: Number(value),
@@ -123,6 +123,14 @@ to {
             onChange={handleChange}
             multiline
             rows={4}
+            fullWidth
+          />
+            <TextField
+            label="Quantity"
+            name="quantity"
+            type="number"
+           value={productData.quantity}
+            onChange={handleChange}
             fullWidth
           />
           <TextField

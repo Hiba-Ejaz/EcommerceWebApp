@@ -27,8 +27,8 @@ import {
  // fetchAllProducts,
  // setProductForUpdate,
 } from "../../redux/reducers/productsReducer";
-import { Product, newOrder } from "../../types/Product";
-import { Link, Route, useParams } from "react-router-dom";
+import {  newOrder } from "../../types/Product";
+import {  useParams } from "react-router-dom";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
@@ -37,7 +37,7 @@ import { addToCart}
   // removeFromCart, totalCartAmount, totalCartAmountAfterUpdate, updateCartItem } 
 from "../../redux/reducers/cartReducer";
 import { CustomisedLink } from "../../styles/navbar/navbar";
-import { CategoryButton, FilterBox, ProductActionButton, ProductBox, ProductButton, ProductImage } from "../../styles/products/productsDisplay";
+import {  FilterBox,  ProductBox, ProductButton, ProductImage } from "../../styles/products/productsDisplay";
 import { Colors } from "../../styles/theme/mainTheme";
 import { ProductRead } from "../../types/NewProduct";
 
@@ -51,8 +51,8 @@ function Products({  categoryId = 0 }: { categoryId?: number }) {
   const [paginatedProducts, setPaginatedProduct] = useState<ProductRead[]>([]);
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.down('md'))
+  const [addingToCart, setAddingToCart] = useState(false);
   const [sortOrder, setSortOrder] = useState("");
-  const [searchByName, setSearchByName] = useState("");
   const [filteredList, setFilteredList] = useState<ProductRead[]>([]);
   const dispatch = useAppDispatch();
   const [lowerPriceRange, setLowerPriceRange] = useState(0);
@@ -63,11 +63,8 @@ function Products({  categoryId = 0 }: { categoryId?: number }) {
     (state) => state.productsReducer.products
   );
  
-  const cart = useCustomTypeSelector((state) => state.cartReducer);
   const LoggedInUser = useCustomTypeSelector((state) => state.authReducer);
   const LoggedInUserRole = LoggedInUser.user.role;
-  console.log("logged in user", LoggedInUserRole);
-  console.log("cart Items", cart.cart);
   const service = {
     getData: ({ from, to }: { from: number; to: number }) => {
       return filteredList.slice(from, to)
@@ -79,12 +76,21 @@ function Products({  categoryId = 0 }: { categoryId?: number }) {
     (state) => state.authReducer.accessToken
   );
   const handleAddToCart = async ( productId:string,quantity:number) => {
+    if (addingToCart) {
+      return; 
+    }
     const newOrderr:newOrder = {
       productId: productId,
       quantity: quantity,
     };
-    console.log("going to dispatch add to cart");
-    await dispatch(addToCart({newOrderr,token}));   
+    try {
+      setAddingToCart(true); 
+      await dispatch(addToCart({ newOrderr, token }));
+    } catch (error) {
+      console.error('An error occurred:', error);
+    } finally {
+      setAddingToCart(false); 
+    }  
   }
   useEffect(() => {  
     setPaginatedProduct(service.getData({ from: pagination.from, to: pagination.to }));
@@ -124,7 +130,7 @@ const handleSortChange = (e: SelectChangeEvent) => {
   
   const handleEditProduct = async (productId: string) => {
   await dispatch(setProductIdForUpdate(productId));
-    await dispatch(getProductForUpdate(productId)); // Use the async action creator
+    await dispatch(getProductForUpdate(productId)); 
   };
 
   const handlePriceChange = (e: SelectChangeEvent) => {
@@ -281,7 +287,7 @@ const handleSortChange = (e: SelectChangeEvent) => {
                   </Typography>
                   {LoggedInUserRole !== "Admin" && showOptions && 
                   (<ProductButton
-                    variant="outlined" show={showOptions}
+                    variant="outlined" disabled={addingToCart} show={showOptions}
                     onClick={() => { 
                       handleAddToCart(product.id,1); 
                     }}

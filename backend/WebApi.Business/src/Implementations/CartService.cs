@@ -23,19 +23,41 @@ namespace WebApi.Business.src.Implementations
             _mapper = mapper;
 
         }
+        // public async Task<IEnumerable<CartReadDto>> GetCartItems(Guid userId)
+        // {
+        //     var carrtItems = await _cartItemRepository.GetCartItems(userId) ?? throw CustomException.NotFoundException();
+        //     var cartItems = carrtItems.Select(ci => new CartReadDto
+        //     {
+        //         ProductId = ci.Product.Id,
+        //         ProductTitle = ci.Product.Title,
+        //         Quantity = ci.Quantity,
+        //         ProductPrice = ci.Product.Price,
+        //         TotalAmount = ci.Cart.TotalAmount,
+        //     });
+        //     return cartItems;
+        // }
         public async Task<IEnumerable<CartReadDto>> GetCartItems(Guid userId)
         {
-            var carrtItems = await _cartItemRepository.GetCartItems(userId) ?? throw CustomException.NotFoundException();
-            var cartItems = carrtItems.Select(ci => new CartReadDto
+            try
             {
-                ProductId = ci.Product.Id,
-                ProductTitle = ci.Product.Title,
-                Quantity = ci.Quantity,
-                ProductPrice = ci.Product.Price,
-                TotalAmount = ci.Cart.TotalAmount,
-            });
-            return cartItems;
+                var carrtItems = await _cartItemRepository.GetCartItems(userId) ?? throw CustomException.NotFoundException();
+                var cartItems = carrtItems.Select(ci => new CartReadDto
+                {
+                    ProductId = ci.Product.Id,
+                    ProductTitle = ci.Product.Title,
+                    Quantity = ci.Quantity,
+                    ProductPrice = ci.Product.Price,
+                    TotalAmount = ci.Cart.TotalAmount,
+                }) ?? throw CustomException.NotFoundException();
+                return cartItems;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("An error occurred while fetching cart items.", ex);
+            }
+
         }
+
         public async Task<string> AddToCart(Guid userId, AddToCartDto addToCartDto)
         {
             var product = await _productRepository.GetOneById(addToCartDto.ProductId);
@@ -56,8 +78,8 @@ namespace WebApi.Business.src.Implementations
                     UserId = userId,
                     Status = OrderStatus.Processing,
                     CartItems = new List<CartItem>()
-                };       
-               var createdCart = await _cartRepository.CreateOne(newCart); 
+                };
+                var createdCart = await _cartRepository.CreateOne(newCart);
                 createdCart.CartItems = new List<CartItem>();
                 var cartItem = new CartItem
                 {
@@ -68,6 +90,8 @@ namespace WebApi.Business.src.Implementations
                 };
                 newCart.CartItems.Add(cartItem);
                 newCart.TotalAmount = cartItem.Product.Price;
+                product.Quantity-=1;
+                await _productRepository.UpdateOne(product.Id,product);
                 return await _cartRepository.UpdateCart(newCart);
             }
             else if (existingCart != null)
@@ -79,7 +103,11 @@ namespace WebApi.Business.src.Implementations
                     {
                         if (addToCartDto.Quantity < 0)
                         {
-                            existingCartItem.Quantity -= Math.Abs(addToCartDto.Quantity);
+                            var producttoupdatequantity1 = await _productRepository.GetOneById(addToCartDto.ProductId);
+                            if(producttoupdatequantity1 != null){
+                            producttoupdatequantity1.Quantity += 1;    
+                            await _productRepository.UpdateOne(producttoupdatequantity1.Id,producttoupdatequantity1);
+                            }
                             if (existingCartItem.Quantity == 0)
                             {
                                 await _cartItemRepository.RemoveFromCart(userId, addToCartDto.ProductId);
@@ -91,7 +119,12 @@ namespace WebApi.Business.src.Implementations
                         }
                         else
                         {
-                            existingCartItem.Quantity += addToCartDto.Quantity;
+                            var producttoupdatequantity2 = await _productRepository.GetOneById(addToCartDto.ProductId);
+                            if(producttoupdatequantity2 != null){
+                            producttoupdatequantity2.Quantity -= 1;    
+                            await _productRepository.UpdateOne(producttoupdatequantity2.Id,producttoupdatequantity2);
+                            }
+                            existingCartItem.Quantity += 1;
                             existingCart.TotalAmount += existingCartItem.Product.Price;
                         }
                         return await _cartItemRepository.UpdateCartItem(existingCartItem);
@@ -112,6 +145,12 @@ namespace WebApi.Business.src.Implementations
                     Product = product,
                     Quantity = addToCartDto.Quantity,
                 };
+                existingCart.TotalAmount+=cartItem2.Product.Price;
+                 var producttoupdatequantity = await _productRepository.GetOneById(cartItem2.Product.Id);
+                            if(producttoupdatequantity != null){
+                            producttoupdatequantity.Quantity -= 1;    
+                            await _productRepository.UpdateOne(producttoupdatequantity.Id,producttoupdatequantity);
+                            }
                 existingCart.CartItems.Add(cartItem2);
                 return await _cartRepository.UpdateCart(existingCart);
             }

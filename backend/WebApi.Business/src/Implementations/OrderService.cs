@@ -74,7 +74,7 @@ namespace WebApi.Business.src.Implementations
             return await _orderRepo.UpdateOne(existingOrder);
         }
         public async Task<IEnumerable<OrderReadDto>> GetOrder(Guid userId)
-        {
+        {   try{
             var ordeerItems = await _orderItemRepository.GetOrderItems(userId)?? throw CustomException.NotFoundException();
             var orderItems = ordeerItems.Select(ci => new OrderReadDto
             {
@@ -86,6 +86,12 @@ namespace WebApi.Business.src.Implementations
                 TotalAmount = ci.Order.TotalAmount,
             }) ?? throw CustomException.NotFoundException();
             return orderItems;
+        } catch (Exception ex)
+    {
+        
+     throw new Exception("An error occurred while fetching order items.", ex);
+
+    }
         }
         public async Task<IEnumerable<OrderWithDetailsReadDto>> GetAllOrders()
         {

@@ -14,13 +14,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../../../hooks/useCustomUsersType";
 import useCustomTypeSelector from "../../../hooks/useCustomTypeSelector";
 import { AddCircle, RemoveCircle } from "@mui/icons-material";
-// import {
-//   decrementQuantityOfIndiviualProduct,
-//   incrementQuantityOfIndiviualProduct,
-//   removeFromCart,
-//   totalCartAmount,
-//   totalCartAmountAfterUpdate,
-// } from "../../../redux/reducers/cartReducer";
+import CircularProgress from "@mui/material/CircularProgress";
+
 import { useEffect, useState } from "react";
 import { Colors } from "../../../styles/theme/mainTheme";
 import { addToCart, deleteCart, deleteItemFromCart, displayCart } from "../../../redux/reducers/cartReducer";
@@ -35,8 +30,18 @@ function Cart() {
     (state) => state.authReducer.accessToken
   );
   const cartItems = cart.cart;
-const [isLoading, setIsLoading] = useState(false);
+  const isCartLoading = useCustomTypeSelector((state) => state.cartReducer.isCartLoading);
+ const [isLoading, setIsLoading] = useState(false);
 const navigate = useNavigate();
+const handleOrderButtonClick = async () => {
+  try {
+    await dispatch(addOrder(token));
+    await dispatch(deleteCart(token));
+    navigate("/Order"); 
+  } catch (error) {
+    console.log("error occured in deletion of cart");
+  }
+};
   const manageQuantityInCart = async ( productId:string,quantity:number) => {
     setIsLoading(true); 
     const newOrderr:newOrder = {
@@ -55,6 +60,16 @@ const navigate = useNavigate();
   }
   return (
     <div>
+     {isCartLoading ? (
+        <CircularProgress /> 
+      ) : (  
+      <>
+      {cart.error && <p>Error: {cart.error}</p>} 
+      {cartItems.length === 0 ? (
+            <Typography variant="subtitle1" gutterBottom>
+              Your cart is empty. Shop more!
+            </Typography>
+          ) :(
       <Grid container spacing={2}>
         <Grid item xs={12} sm={8}>
           {cartItems.map((product) => (
@@ -77,14 +92,14 @@ const navigate = useNavigate();
                     Category ID: {product.category.id}
                   </Typography> */}
                   <Typography variant="subtitle1" gutterBottom>
-                    Price: {product.productPrice*product.quantity}
+                   Product Price: {product.productPrice}
+                  </Typography>
+                  <Typography variant="subtitle1" gutterBottom>
+                  Sub-Total{product.productPrice*product.quantity}
                   </Typography>
                   <Box display="flex" alignItems="center">
-                    <IconButton  disabled={isLoading} 
-                      onClick={() => { manageQuantityInCart(product.productId,-1) 
-                       // dispatch(displayCart(token)); 
-                      //  dispatch(decrementQuantityOfIndiviualProduct(product.id))
-                        
+                    <IconButton  disabled={isCartLoading} 
+                      onClick={() => { manageQuantityInCart(product.productId,-1)                       
                       }}
                     >
                       <RemoveCircle />
@@ -92,11 +107,8 @@ const navigate = useNavigate();
                     <Typography variant="subtitle1" gutterBottom>
                       {product.quantity}
                     </Typography>
-                    <IconButton  disabled={isLoading} 
+                    <IconButton disabled={isCartLoading} 
                       onClick={() => {manageQuantityInCart(product.productId,1)  
-                       //  dispatch(displayCart(token)); 
-                        // dispatch(incrementQuantityOfIndiviualProduct(product.id))
-                        // dispatch(totalCartAmountAfterUpdate());
                       }
                       }
                     >
@@ -105,6 +117,7 @@ const navigate = useNavigate();
                   </Box>
                   <Button
                     variant="contained"
+                    disabled={isCartLoading} 
                     sx={{backgroundColor:Colors.light_grey,
                     color:Colors.black,   
                      transition: "background-color 0.3s, border 0.3s, color 0.3s",
@@ -140,15 +153,8 @@ const navigate = useNavigate();
                 Total Amount: {cart.total}
               </Typography>
               
-              <Button variant="contained"  onClick={async() => {
-                      // dispatch(addOrder( token )).then(() => {
-                      //   dispatch(deleteCart(token));
-                      await dispatch(addOrder(token));
-                      await dispatch(deleteCart(token));
-                      navigate("/Order");
-                    //  });
-                    }
-                  }
+              <Button variant="contained" disabled={isCartLoading}  
+               onClick={handleOrderButtonClick}
                sx={{backgroundColor:Colors.light_grey,
                     color:Colors.black,   
                      transition: "background-color 0.3s, border 0.3s, color 0.3s",
@@ -163,8 +169,10 @@ const navigate = useNavigate();
             </CardContent>
           </Card>
         </Grid>
-      </Grid>
+      </Grid>)}
+      </>)};
     </div>
+      
   );
 }
 

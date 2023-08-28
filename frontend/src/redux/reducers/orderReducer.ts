@@ -56,7 +56,7 @@ export const displayOrder = createAsyncThunk(
       console.log("order response", response.data);
       return response.data;
     } catch (e) {
-      console.log("error");
+      console.log("error in display my order",e);
       const error = e as AxiosError;
       throw error;
     }
@@ -77,7 +77,7 @@ export const fetchAllOrders = createAsyncThunk("fetchAllOrders", async (token: s
     console.log("order with details response", response.data);
     return response.data;
   } catch (e) {
-    console.log("error");
+    console.log("error", e); 
     const error = e as AxiosError;
     throw error;
   }
@@ -91,7 +91,6 @@ export const orderSlice = createSlice({
     builder
       .addCase(displayOrder.pending, (state) => {
         state.loading = true;
-        state.error = "it is loading";
       })
       .addCase(displayOrder.rejected, (state, action) => {
         state.loading = false;

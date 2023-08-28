@@ -57,6 +57,7 @@ function Actions({ matches }: NavBarMatchesProps) {
                   <ShoppingCart sx={{ color: Colors.dim_grey }} />
                 </Link>
               </Tooltip>
+              
             </Badge>
           </ListItemIcon>
         </ListItemButton>

@@ -10,6 +10,7 @@ interface CartState {
   totalQuantity: number;
   total: number;
   loading: boolean;
+  isCartLoading: boolean;
   error: string | null;
 }
 
@@ -18,6 +19,7 @@ const initialState: CartState = {
   totalQuantity: 0,
   total: 0,
   loading: false,
+  isCartLoading: false,
   error: null,
 };
 
@@ -37,7 +39,7 @@ export const displayCart = createAsyncThunk(
       );
       return response.data;
     } catch (e) {
-      console.log("error");
+      console.log("error displaying cart");
       const error = e as AxiosError;
       throw error;
     }
@@ -78,6 +80,7 @@ export const deleteCart = createAsyncThunk(
           },
         }
       );
+      console.log("delete cart response",response.data);
       return response.data;
     } catch (e) {
       const error = e as AxiosError;
@@ -126,7 +129,7 @@ export const cartSlice = createSlice({
     builder
       .addCase(displayCart.pending, (state) => {
         state.loading = true;
-        state.error = "it is loading";
+        state.isCartLoading = true; 
       })
       .addCase(displayCart.rejected, (state, action) => {
         state.loading = false;
@@ -136,6 +139,7 @@ export const cartSlice = createSlice({
         displayCart.fulfilled,
         (state, action: PayloadAction<CartRead[]>) => {
           state.cart = action.payload as CartRead[];
+          state.isCartLoading = false;
           state.totalQuantity = action.payload.reduce(
             (total, product) => total + product.quantity,
             0
@@ -149,7 +153,6 @@ export const cartSlice = createSlice({
       )
       .addCase(addToCart.pending, (state) => {
         state.loading = true;
-        state.error = "it is loading";
       })
       .addCase(
         addToCart.fulfilled,

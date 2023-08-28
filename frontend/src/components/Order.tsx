@@ -1,7 +1,7 @@
 import { Box, Button, Card, CardContent, Divider, Grid, Typography } from "@mui/material";
 import useCustomTypeSelector from "../hooks/useCustomTypeSelector";
 import { useAppDispatch } from "../hooks/useCustomUsersType";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { displayOrder } from "../redux/reducers/orderReducer";
 
   
@@ -11,15 +11,25 @@ import { displayOrder } from "../redux/reducers/orderReducer";
     const token = useCustomTypeSelector(
       (state) => state.authReducer.accessToken
     );
-   
+    const isOrderLoading = useCustomTypeSelector((state) => state.orderReducer.loading);
     const orderItems = order.order;
   
-  //const orderId=orderItems[0].orderId;
+ 
   const orderId = orderItems.length > 0 ? orderItems[0].orderId : null;
-
   useEffect(() => {
-    dispatch(displayOrder(token));
-  }, [dispatch]);
+    const fetchData = async () => {
+      try {
+        await dispatch(displayOrder(token));
+      } catch (error) {
+        console.error("Error fetching order:", error);
+      }
+    };
+    fetchData();
+}, [dispatch, token]);
+
+  if (isOrderLoading) {
+    return <p>Loading...</p>;
+  }
 
     return (
       <div>
@@ -32,7 +42,6 @@ import { displayOrder } from "../redux/reducers/orderReducer";
         <Grid container spacing={2}>
           <Grid item xs={12} sm={8}>
             {orderItems.map((product) => (
-         
               <Card sx={{ marginBottom: 2 }} key={product.productId}>
                 <Box display="flex" alignItems="center" p={2}>
                   {/* <img
