@@ -15,8 +15,10 @@ namespace WebApi.Controller.src.Controllers
         }
         [Authorize(Roles = "Admin")]
         [HttpGet("orders")]
-        public async Task<IEnumerable<OrderWithDetailsReadDto>> GetOrderItems()
+         public async Task<IEnumerable<OrderWithDetailsReadDto>> GetOrderItems()
+        //  public async Task<string> GetOrderItems()
         {
+            // return "controller coming back";
             return await _orderService.GetAllOrders();
         }
     }

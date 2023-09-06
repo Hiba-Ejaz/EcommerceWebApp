@@ -150,7 +150,7 @@ const Profile = () => {
           <Typography variant="body1" gutterBottom>
             Role: {user.role}
           </Typography>
-          <img src={user.avatar} alt="User Avatar" />z
+          <img src={user.avatar} alt="User Avatar"  style={{ width: '20px', height: '20px' }} />
           <Box>
             <Button
               variant="contained"

@@ -5,3 +5,10 @@ export interface Category {
     creationAt: string,
     updatedAt: string
   };
+  export interface CategoryCreate {
+    name: string;
+  };
+  export interface ReadCategory {
+    id:string;
+    name: string;
+  };

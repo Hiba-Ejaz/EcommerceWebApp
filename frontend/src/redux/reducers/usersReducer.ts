@@ -86,12 +86,12 @@ export const updateUserPassword = createAsyncThunk(
   }
 );
 export const fetchAllUsers = createAsyncThunk("fetchAllUsers", async () => {
+
   try {
     const usersList = await axios.get<UserRead[]>( //backend change
       "https://shop-and-shop.azurewebsites.net/api/v1/users", {  
       }
     );
-    console.log(usersList.data);
     return usersList.data;
   } catch (e) {
     const error = e as AxiosError;
@@ -102,6 +102,7 @@ export const fetchAllUsers = createAsyncThunk("fetchAllUsers", async () => {
 export const displayAllUsers = createAsyncThunk("displayAllUsers", 
 async (token: string | null) => {
   try {
+    console.log("going to fetch userssssssssssssssssssss");
     const usersList = await axios.get<UserRead[]>( //backend change
       "https://shop-and-shop.azurewebsites.net/api/v1/users", {
         headers: {

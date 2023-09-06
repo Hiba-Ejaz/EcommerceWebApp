@@ -8,5 +8,6 @@ namespace WebApi.Business.src.Abstractions
         public Task<string> AddOrder(Guid userIdGuid);
         public Task<IEnumerable<OrderReadDto>> GetOrder(Guid userIdGuid);
         Task<IEnumerable<OrderWithDetailsReadDto>> GetAllOrders();
+        // Task<string> GetAllOrders();
     }
 }

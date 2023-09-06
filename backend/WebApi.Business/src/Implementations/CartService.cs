@@ -40,7 +40,7 @@ namespace WebApi.Business.src.Implementations
         {
             try
             {
-                var carrtItems = await _cartItemRepository.GetCartItems(userId) ?? throw CustomException.NotFoundException();
+                var carrtItems = await _cartItemRepository.GetCartItems(userId)?? throw CustomException.NotFoundException();
                 var cartItems = carrtItems.Select(ci => new CartReadDto
                 {
                     ProductId = ci.Product.Id,
@@ -68,7 +68,7 @@ namespace WebApi.Business.src.Implementations
             }
             if (user == null)
             {
-                throw CustomException.NotFoundException();
+             throw CustomException.NotFoundException();
             }
             var existingCart = await _cartRepository.GetProcessingCartByUserId(userId);
             if (existingCart == null)
@@ -105,7 +105,8 @@ namespace WebApi.Business.src.Implementations
                         {
                             var producttoupdatequantity1 = await _productRepository.GetOneById(addToCartDto.ProductId);
                             if(producttoupdatequantity1 != null){
-                            producttoupdatequantity1.Quantity += 1;    
+                            producttoupdatequantity1.Quantity += 1; 
+                            existingCartItem.Quantity -= 1;   
                             await _productRepository.UpdateOne(producttoupdatequantity1.Id,producttoupdatequantity1);
                             }
                             if (existingCartItem.Quantity == 0)
@@ -115,6 +116,7 @@ namespace WebApi.Business.src.Implementations
                             if (existingCartItem.Quantity > 0)
                             {
                                 existingCart.TotalAmount -= existingCartItem.Product.Price;
+            
                             }
                         }
                         else
@@ -164,7 +166,7 @@ namespace WebApi.Business.src.Implementations
             }
             catch (Exception ex)
             {
-                throw new CustomException(500, $"Error deleting cart: {ex.Message}");
+                  throw new CustomException(500, $"Error deleting cart: {ex.Message}");
             }
         }
         public async Task<string> DeleteCart(Guid userIdGuid)
@@ -186,7 +188,7 @@ namespace WebApi.Business.src.Implementations
                 }
                 else
                 {
-                    throw CustomException.NotFoundException();
+                         throw CustomException.NotFoundException();
                 }
             }
             catch (Exception ex)

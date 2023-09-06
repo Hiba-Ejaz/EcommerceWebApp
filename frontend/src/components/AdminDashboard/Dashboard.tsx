@@ -2,55 +2,85 @@ import { useNavigate } from "react-router";
 import useCustomTypeSelector from "../../hooks/useCustomTypeSelector";
 import { useAppDispatch } from "../../hooks/useCustomUsersType";
 import { newOrder } from "../../types/Product";
-import { addToCart, deleteItemFromCart, displayCart } from "../../redux/reducers/cartReducer";
-import { Box, Button, Card, CardContent, Divider, Grid, IconButton,  ListItemButton, Typography } from "@mui/material";
+import {
+  addToCart,
+  deleteItemFromCart,
+  displayCart,
+} from "../../redux/reducers/cartReducer";
+import {
+  Box,
+  Button,
+  Card,
+  CardContent,
+  Divider,
+  Grid,
+  IconButton,
+  ListItemButton,
+  Typography,
+} from "@mui/material";
 import { AddCircle, Dashboard, RemoveCircle } from "@mui/icons-material";
 import { Colors } from "../../styles/theme/mainTheme";
 import { Link } from "react-router-dom";
 import Users from "./Users";
-import { displayAllUsers, fetchAllUsers } from "../../redux/reducers/usersReducer";
+import {
+  displayAllUsers,
+  fetchAllUsers,
+} from "../../redux/reducers/usersReducer";
 import { fetchAllOrders } from "../../redux/reducers/orderReducer";
- 
-  
-  function Dashboarddd() {
-    const dispatch = useAppDispatch(); 
+
+function Dashboarddd() {
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const token = useCustomTypeSelector(
-    (state) => state.authReducer.accessToken
-  );
-  const handleNavigateAndFetch = () => {
-    // Dispatch the fetchAllUsers action before navigating
-    dispatch(displayAllUsers(token));
-    navigate("/users");
+  const token = useCustomTypeSelector((state) => state.authReducer.accessToken);
+  const handleNavigateAndFetch = async () => {
+    try {
+      await dispatch(displayAllUsers(token));
+      navigate("/users");
+    } catch (error) {
+      console.error("Error fetching and navigating:", error);
+    }
   };
-  const handleNavigateAndFetchOrders = () => {
-    // Dispatch the fetchAllUsers action before navigating
-    dispatch(fetchAllOrders(token));
+  const handleNavigateAndFetchOrders = async () => {
+    try{
+     await dispatch(fetchAllOrders(token));
     navigate("/orders");
+    }
+    catch (error) {
+      console.error("Error fetching and navigating orders:", error);
+    }
   };
-   
-    return (
-      <div>
+  // const handleNavigateCategories = () => {
+  //   navigate("/categories");
+  // };
+
+  return (
+    <div>
       <nav>
         <ul>
           <li>
-          <ListItemButton>
-          <Link to={"/users"} onClick={handleNavigateAndFetch}>
-              Users Panel
-            </Link>
-         </ListItemButton>
+            <ListItemButton>
+              <Link to={"/users"} onClick={handleNavigateAndFetch}>
+                Users Panel
+              </Link>
+            </ListItemButton>
           </li>
           <li>
+            <ListItemButton>
+              <Link to={"/orders"} onClick={handleNavigateAndFetchOrders}>
+                Orders Panel
+              </Link>
+            </ListItemButton>
+          </li>
+          {/* <li>
           <ListItemButton>
-          <Link to={"/orders"} onClick={handleNavigateAndFetchOrders}>
-              Orders Panel
+          <Link to={"/categories"} onClick={handleNavigateCategories}>
+              Categories
             </Link>
          </ListItemButton>
-          </li>
-         
+          </li> */}
         </ul>
       </nav>
-        <Grid container spacing={2}>
+      {/* <Grid container spacing={2}>
           
           <Grid item xs={12} sm={4}>
             <Card sx={{ marginBottom: 2 }}>
@@ -61,10 +91,9 @@ import { fetchAllOrders } from "../../redux/reducers/orderReducer";
               </CardContent>
             </Card>
           </Grid>
-        </Grid>
-      </div>
-    );
-  }
-  
-  export default Dashboarddd;
-  
+        </Grid> */}
+    </div>
+  );
+}
+
+export default Dashboarddd;

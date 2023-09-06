@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using WebApi.Domain.src.Entities;
@@ -12,9 +13,11 @@ using WebApi.WebApi.Database;
 namespace WebApi.WebApi.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20230904104028_UpdatedMigration")]
+    partial class UpdatedMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -231,11 +234,6 @@ namespace WebApi.WebApi.Migrations
                         .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("description");
-
-                    b.Property<string[]>("Images")
-                        .IsRequired()
-                        .HasColumnType("text[]")
-                        .HasColumnName("images");
 
                     b.Property<decimal>("Price")
                         .HasColumnType("numeric")

@@ -33,13 +33,13 @@ const initialState: ProductReducer = {
 
 export const fetchAllProducts = createAsyncThunk(
   "fetchAllProducts",
-
   async () => {
     try {
       console.log("came here to fetch");
       const result = await axios.get<ProductRead[]>(
         "https://shop-and-shop.azurewebsites.net/api/v1/products/"
       );
+      console.log(result.data);
       return result.data;
     } catch (e) {
       const error = e as AxiosError;
@@ -73,6 +73,7 @@ export const createNewProduct = createAsyncThunk(
       token: payload.token,
     };
     try {
+      console.log("product going ",updatedPayload.product)
       const result = await axios.post<ProductRead>(
         "https://shop-and-shop.azurewebsites.net/api/v1/products/",
         updatedPayload.product,

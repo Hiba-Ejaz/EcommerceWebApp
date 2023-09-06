@@ -136,20 +136,6 @@ console.log("token is",token);
                         }} variant="contained" sx={{backgroundColor:Colors.black ,color:Colors.light_grey}}>
           Update your password
         </Button>
-        <TextField
-          label="Role"
-          name="role"
-          value={userData.role}
-          onChange={handleChange}
-          fullWidth
-          margin="normal"
-          required
-        />
-        <input
-        type="file"
-          name="avatar"
-          onChange={handleChange}
-        />
         {/* <Button type="submit" onClick={() => {
                           // dispatch(addToCart(product))
                           //dispatch(UpdateUser(userData.password));

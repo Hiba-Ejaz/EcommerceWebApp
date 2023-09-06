@@ -13,8 +13,8 @@ using WebApi.WebApi.Database;
 namespace WebApi.WebApi.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20230826153325_fullStackFinalMigrations")]
-    partial class fullStackFinalMigrations
+    [Migration("20230905094607_UpdatedProduct")]
+    partial class UpdatedProduct
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -234,6 +234,11 @@ namespace WebApi.WebApi.Migrations
                         .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("description");
+
+                    b.Property<string[]>("Images")
+                        .IsRequired()
+                        .HasColumnType("text[]")
+                        .HasColumnName("images");
 
                     b.Property<decimal>("Price")
                         .HasColumnType("numeric")

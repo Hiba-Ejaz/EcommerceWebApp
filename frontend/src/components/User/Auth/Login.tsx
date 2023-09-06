@@ -152,7 +152,7 @@ const Login = () => {
               <Typography variant="body1" gutterBottom>
                 Role: {user.role}
               </Typography>
-              <img src={user.avatar} alt="User Avatar" />
+              <img src={user.avatar} alt="User Avatar" height="200em" />
               <Box>
                 <Button
                   variant="contained"

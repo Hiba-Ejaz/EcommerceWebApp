@@ -33,9 +33,9 @@ function CreateProduct() {
     title: "",
     price: 0,
     description: "",
-   // categoryId: "",
-    quantity:0,
-    //imagesIds:[],
+    // categoryId: "",
+    quantity: 0,
+    images: [],
   });
   const slideAnimation = keyframes`
 from {
@@ -57,44 +57,31 @@ to {
         [name]: Number(value),
       }));
     } else if (name === "images") {
-      const files = event.target.files;
-      if (files) {
-        const imageIds: string[] = [];
-      for (let i = 0; i < files.length && i<=2 ; i++) {
-        const file = files[i];
-        console.log("going to the common function");
-        
-        const response=  await dispatch(uploadFile(file)) as PayloadAction<{imagesId:string}>;
-        const id = response.payload.imagesId;
-        imageIds.push(id);
-      }
-      
+      const imageUrls = value.split(",").map((url) => url.trim());
+      const limitedImageUrls = imageUrls.slice(0, 3);
       setProductData((prevState) => ({
         ...prevState,
-        [name]: imageIds,
+        images: limitedImageUrls,
       }));
-    } }
-    else {
+    } else {
       setProductData((prevData) => ({
         ...prevData,
         [name]: value,
       }));
     }
   };
-  const token = useCustomTypeSelector(
-    (state) => state.authReducer.accessToken
-  );
-  function createImageObject(location: string): ImageType {
-    return {
-      link: location,
-      productId: 0, // You need to set the actual product ID here if you have it
-    };
-  }
+  const token = useCustomTypeSelector((state) => state.authReducer.accessToken);
+  // function createImageObject(location: string): ImageType {
+  //   return {
+  //     link: location,
+  //     productId: 0, // You need to set the actual product ID here if you have it
+  //   };
+  // }
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
     setCreateNew(false);
-    const { title } = productData;
-    dispatch(createNewProduct({product:productData,token:token}));
+    // const { title } = productData;
+    dispatch(createNewProduct({ product: productData, token: token }));
     // if(products.find((item)=>item.id===productData.))
   };
   return (
@@ -125,11 +112,11 @@ to {
             rows={4}
             fullWidth
           />
-            <TextField
+          <TextField
             label="Quantity"
             name="quantity"
             type="number"
-           value={productData.quantity}
+            value={productData.quantity}
             onChange={handleChange}
             fullWidth
           />
@@ -137,17 +124,18 @@ to {
             label="Category ID"
             name="categoryId"
             type="number"
-           // value={productData.categoryId}
+            // value={productData.categoryId}
             onChange={handleChange}
             fullWidth
           />
-          <label>Add product images (it will take only first 3 images)</label>
-          <input 
-        type="file"
-        name="images"
-        onChange={handleChange}
-        multiple
-      />
+          <label>Add product images (comma-separated URLs, maximum 3)</label>
+          <TextField
+            fullWidth
+            type="text"
+            name="images"
+            onChange={handleChange}
+            value={productData.images}
+          />
           <Button type="submit" variant="contained" color="primary">
             Add Product
           </Button>

@@ -83,6 +83,7 @@ export const deleteCart = createAsyncThunk(
       console.log("delete cart response",response.data);
       return response.data;
     } catch (e) {
+      console.log("erro is",e);
       const error = e as AxiosError;
       throw error;
     }
@@ -97,7 +98,7 @@ export const addToCart = createAsyncThunk(
   }: {
     newOrderr: newOrder;
     token: string | null;
-  }) => {
+  }, { rejectWithValue }) => {
     console.log("inside reducer");
     try {
       console.log("product quantity request going", newOrderr.quantity);
@@ -106,17 +107,15 @@ export const addToCart = createAsyncThunk(
         newOrderr,
         {
           headers: {
-            Authorization: `Bearer ${token}`, // Include the token in the Authorization header
+            Authorization: `Bearer ${token}`, 
             "Content-Type": "application/json",
           },
         }
       );
-      console.log("order data", orderCreated.data);
       return orderCreated.data;
-    } catch (e) {
-      console.log("error");
-      const error = e as AxiosError;
-      return error.message;
+    } catch (e:any) {
+      console.log("error here");
+      return rejectWithValue(e.message);
     }
   }
 );
@@ -158,17 +157,19 @@ export const cartSlice = createSlice({
         addToCart.fulfilled,
         (state, action: PayloadAction<boolean | string>) => {
           state.loading = false;
-          if (typeof action.payload === "string") {
-            console.log("request fulfilled");
-            state.error = action.payload;
-          } else {
-            console.log("actionpayload fulfilled not string");
+          // if (typeof action.payload === "string") {
+          //   state.error = action.payload;     
+          // } else {
+          //   console.log("actionpayload fulfilled not string");
+          // }
+          if (!state.error) {
+            return state;
           }
         }
       )
       .addCase(addToCart.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.error.message || null;
+        state.loading = false; 
+        state.error = action.payload as string;
       });
   },
 });

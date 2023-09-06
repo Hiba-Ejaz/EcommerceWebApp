@@ -64,7 +64,6 @@ namespace WebApi.Controller.src.Controllers
                     return "user claim is null"; // User not authenticated
                }
                var userId = loggedInUserIdClaim.Value;
-               // var userId=await GetUserFromClaim();
                if (Guid.TryParse(userId, out Guid userIdGuid))
                {
                     return await _cartService.AddToCart(userIdGuid, addToCartDto);

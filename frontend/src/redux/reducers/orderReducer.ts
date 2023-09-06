@@ -10,6 +10,12 @@ interface OrderState {
   loading: boolean;
   error: string | null;
 }
+type ErrorResponseType = {
+  statusCode: number;
+  message: string;
+
+};
+
 
 const initialState: OrderState = {
   orderList: [],
@@ -36,7 +42,14 @@ export const addOrder = createAsyncThunk(
       );
       console.log("order data", orderCreated.data);
       return orderCreated.data;
-    } catch (e) {}
+    } catch (error:any) {
+      if (axios.isAxiosError(error)) {
+        console.error("Detailed error message:", error.response?.data);
+      } else {
+        console.error("Request failed:", error.message);
+      }
+      throw error;
+    }
   }
 );
 export const displayOrder = createAsyncThunk(

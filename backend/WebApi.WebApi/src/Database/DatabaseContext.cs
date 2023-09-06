@@ -36,11 +36,11 @@ namespace WebApi.WebApi.Database
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            var builder = new NpgsqlDataSourceBuilder(_configuration.GetConnectionString("DefaultConnection"));
-            builder.MapEnum<Role>();
-            builder.MapEnum<OrderStatus>();
-            optionsBuilder.UseNpgsql(builder.Build()).UseSnakeCaseNamingConvention();
-            optionsBuilder.AddInterceptors(new TimeStampInterceptor());
+            // var builder = new NpgsqlDataSourceBuilder(_configuration.GetConnectionString("DefaultConnection"));
+            // builder.MapEnum<Role>();
+            // builder.MapEnum<OrderStatus>();
+            // optionsBuilder.UseNpgsql(builder.Build()).UseSnakeCaseNamingConvention();
+            // optionsBuilder.AddInterceptors(new TimeStampInterceptor());
         }
     }
 }

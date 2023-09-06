@@ -23,15 +23,11 @@ namespace WebApi.Business.src.Implementations
                 await _baseRepo.DeleteOneById(foundItem);
                 return true;
             }
-            throw CustomException.NotFoundException();
+           throw CustomException.NotFoundException();
         }
         public virtual async Task<IEnumerable<TReadDto>> GetAll(SearchQueryOptions options)
         {
-            var mappedResult = _mapper.Map<IEnumerable<TReadDto>>(await _baseRepo.GetAll(options));
-            if (mappedResult == null)
-            {
-                throw CustomException.NotFoundException();
-            }
+            var mappedResult = _mapper.Map<IEnumerable<TReadDto>>(await _baseRepo.GetAll(options)) ?? throw CustomException.NotFoundException();
             return mappedResult;
         }
         public async Task<TReadDto> GetOneById(Guid id)

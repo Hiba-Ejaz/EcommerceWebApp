@@ -25,8 +25,10 @@ namespace WebApi.Business.src.Implementations
         }
         public async Task<string> AddOrder(Guid userIdGuid)
         {
-            var cart = await _cartRepository.GetProcessingCartByUserId(userIdGuid) ?? throw CustomException.NotFoundException();
-            var user = await _userRepo.GetOneById(userIdGuid) ?? throw CustomException.NotFoundException();
+            var cart = await _cartRepository.GetProcessingCartByUserId(userIdGuid);
+            // ?? throw CustomException.NotFoundException();
+            var user = await _userRepo.GetOneById(userIdGuid);
+            // ?? throw CustomException.NotFoundException();
             var existingOrder = await _orderRepo.GetOneByUserId(userIdGuid);
             if (existingOrder == null)
             {
@@ -75,7 +77,8 @@ namespace WebApi.Business.src.Implementations
         }
         public async Task<IEnumerable<OrderReadDto>> GetOrder(Guid userId)
         {   try{
-            var ordeerItems = await _orderItemRepository.GetOrderItems(userId)?? throw CustomException.NotFoundException();
+            var ordeerItems = await _orderItemRepository.GetOrderItems(userId);
+            //?? throw CustomException.NotFoundException();
             var orderItems = ordeerItems.Select(ci => new OrderReadDto
             {
                 ProductId = ci.Product.Id,
@@ -84,7 +87,8 @@ namespace WebApi.Business.src.Implementations
                 Quantity = ci.Quantity,
                 ProductPrice = ci.Product.Price,
                 TotalAmount = ci.Order.TotalAmount,
-            }) ?? throw CustomException.NotFoundException();
+            });
+            // ?? throw CustomException.NotFoundException();
             return orderItems;
         } catch (Exception ex)
     {
@@ -93,7 +97,7 @@ namespace WebApi.Business.src.Implementations
 
     }
         }
-        public async Task<IEnumerable<OrderWithDetailsReadDto>> GetAllOrders()
+         public async Task<IEnumerable<OrderWithDetailsReadDto>> GetAllOrders()
         {
             var allOrders = await _orderRepo.GetAllOrders() ?? throw CustomException.NotFoundException();
             var orders = allOrders.Select(od => new OrderWithDetailsReadDto
@@ -112,6 +116,7 @@ namespace WebApi.Business.src.Implementations
                 }).ToList()
             });
             return orders;
+           
         }
     }
 }

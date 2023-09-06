@@ -1,6 +1,6 @@
 # E-Commerce Web App
 
-Welcome to the E-Commerce Web App, a full-fledged e-commerce application built using ASP.NET Core Web API for the backend and Redux with Material UI for the frontend. This application combines the power of clean architecture, database storage, and a well-designed user interface to offer both customers and administrators an enjoyable shopping experience.
+Welcome to the E-Commerce Web App, an e-commerce application built using ASP.NET Core Web API for the backend and Redux with Material UI for the frontend. This application combines the power of clean architecture, database storage, and a well-designed user interface.
 
 ## Features
 
@@ -23,9 +23,13 @@ Welcome to the E-Commerce Web App, a full-fledged e-commerce application built u
 
 ## Usage
 1. Visit the home page to explore the array of available products.
-2. Either create a new account or log in to your existing account to start adding products to your cart.
+2. Either create a new account or log in to your existing account to start adding products to your cart (Admin cannot add products to the cart).
 3. Access the cart section to manage items, adjust quantities, and finalize orders.
 4. Admin users can access the admin dashboard for streamlined product, order, and user management.
+   
+## Admin Account Details
+- Email: mummy@gmail.com
+- Password: mummy123
 
 ## Technologies Used
 

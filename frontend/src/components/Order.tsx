@@ -25,7 +25,7 @@ import { displayOrder } from "../redux/reducers/orderReducer";
       }
     };
     fetchData();
-}, [dispatch, token]);
+}, []);
 
   if (isOrderLoading) {
     return <p>Loading...</p>;

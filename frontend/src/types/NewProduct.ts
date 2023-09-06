@@ -4,7 +4,7 @@ export interface NewProduct{
   description: string;
  // categoryId: string; // Use string for CategoryId since it's a Guid (UUID)
   quantity: number;
- // imagesIds: string[];
+  images: string[];
 }
 export interface searchQueryOptions {
   searchQuery: string;      // Corresponds to SearchQuery property
@@ -26,6 +26,7 @@ export interface CreateProduct {
     title: string;
     price: number;
     description: string;
+    images: string[];
     //imagesIds: string[]; // Use the Image interface defined earlier
   }
   export interface ImageType {
@@ -36,6 +37,7 @@ export interface CreateProduct {
     title: string;
     price: number;
     description: string;
+    images: string[];
    // categoryId: string; // Use string for CategoryId since it's a Guid (UUID)
    // images: string[]; // Use the Image interface defined earlier
     quantity: number;

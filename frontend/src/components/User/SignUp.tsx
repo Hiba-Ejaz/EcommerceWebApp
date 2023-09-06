@@ -31,15 +31,15 @@ const UserDataForm = () => {
   const dispatch = useAppDispatch();
   const userCreated = useCustomTypeSelector(state => state.usersReducer.userCreated);
   const handleChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { name } = event.target;
+    const { name,value } = event.target;
     if(name==="avatar"){
-      const file = event.target.files?.[0];
-      if (file) {
-       const response=  await dispatch(uploadFile(file)) as PayloadAction<{location:string}>;
-       const location = response.payload.location;
-       setUserData((prevState) => ({ ...prevState, [name]: location }));
+      // const file = event.target.files?.[0];
+      // if (file) {
+      //  const response=  await dispatch(uploadFile(file)) as PayloadAction<{location:string}>;
+      //  const location = response.payload.location;
+       setUserData((prevState) => ({ ...prevState, [name]:value  }));
           }
-       }
+       //}
     else{ 
       const { name, value } = event.target;
     setUserData((prevState) => ({ ...prevState, [name]: value }));
@@ -100,11 +100,19 @@ const UserDataForm = () => {
         required
         type="password"
       />
-      <input 
+       <label>Add Image Url</label>
+            <TextField
+              fullWidth
+              type="text"
+              name="avatar"
+              onChange={handleChange}
+              value={userData.avatar}
+            />
+      {/* <input 
         type="file"
         name="avatar"
         onChange={handleChange}
-      />
+      /> */}
       <Button type="submit" variant="contained" sx={{backgroundColor:Colors.black ,color:Colors.light_grey}}>
         Submit
       </Button>

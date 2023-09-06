@@ -37,7 +37,7 @@ function Home() {
             },
           }}
         >
-          <CategoryButton
+          {/* <CategoryButton
             variant="outlined"
             value="1"
             style={{
@@ -99,10 +99,11 @@ function Home() {
             onClick={handleCategoryChangeButton}
           >
             <CategoryTag>All</CategoryTag>
-          </CategoryButton>
+          </CategoryButton> */}
         </Box>
       </Container>
-      {categoryId && <Products categoryId={categoryId} />}
+      {/* {categoryId && <Products categoryId={categoryId} />} */}
+      <Products></Products>
     </ThemeProvider>
   );
 }

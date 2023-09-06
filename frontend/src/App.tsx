@@ -24,15 +24,19 @@ import Dashboarddd from "./components/AdminDashboard/Dashboard";
 import Orders from "./components/AdminDashboard/Orders";
 
 const App = () => {
-  const users = useCustomTypeSelector((state) => state.usersReducer);
+  // const users = useCustomTypeSelector((state) => state.usersReducer);
   const accessToken = useCustomTypeSelector(
     (state) => state.authReducer.accessToken
   );
   const dispatch = useAppDispatch();
   useEffect(() => {
-    dispatch(fetchAllProducts());
-    dispatch(fetchAllUsers());
+    const fetchProducts = async () => {
+      await dispatch(fetchAllProducts());
+    };
+  
+    fetchProducts();
   }, []);
+  
   return (
      <ThemeProvider theme={theme}>
       <Container maxWidth="xl" sx={{ background: "#fff" }}>

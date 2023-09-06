@@ -7,6 +7,7 @@ namespace WebApi.Business.src.Dtos
     public class CategoryReadDto
     {
         public string Name { get; set; }
+        public Guid Id { get; set; }
     }
     public class CategoryUpdateDto
     {

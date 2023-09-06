@@ -8,6 +8,7 @@ namespace WebApi.Business.src.Dtos
     public string Description { get; set; }
     // public Guid CategoryId { get; set; } 
     public int Quantity { get; set; }
+    public string[] Images { get; set; }
     //public List<Image> Images { get; set; }
     //public List<Guid> ImageIds { get; set; }
   }
@@ -17,6 +18,7 @@ namespace WebApi.Business.src.Dtos
     public string Title { get; set; }
     public decimal Price { get; set; }
     public string Description { get; set; }
+      public string[] Images { get; set; }
     //   public List<Image> Images { get; set; }
     //   public List<Guid> ImageIds { get; set; }
   }
@@ -26,6 +28,7 @@ namespace WebApi.Business.src.Dtos
     public string Title { get; set; }
     public decimal Price { get; set; }
     public string Description { get; set; }
+    public string[] Images { get; set; }
     // public Guid CategoryId { get; set; }
     // public List<Image> Images { get; set; }
     // public List<Guid> ImageIds { get; set; }
