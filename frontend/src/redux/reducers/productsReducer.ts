@@ -51,7 +51,7 @@ export const getProductById = createAsyncThunk(
   "getProductById",
   async (productId: string) => {
     try {
-      const result = await axios.get<ProductRead[]>(
+      const result = await axios.get<ProductRead>(
         `https://shop-and-shop.azurewebsites.net/api/v1/products/${productId}`
       );
       return result.data;
@@ -217,7 +217,7 @@ export const productsSlice = createSlice({
           state.productDeleted = true;
         }
       })
-      .addCase(getProductById.fulfilled, (state, action) => {
+     .addCase(getProductById.fulfilled, (state, action) => {
         state.productDeleted = false;
         if (
           typeof action.payload === "object" &&
@@ -227,10 +227,11 @@ export const productsSlice = createSlice({
           "description" in action.payload
         ) {
           state.error = "product retrieved by id";
+          state.productbyId= action.payload ;
         } else {
           state.error = "product not retrieved by id";
         }
-      })
+      }) 
       .addCase(getProductForUpdate.fulfilled, (state, action) => {
         if (
           typeof action.payload === "object" &&

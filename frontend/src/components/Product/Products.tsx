@@ -117,9 +117,9 @@ function Products({ categoryId = 0 }: { categoryId?: number }) {
       );
     }
     if (searchName && searchName !== "") {
-      console.log("search name in app rendered" + searchName);
+      console.log("search naaa yehhh hai" + searchName);
       filteredProducts = filteredProducts.filter((product) =>
-        product.title.toLowerCase().includes(searchName)
+        product.title.toLowerCase().includes(searchName.toLowerCase())
       );
     }
     if (sortOrder === "asc") {
@@ -357,7 +357,7 @@ function Products({ categoryId = 0 }: { categoryId?: number }) {
                 onMouseEnter={handleMouseEnter}
                 onMouseLeave={handleMouseLeave}
               >
-                {/* <Link to={`/details/${(product.id)}`}> */}
+                 <Link to={`/details/${(product.id)}`}> 
                 {product.images && product.images[0] && (
                   <ProductImage
                     src={product.images[0]}
@@ -365,7 +365,7 @@ function Products({ categoryId = 0 }: { categoryId?: number }) {
                     style={{ objectFit: "cover" }}
                   />
                 )}
-                {/* </Link> */}
+                 </Link> 
                 <CardContent sx={{ textAlign: "center" }}>
                   <Typography>{product.title}</Typography>
                   <Typography>{/* Category Name: {product.} */}</Typography>

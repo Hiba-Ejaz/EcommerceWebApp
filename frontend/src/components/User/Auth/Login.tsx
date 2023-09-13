@@ -24,6 +24,7 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [emailError, setEmailError] = useState("");
   const dispatch = useAppDispatch();
   const user = useCustomTypeSelector((state) => state.authReducer.user);
   const accessToken = useCustomTypeSelector(
@@ -34,7 +35,12 @@ const Login = () => {
       handleFetchUserProfile();
     }
   }, [accessToken]);
+  const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   const handleLogin = async () => {
+    if (!isEmailValid) {
+      setEmailError("Invalid email format");
+      return;
+    }
     try {
       console.log("going to auth for getting token");
       const response = await axios.post<string>(
@@ -112,8 +118,14 @@ const Login = () => {
               fullWidth
               margin="normal"
               value={email}
+              required
               onChange={(e) => setEmail(e.target.value)}
             />
+             {!isEmailValid && (
+              <Typography variant="body2" color="error" gutterBottom>
+                {emailError}
+              </Typography>
+            )}
             <TextField
               type="password"
               label="Password"
@@ -121,6 +133,7 @@ const Login = () => {
               fullWidth
               margin="normal"
               value={password}
+              required
               onChange={(e) => setPassword(e.target.value)}
             />
             {error && (
@@ -136,7 +149,7 @@ const Login = () => {
               sx={{ marginTop: 2 ,backgroundColor:Colors.black,color:Colors.light_grey}}
             >
               {" "}
-              Loginnnn
+              Login
             </Button>
           </form>
         </Box>

@@ -27,6 +27,7 @@ const UserDataForm = () => {
   type isAvailableResponse = {
     isAvailable: boolean;
   }
+  const [error, setError] = useState<string | null>(null);
   const users = useCustomTypeSelector(state => state.usersReducer.users);
   const dispatch = useAppDispatch();
   const userCreated = useCustomTypeSelector(state => state.usersReducer.userCreated);
@@ -48,7 +49,21 @@ const UserDataForm = () => {
   const navigate = useNavigate();
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
-    const { email } = userData;
+    const { email,name,password } = userData;
+    if (!name || !email || !password) {
+      setError("Name, email, and password are required fields.");
+      return;
+    }
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
+    if (!emailRegex.test(email)) {
+      setError("Email must be in the format 'abc@gmail.com'.");
+      return;
+    }
+    const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+    if (!passwordRegex.test(password)) {
+      setError("Password must contain at least 8 characters with a combination of letters and numbers.");
+      return;
+    }
     const userExists = users.some((user) => user.email === email);
     if (userExists) {
       setError("email already in use");
@@ -62,7 +77,6 @@ const UserDataForm = () => {
     }
   };
 
-  const [error, setError] = useState("");
   const theme = useTheme();
   return (
     <CustomisedForm onSubmit={handleSubmit} >

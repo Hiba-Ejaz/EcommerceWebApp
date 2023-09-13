@@ -21,7 +21,7 @@ function UpdateUser() {
   
   const [updated, setUpdated] = useState(false);
   const [newPassword, setNewPassword] = useState("");
- 
+  const [error, setError] = useState<string | null>(null);
   
   const [userData, setUserData] = useState<ReadUser>({
     email: details.email,
@@ -99,7 +99,7 @@ console.log("token is",token);
           disabled
           fullWidth
           margin="normal"
-          required
+          
         />
         <TextField
           label="Name"
@@ -108,7 +108,7 @@ console.log("token is",token);
           onChange={handleChange}
           fullWidth
           margin="normal"
-          required
+          disabled
         />
         <TextField
           label="Email"
@@ -117,7 +117,7 @@ console.log("token is",token);
           onChange={handleChange}
           fullWidth
           margin="normal"
-          required
+          disabled
           type="email"
         />
         <TextField
@@ -130,9 +130,21 @@ console.log("token is",token);
           required
           type="password"
         />
+        {error && (
+        <Typography variant="body2" color="error" gutterBottom>
+          {error}
+        </Typography>
+      )}
          <Button type="button" onClick={() => {
-                          // dispatch(addToCart(product))
+                           const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+                           if (!passwordRegex.test(newPassword)) {
+                             setError("Password must contain at least 8 characters with a combination of letters and numbers.");
+                             return;
+                           }
+                           else{
                           dispatch(updateUserPassword({newPassword,token}));
+                          setUpdated(true);
+                           }
                         }} variant="contained" sx={{backgroundColor:Colors.black ,color:Colors.light_grey}}>
           Update your password
         </Button>
@@ -147,7 +159,7 @@ console.log("token is",token);
         <AnimatedBox>
           <Box sx={{ display: "flex", fontFamily: 'Raleway, Arial', justifyContent: "center", alignContent: "center", margin: "3em", padding: "2em", boxShadow: "2", borderRadius: "2", backgroundColor: Colors.primary }}>
             <Typography variant='h3'>
-              YOUR PROFILE HAS BEEN UPDATED
+              YOUR PASSWORD HAS BEEN UPDATED
             </Typography>
           </Box>
         </AnimatedBox>
