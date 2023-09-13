@@ -48,7 +48,7 @@ Welcome to the E-Commerce Web App, an e-commerce application built using ASP.NET
 - Azure PostgreSQL 
 
 
-![ERD](erd.png)
+![ERD](ERD.png)
 
 
 ## Deployment
