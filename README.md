@@ -45,13 +45,21 @@ Welcome to the E-Commerce Web App, an e-commerce application built using ASP.NET
 - Material UI
 
 ### Database
-- Elephant SQL
+- Azure PostgreSQL 
+
+
+![ERD](erd.png)
+
 
 ## Deployment
 The backend of the application is hosted on Azure, and the frontend is hosted on Netlify.
 
-- Frontend URL: [🌐 Netlify - E-Commerce Web App](https://64ed1a708930350073e4b10f--dapper-malabi-3bb9df.netlify.app/Home)
+- Frontend URL: [🌐 Netlify - E-Commerce Web App](https://shopnshop.netlify.app/)
   
 - Backend API Documentation: [🌐 Azure Swagger Documentation](https://shop-and-shop.azurewebsites.net/swagger/index.html)
 
+
+
+
 Thank you for choosing our E-Commerce Web App. We hope you have a seamless shopping experience!
+
