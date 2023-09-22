@@ -78,6 +78,7 @@ builder.Services.AddDbContext<DatabaseContext>(
 );
 
  builder.Services.AddControllers();
+ builder.WebHost.UseUrls("http://0.0.0.0:5000");
 
 // Configure route and for REST APIs route should start with lowercase
 builder.Services.Configure<RouteOptions>(options =>
